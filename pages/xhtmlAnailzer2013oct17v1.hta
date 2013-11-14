@@ -1,0 +1,6045 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/HTML4.01//loose.dtd">
+
+<!-- xhtml analyzer -->
+
+<html>
+<head>
+<title> xhtml analyzer</title>
+<style type="text/css">
+
+	body			{background-color:rgb(241, 241, 202); color:rgb(0, 0, 0); font-family:verdana, sans-serif;
+			 			font-size:1em;}
+	a				{color:rgb(68, 120, 197);}
+	#header			{font-size:1.5em;}
+	.titles			{font-size:1.25em;}
+	.title2			{font-size:1.55em; color:rgb(209, 111,: 105);}
+	.title3			{font-size:1.5em; color:rgb(0, 0, 0);}
+	.title4			{font-size:1.25em; color:rgb(209, 111, 105);}
+	#secondaryBody	{background-color:rgb(246, 184, 180); padding-left:1em;}
+	#fileArea		{background-color:rgb(255, 255, 228); padding-left:1em;}
+	#reviewSection	{background-color:rgb(255, 255, 228); padding-left:1em;}
+	.orange			{color:rgb(218, 155, 70); font-weight:bold;}
+	.turquoise		{color:rgb(107, 187, 199); font-weight:bold;}
+	#boldColors		{font-size:1em; font-weight:bold;}
+				
+				
+</style>
+</head>
+
+<body>
+
+<script type="text/jscript">
+<!-- hide code from older browsers
+
+//var debugWindow = window.open('', 'debug', 'toolbar=no,location=no,scrollbars=yes,resizable=yes,width=750,height=350');
+ 
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// global variables
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var imgNumber = 1;
+var alertIssued = false;
+var metaKeywords = false, metaDescription = false;
+var nestingErrorLocation = -1;
+var displayCSSmessage = false;
+var showDepreciated = false;
+
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// constants returned by Drive.DriveType
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var DriveTypeRemovable = 1;
+var DriveTypeFixed = 2;
+var DriveTypeNetwork = 3;
+var DriveTypecurrentDirectoryROM = 4;
+var DriveTypeRAMDisk = 5;
+
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// constants returned by File.Attributes
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var FileAttrNormal   = 0;
+var FileAttrReadOnly = 1;
+var FileAttrHidden = 2;
+var FileAttrSystem = 4;
+var FileAttrVolume = 8;
+var FileAttrDirectory = 16;
+var FileAttrArchive = 32; 
+var FileAttrAlias = 1024;
+var FileAttrCompressed = 2048;
+
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// constants for opening files
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var OpenFileForReading = 1; 
+var OpenFileForWriting = 2; 
+var OpenFileForAppending = 8; 
+
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// valid DOCTYPES
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var vDOC1 ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+var vDOC2 ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+var vDOC3 ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">';
+var vDOC4 ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">';
+var vDOC5 ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">';
+var vDOC6 ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+var vDOC7 ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/HTML4.01//loose.dtd">';
+var vDOC8 ='<!DOCTYPE xHTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/HTML4.01//loose.dtd">';
+var vDOC9 ='<!doctype html public "-//w3c//dtd html 4.0 transitional//en">';
+var vDOC10 = '<!DOCTYPE HTML>';
+
+
+//'''''''''''''''''''''''''''''''''''''''''''''
+// valid head tags
+//'''''''''''''''''''''''''''''''''''''''''''''
+var headTag = new Array();
+
+	headTag[0] = 'title';
+	headTag[1] = 'style';
+	headTag[2] = 'link';
+	headTag[3] = 'script';
+	headTag[4] = 'meta';
+	headTag[5] = '/title';
+	headTag[6] = '/style';
+	headTag[7] = '/script';
+	headTag[8] = 'base';
+
+//''''''''''''''''''''''''''''''''''''''''''''''''
+// standard color names
+//''''''''''''''''''''''''''''''''''''''''''''''''
+var namedColors = new Array();
+
+	namedColors[0] = 'black';
+	namedColors[1] = 'silver';
+	namedColors[2] = 'gray';
+	namedColors[3] = 'white';
+	namedColors[4] = 'maroon';
+	namedColors[5] = 'red';
+	namedColors[6] = 'fuchsia';
+	namedColors[7] = 'purple';	
+	namedColors[8] = 'green';
+	namedColors[9] = 'lime';
+	namedColors[10] = 'olive';
+	namedColors[11] = 'yellow';
+	namedColors[12] = 'navy';
+	namedColors[13] = 'blue';
+	namedColors[14] = 'teal';
+	namedColors[15] = 'aqua';
+//''''''''''''''''''''''''''''''''''''''''''
+//	cross-platform fonts
+//''''''''''''''''''''''''''''''''''''''''''
+var	cpFonts = new Array();
+
+	cpFonts[0] = 'arial';
+	cpFonts[1] = 'courier';
+	cpFonts[2] = 'georgia';
+	cpFonts[3] = 'times new roman';
+	cpFonts[4] = 'trebuchet ms';
+	cpFonts[5] = 'trebuchet';
+	cpFonts[6] = 'verdana';
+	cpFonts[7] = 'serif';
+	cpFonts[8] = 'sans-serif';
+	cpFonts[9] = 'monospace';
+	cpFonts[10] = 'cursive';
+	cpFonts[11] = 'fantasy';
+	
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//  Tags that don't have attributes:
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var NATarray = new Array();
+
+	NATarray[0] = 'abbr';
+	NATarray[1] = 'acronym';
+	NATarray[2] = 'address';
+	NATarray[3] = 'b';
+	NATarray[4] = 'big';
+	NATarray[5] = 'center';
+	NATarray[6] = 'cite';
+	NATarray[7] = 'code';
+	NATarray[8] = 'dd';
+	NATarray[9] = 'dl';
+	NATarray[10] = 'dt';
+ 	NATarray[11] = 'em';
+	NATarray[12] = 'fieldset';
+	NATarray[13] = 'head';
+	NATarray[14] = 'i';
+	NATarray[15] = 'kbd';
+	NATarray[16] = 'layer';
+	NATarray[17] = 'nobr';
+	NATarray[18] = 'noframes';
+	NATarray[19] = 'noscript';
+	NATarray[20] = 'pre';
+	NATarray[21] = 's';
+	NATarray[22] = 'samp';
+	NATarray[23] = 'small';
+	NATarray[24] = 'strike';
+	NATarray[25] = 'strong';
+	NATarray[26] = 'sub';
+
+	NATarray[27] = 'sup';
+	NATarray[28] = 'title';
+	NATarray[29] = 'tt';
+	NATarray[30] = 'u';
+	NATarray[31] = 'wbr';
+	NATarray[32] = 'nav';
+	
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//  general attributes good in almost all tags -- supercedes array above
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var okAttributes = new Array();
+
+	okAttributes[0] = 'class';
+	okAttributes[1] = 'id';
+	okAttributes[2] = 'style';
+	okAttributes[3] = 'title';
+	okAttributes[4] = 'onclick';
+	okAttributes[5] = 'lang';
+	okAttributes[6] = 'datafld';
+	okAttributes[7] = 'datasrc';
+	
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//  Valid attributes 
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var VATarray = new Array();
+
+	VATarray[0] = 'accesskey';
+	VATarray[1] = 'action';
+	VATarray[2] = 'align';
+	VATarray[3] = 'alink';
+	VATarray[4] = 'alt';
+	VATarray[5] = 'autostart';
+	VATarray[6] = 'background';
+	VATarray[7] = 'bgcolor';
+	VATarray[8] = 'border';
+	VATarray[9] = 'bordercolor';
+	VATarray[10] = 'cellpadding';
+	VATarray[11] = 'cellspacing';
+	VATarray[12] = 'char';
+	VATarray[13] = 'charset';
+	VATarray[14] = 'checked';
+	VATarray[15] = 'cite';
+	VATarray[16] = 'class';
+	VATarray[17] = 'classid';
+	VATarray[18] = 'clear';
+	VATarray[19] = 'code';
+	VATarray[20] = 'codebase';
+	VATarray[21] = 'color';
+	VATarray[22] = 'cols';
+	VATarray[23] = 'colspan';
+	VATarray[24] = 'content';
+	VATarray[25] = 'controls';
+	VATarray[26] = 'coords';
+	VATarray[27] = 'data';
+	VATarray[28] = 'disabled';
+	VATarray[29] = 'enctype';
+	VATarray[30] = 'face';
+	VATarray[31] = 'for';
+	VATarray[32] = 'frame';
+	VATarray[33] = 'frameborder';
+	VATarray[34] = 'height';
+	VATarray[35] = 'href';
+	VATarray[36] = 'hspace';
+	VATarray[37] = 'http-equiv';
+	VATarray[38] = 'id';
+	VATarray[39] = 'label';
+	VATarray[40] = 'language';
+	VATarray[41] = 'link';
+	VATarray[42] = 'longdesc';
+	VATarray[43] = 'loop';
+	VATarray[44] = 'marginheight';
+	VATarray[45] = 'marginwidth';
+	VATarray[46] = 'maxlength';
+	VATarray[47] = 'media';
+	VATarray[48] = 'method';
+	VATarray[49] = 'multiple';
+	VATarray[50] = 'name';
+	VATarray[51] = 'nohref';	
+	VATarray[52] = 'noresize';
+	VATarray[53] = 'noshade';
+	VATarray[54] = 'nowrap';
+	VATarray[55] = 'readonly';
+	VATarray[56] = 'rel';
+	VATarray[57] = 'rows';
+	VATarray[58] = 'rowspan';
+	VATarray[59] = 'rules';
+	VATarray[60] = 'scrolling';
+	VATarray[61] = 'selected';
+	VATarray[62] = 'shape';
+	VATarray[63] = 'size';
+	VATarray[64] = 'span';
+	VATarray[65] = 'src';
+	VATarray[66] = 'standby';
+	VATarray[67] = 'start';
+	VATarray[68] = 'tabindex';
+	VATarray[69] = 'target';
+	VATarray[70] = 'text';
+	VATarray[71] = 'title';
+	VATarray[72] = 'type';
+	VATarray[73] = 'usemap';
+	VATarray[74] = 'valign';
+	VATarray[75] = 'value';
+	VATarray[76] = 'vlink';
+	VATarray[77] = 'vspace';
+	VATarray[78] = 'width';
+	VATarray[79] = 'onblur';
+	VATarray[80] = 'onchange';
+	VATarray[81] = 'onclick';
+	VATarray[82] = 'ondbclick';
+	VATarray[83] = 'onfocus';
+	VATarray[84] = 'onkeydown';
+	VATarray[85] = 'onkeypress';
+	VATarray[86] = 'onkeyup';
+	VATarray[87] = 'onload';
+	VATarray[88] = 'onmousedown';
+	VATarray[89] = 'onmousemove';
+	VATarray[90] = 'onmouseout';
+	VATarray[91] = 'onmouseover';
+	VATarray[92] = 'onmouseup';
+	VATarray[93] = 'onreset';
+	VATarray[94] = 'onselect';
+	VATarray[95] = 'onsubmit';
+	VATarray[96] = 'onunload';
+	VATarray[97] = 'style';
+//''''''''''''''''''''''''''''''''''''''
+// above Quickstart, below Nutshell
+//''''''''''''''''''''''''''''''''''''''
+	VATarray[98] = 'abbr';
+	VATarray[99] = 'accept';
+	VATarray[100] = 'archive';
+	VATarray[101] = 'codetype';
+	VATarray[102] = 'datetime';
+	VATarray[103] = 'ismap';
+	VATarray[104] = 'valuetype';
+	VATarray[105] = 'scheme';
+	VATarray[106] = 'wrap';
+//'''''''''''''''''''''''''''''''''''''''
+// FLASH specific attributes
+//'''''''''''''''''''''''''''''''''''''''
+	VATarray[107] = 'pluginspage';
+	VATarray[108] = 'allowscriptaccess';
+	VATarray[109] = 'quality';
+	VATarray[110] = 'xmlns';
+	VATarray[111] = 'xml:lang';
+	VATarray[112] = 'lang';
+	VATarray[113] = 'loop';
+	VATarray[114] = 'play';
+	VATarray[115] = 'menu';
+	VATarray[116] = 'scale';
+	VATarray[117] = 'salign';
+	VATarray[118] = 'swliveconnect';
+//''''''''''''''''''''''''''''''''''''''''
+// Quick Time specific attributes
+//''''''''''''''''''''''''''''''''''''''''
+	VATarray[119] = 'autoplay';
+	VATarray[120] = 'controller';
+	VATarray[121] = 'volume';
+	VATarray[122] = 'playeveryframe';
+//''''''''''''''''''''''''''''''''''''''''
+// RAOCX player attributes
+//''''''''''''''''''''''''''''''''''''''''
+	VATarray[123] = 'displaysize';
+	VATarray[124] = 'autosize';
+	VATarray[125] = 'showstatusbar';
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// oversites added after they were discovered in testing
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	VATarray[126] = 'prompt';
+	VATarray[127] = 'datetime';
+	VATarray[128] = 'hidden';
+	VATarray[129] = 'showcontrols';
+	VATarray[130] = 'allowScriptAccess';
+// mask embeded id
+	VATarray[131] = 'classddi';
+// 2013 aug 25 HTML 5
+	VATarray[132] = 'datasrc';
+	VATarray[133] = 'datapagesize';
+	VATarray[134] = 'datafld';
+	VATarray[135] = 'contenteditable';
+	VATarray[136] = 'contextmenu';
+	VATarray[137] = 'draggable';
+	VATarray[138] = 'dropzone';
+	VATarray[139] = 'hidden';
+	VATarray[140] = 'spellcheck';
+	VATarray[141] = 'media';
+	VATarray[142] = 'autoplay';
+	VATarray[143] = 'controls';
+	VATarray[144] = 'loop';
+	VATarray[145] = 'preload';
+	VATarray[146] = 'muted';
+	VATarray[147] = 'poster';
+	VATarray[148] = 'autofocus';
+
+
+
+	
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// valid named metacharacters
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var validNamedEntities = new Array();
+
+	validNamedEntities[0] = '&AElig;';
+	validNamedEntities[1] = '&Aacute;';
+	validNamedEntities[2] = '&Acirc;';
+	validNamedEntities[3] = '&Agrave;';
+	validNamedEntities[4] = '&Alpha;';
+	validNamedEntities[5] = '&Aring;';
+	validNamedEntities[6] = '&Atilde;';
+	validNamedEntities[7] = '&Auml;';
+	validNamedEntities[8] = '&Beta;';
+	validNamedEntities[9] = '&Ccedil;';
+	validNamedEntities[10] = '&Chi;';
+	validNamedEntities[11] = '&Dagger;';
+	validNamedEntities[12] = '&Delta;';
+	validNamedEntities[13] = '&ETH;';
+	validNamedEntities[14] = '&Eacute;';
+	validNamedEntities[15] = '&Ecirc;';
+	validNamedEntities[16] = '&Egrave;';
+	validNamedEntities[17] = '&Epsilon;';
+	validNamedEntities[18] = '&Eta;';
+	validNamedEntities[19] = '&Euml;';
+	validNamedEntities[20] = '&Gamma;';
+	validNamedEntities[21] = '&Iacute;';
+	validNamedEntities[22] = '&Icirc;';
+	validNamedEntities[23] = '&Igrave;';
+	validNamedEntities[24] = '&Iota;';
+	validNamedEntities[25] = '&Iuml;';
+	validNamedEntities[26] = '&Kappa;';
+	validNamedEntities[27] = '&Lambda;';
+	validNamedEntities[28] = '&Mu;';
+	validNamedEntities[29] = '&Ntilde;';
+	validNamedEntities[30] = '&Nu;';
+	validNamedEntities[31] = '&OElig;';
+	validNamedEntities[32] = '&Oacute;';
+	validNamedEntities[33] = '&Ocirc;';
+	validNamedEntities[34] = '&Ograve;';
+	validNamedEntities[35] = '&Omega;';
+	validNamedEntities[36] = '&Omicron;';
+	validNamedEntities[37] = '&Oslash;';
+	validNamedEntities[38] = '&Otilde;';
+	validNamedEntities[39] = '&Ouml;';
+	validNamedEntities[40] = '&Phi;';
+	validNamedEntities[41] = '&Pi;';
+	validNamedEntities[42] = '&Prime;';
+	validNamedEntities[43] = '&Psi;';
+	validNamedEntities[44] = '&Rho;';
+	validNamedEntities[45] = '&Scaron;';
+	validNamedEntities[46] = '&Sigma;';
+	validNamedEntities[47] = '&THORN;';
+	validNamedEntities[48] = '&Tau;';
+	validNamedEntities[49] = '&Theta;';
+	validNamedEntities[50] = '&Uacute;';
+	validNamedEntities[51] = '&Ucirc;';
+	validNamedEntities[52] = '&Ugrave;';
+	validNamedEntities[53] = '&Upsilon;';
+	validNamedEntities[54] = '&Uuml;';
+	validNamedEntities[55] = '&Xi;';
+	validNamedEntities[56] = '&Yacute;';
+	validNamedEntities[57] = '&Yuml;';
+	validNamedEntities[58] = '&Zeta;';
+	validNamedEntities[59] = '&aacute;';
+	validNamedEntities[60] = '&acirc;';
+	validNamedEntities[61] = '&acute;';
+	validNamedEntities[62] = '&aelig;';
+	validNamedEntities[63] = '&agrave;';
+	validNamedEntities[64] = '&alefsym;';
+	validNamedEntities[65] = '&alpha;';
+	validNamedEntities[66] = '&amp;';
+	validNamedEntities[67] = '&and;';
+	validNamedEntities[68] = '&ang;';
+	validNamedEntities[69] = '&aring;';
+	validNamedEntities[70] = '&asymp;';
+	validNamedEntities[71] = '&atilde;';
+	validNamedEntities[72] = '&auml;';
+	validNamedEntities[73] = '&bdquo;';
+	validNamedEntities[74] = '&beta;';
+	validNamedEntities[75] = '&brvbar;';
+	validNamedEntities[76] = '&bull;';
+	validNamedEntities[77] = '&cap;';
+	validNamedEntities[78] = '&ccedil;';
+	validNamedEntities[79] = '&cedil;';
+	validNamedEntities[80] = '&cent;';
+	validNamedEntities[81] = '&chi;';
+	validNamedEntities[82] = '&circ;';
+	validNamedEntities[83] = '&clubs;';
+	validNamedEntities[84] = '&cong;';
+	validNamedEntities[85] = '&copy;';
+	validNamedEntities[86] = '&crarr;';
+	validNamedEntities[87] = '&cup;';
+	validNamedEntities[88] = '&curren;';
+	validNamedEntities[89] = '&dArr;';
+	validNamedEntities[90] = '&dagger;';
+	validNamedEntities[91] = '&darr;';
+	validNamedEntities[92] = '&deg;';
+	validNamedEntities[93] = '&delta;';
+	validNamedEntities[94] = '&diams;';
+	validNamedEntities[95] = '&divide;';
+	validNamedEntities[96] = '&eacute;';
+	validNamedEntities[97] = '&ecirc;';
+	validNamedEntities[98] = '&egrave;';
+	validNamedEntities[99] = '&empty;';
+	validNamedEntities[100] = '&emsp;';
+	validNamedEntities[101] = '&ensp;';
+	validNamedEntities[102] = '&entity_name;';
+	validNamedEntities[103] = '&epsilon;';
+	validNamedEntities[104] = '&equiv;';
+	validNamedEntities[105] = '&eta;';
+	validNamedEntities[106] = '&eth;';
+	validNamedEntities[107] = '&euml;';
+	validNamedEntities[108] = '&euro;';
+	validNamedEntities[109] = '&exist;';
+	validNamedEntities[110] = '&fnof;';
+	validNamedEntities[111] = '&forall;';
+	validNamedEntities[112] = '&frac12;';
+	validNamedEntities[113] = '&frac14;';
+	validNamedEntities[114] = '&frac34;';
+	validNamedEntities[115] = '&frasl;';
+	validNamedEntities[116] = '&gamma;';
+	validNamedEntities[117] = '&ge;';
+	validNamedEntities[118] = '&gt;';
+	validNamedEntities[119] = '&hArr;';
+	validNamedEntities[120] = '&harr;';
+	validNamedEntities[121] = '&hearts;';
+	validNamedEntities[122] = '&hellip;';
+	validNamedEntities[123] = '&iacute;';
+	validNamedEntities[124] = '&icirc;';
+	validNamedEntities[125] = '&iexcl;';
+	validNamedEntities[126] = '&igrave;';
+	validNamedEntities[127] = '&image;';
+	validNamedEntities[128] = '&infin;';
+	validNamedEntities[129] = '&int;';
+	validNamedEntities[130] = '&iota;';
+	validNamedEntities[131] = '&iquest;';
+	validNamedEntities[132] = '&isin;';
+	validNamedEntities[133] = '&iuml;';
+	validNamedEntities[134] = '&kappa;';
+	validNamedEntities[135] = '&lArr;';
+	validNamedEntities[136] = '&lambda;';
+	validNamedEntities[137] = '&lang;';
+	validNamedEntities[138] = '&laquo;';
+	validNamedEntities[139] = '&larr;';
+	validNamedEntities[140] = '&lceil;';
+	validNamedEntities[141] = '&ldquo;';
+	validNamedEntities[142] = '&le;';
+	validNamedEntities[143] = '&lfloor;';
+	validNamedEntities[144] = '&lowast;';
+	validNamedEntities[145] = '&loz;';
+	validNamedEntities[146] = '&lrm;';
+	validNamedEntities[147] = '&lsaquo;';
+	validNamedEntities[148] = '&lsquo;';
+	validNamedEntities[149] = '&lt;';
+	validNamedEntities[150] = '&macr;';
+	validNamedEntities[151] = '&mdash;';
+	validNamedEntities[152] = '&micro;';
+	validNamedEntities[153] = '&middot;';
+	validNamedEntities[154] = '&minus;';
+	validNamedEntities[155] = '&mu;';
+	validNamedEntities[156] = '&nabla;';
+	validNamedEntities[157] = '&nbsp;';
+	validNamedEntities[158] = '&ndash;';
+	validNamedEntities[159] = '&ne;';
+	validNamedEntities[160] = '&ni;';
+	validNamedEntities[161] = '&not;';
+	validNamedEntities[162] = '&notin;';
+	validNamedEntities[163] = '&nsub;';
+	validNamedEntities[164] = '&ntilde;';
+	validNamedEntities[165] = '&nu;';
+	validNamedEntities[166] = '&oacute;';
+	validNamedEntities[167] = '&ocirc;';
+	validNamedEntities[168] = '&oelig;';
+	validNamedEntities[169] = '&ograve;';
+	validNamedEntities[170] = '&oline;';
+	validNamedEntities[171] = '&omega;';
+	validNamedEntities[172] = '&omicron;';
+	validNamedEntities[173] = '&oplus;';
+	validNamedEntities[174] = '&or;';
+	validNamedEntities[175] = '&ordf;';
+	validNamedEntities[176] = '&ordm;';
+	validNamedEntities[177] = '&oslash;';
+	validNamedEntities[178] = '&otilde;';
+	validNamedEntities[179] = '&otimes;';
+	validNamedEntities[180] = '&ouml;';
+	validNamedEntities[181] = '&para;';
+	validNamedEntities[182] = '&part;';
+	validNamedEntities[183] = '&permil;';
+	validNamedEntities[184] = '&perp;';
+	validNamedEntities[185] = '&phi;';
+	validNamedEntities[186] = '&pi;';
+	validNamedEntities[187] = '&piv;';
+	validNamedEntities[188] = '&plusmn;';
+	validNamedEntities[189] = '&pound;';
+	validNamedEntities[190] = '&prime;';
+	validNamedEntities[191] = '&prod;';
+	validNamedEntities[192] = '&prop;';
+	validNamedEntities[193] = '&psi;';
+	validNamedEntities[194] = '&quot;';
+	validNamedEntities[195] = '&rArr;';
+	validNamedEntities[196] = '&radic;';
+	validNamedEntities[197] = '&rang;';
+	validNamedEntities[198] = '&raquo;';
+	validNamedEntities[199] = '&rarr;';
+	validNamedEntities[200] = '&rceil;';
+	validNamedEntities[201] = '&rdquo;';
+	validNamedEntities[202] = '&real;';
+	validNamedEntities[203] = '&reg;';
+	validNamedEntities[204] = '&rfloor;';
+	validNamedEntities[205] = '&rho;';
+	validNamedEntities[206] = '&rlm;';
+	validNamedEntities[207] = '&rsaquo;';
+	validNamedEntities[208] = '&rsquo;';
+	validNamedEntities[209] = '&sbquo;';
+	validNamedEntities[210] = '&scaron;';
+	validNamedEntities[211] = '&sdot;';
+	validNamedEntities[212] = '&sect;';
+	validNamedEntities[213] = '&shy;';
+	validNamedEntities[214] = '&sigma;';
+	validNamedEntities[215] = '&sigmaf;';
+	validNamedEntities[216] = '&sim;';
+	validNamedEntities[217] = '&spades;';
+	validNamedEntities[218] = '&sub;';
+	validNamedEntities[219] = '&sube;';
+	validNamedEntities[220] = '&sum;';
+	validNamedEntities[221] = '&sup1;';
+	validNamedEntities[222] = '&sup2;';
+	validNamedEntities[223] = '&sup3;';
+	validNamedEntities[224] = '&sup;';
+	validNamedEntities[225] = '&supe;';
+	validNamedEntities[226] = '&szlig;';
+	validNamedEntities[227] = '&tau;';
+	validNamedEntities[228] = '&there4;';
+	validNamedEntities[229] = '&theta;';
+	validNamedEntities[230] = '&thetasym;';
+	validNamedEntities[231] = '&thinsp;';
+	validNamedEntities[232] = '&thorn;';
+	validNamedEntities[233] = '&tilde;';
+	validNamedEntities[234] = '&times;';
+	validNamedEntities[235] = '&trade;';
+	validNamedEntities[236] = '&uArr;';
+	validNamedEntities[237] = '&uacute;';
+	validNamedEntities[238] = '&uarr;';
+	validNamedEntities[239] = '&ucirc;';
+	validNamedEntities[240] = '&ugrave;';
+	validNamedEntities[241] = '&uml;';
+	validNamedEntities[242] = '&upsih;';
+	validNamedEntities[243] = '&upsilon;';
+	validNamedEntities[244] = '&uuml;';
+	validNamedEntities[245] = '&weierp;';
+	validNamedEntities[246] = '&xi;';
+	validNamedEntities[247] = '&yacute;';
+	validNamedEntities[248] = '&yen;';
+	validNamedEntities[249] = '&yuml;';
+	validNamedEntities[250] = '&zeta;';
+	validNamedEntities[251] = '&zwj;';
+	validNamedEntities[252] = '&zwnj;';
+
+
+
+	
+//''''''''''''''''''''''''''''''''''''''''''''''''''
+// tags that can only be in form object
+//''''''''''''''''''''''''''''''''''''''''''''''''''
+var formTags = new Array();
+
+	formTags[0] = 'textarea';
+	formTags[1] = '/textarea';
+	formTags[2] = 'input';
+	formTags[3] = 'label';
+	formTags[4] = '/label';
+	formTags[5] = 'optgroup';
+	formTags[6] = '/optgroup';
+	formTags[7] = 'option';
+	formTags[8] = '/option';
+	formTags[9] = 'select';
+	formTags[10] = '/select';
+	formTags[11] = 'button';
+	formTags[12] = '/button';
+	formTags[13] = 'fieldset';
+	formTags[14] = '/fieldset';
+
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// tags that can only be between a table tag and the first tr tag
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var tableTags = new Array();
+
+	tableTags[0] = 'caption';
+	tableTags[1] = '/caption';
+	tableTags[2] = 'col';
+	tableTags[3] = 'colgroup';
+	tableTags[4] = '/colgroup';
+	tableTags[5] = 'th';
+	tableTags[6] = '/th';
+
+
+	tableTags[7] = 'tbody';
+	tableTags[8] = '/tbody';
+	tableTags[9] = 'thead';
+	tableTags[10] = '/thead';
+	tableTags[11] = 'tfoot';
+	tableTags[12] = '/tfoot';
+	tableTags[13] = 'tr';
+	tableTags[14] = '/tr';
+	tableTags[15] = 'td';
+	tableTags[16] = '/td';
+	
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// miscellaneous inclusive tags
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var mapTags = new Array();
+	mapTags[0] = 'area';		
+	
+var listTags = new Array();
+	listTags[0] = 'li';
+	listTags[1] = '/li';
+	
+var objectTags = new Array();
+	objectTags[0] = 'param';
+	
+var defListTags = new Array();
+	defListTags[0] = 'dt';
+	defListTags[1] = '/dt';
+	
+var frameTags = new Array();
+	frameTags[0] = 'frame';
+	
+var trTags = new Array();
+	trTags[0] = 'td';
+	trTags[1] = '/td';
+	
+var invalidFormChild = new Array();
+	invalidFormChild[0] = 'form';
+	invalidFormChild[1] = '/form';
+	
+var invalidPreChild = new Array();
+	invalidPreChild[0] = 'img';
+	invalidPreChild[1] = 'object';
+	invalidPreChild[2] = '/object';
+	invalidPreChild[3] = 'applet';
+	invalidPreChild[4] = '/applet';
+	invalidPreChild[5] = 'big';
+	invalidPreChild[6] = '/big';
+	invalidPreChild[7] = 'small';
+	invalidPreChild[8] = '/small';
+	invalidPreChild[9] = 'sub';
+	invalidPreChild[10] = '/sub';
+	invalidPreChild[11] = 'sup';
+	invalidPreChild[12] = '/sup';
+	invalidPreChild[13] = 'font';
+	invalidPreChild[14] = '/font';
+	invalidPreChild[15] = 'basefont';
+	
+var invalidAChild = new Array();
+	invalidAChild[0] = 'a';
+	invalidAChild[1] = '/a';
+	
+var invalidButtonChild = new Array();
+	invalidButtonChild[0] = 'a';
+	invalidButtonChild[1] = '/a';
+	invalidButtonChild[2] = 'form';
+	invalidButtonChild[3] = '/form';
+	invalidButtonChild[4] = 'input';
+	invalidButtonChild[5] = 'select';
+	invalidButtonChild[6] = '/select';
+	invalidButtonChild[7] = 'textarea';
+	invalidButtonChild[8] = '/textarea';
+	invalidButtonChild[9] = 'label';
+	invalidButtonChild[10] = '/label';
+	invalidButtonChild[11] = 'button';
+	invalidButtonChild[12] = '/button';
+	invalidButtonChild[13] = 'iframe';
+	invalidButtonChild[14] = '/iframe';
+	invalidButtonChild[15] = 'isindex';
+
+
+var invalidLabelChild = new Array();
+	invalidLabelChild[0] = 'label';
+	invalidLabelChild[1] = '/label';
+		
+//'''''''''''''''''''''''''''''''''''''''''''''''''
+// depreciated attribute / tag pairs
+//'''''''''''''''''''''''''''''''''''''''''''''''''
+var depreciatedAttributes = new Array();
+
+	depreciatedAttributes[0] = 'body*alink';
+	depreciatedAttributes[1] = 'body*background';
+	depreciatedAttributes[2] = 'body*link';
+	depreciatedAttributes[3] = 'body*vlink';
+	depreciatedAttributes[4] = 'br*clear';
+	depreciatedAttributes[5] = 'caption*align';
+	depreciatedAttributes[6] = 'div*align';
+	depreciatedAttributes[7] = 'dl*compact';
+	depreciatedAttributes[8] = 'h1*align';
+	depreciatedAttributes[9] = 'h2*align';
+	depreciatedAttributes[10] = 'h3*align';
+	depreciatedAttributes[11] = 'h4*align';
+	depreciatedAttributes[12] = 'h5*align';
+
+	depreciatedAttributes[13] = 'h6*align';
+	depreciatedAttributes[14] = 'hr*align';
+	depreciatedAttributes[15] = 'hr*noshade';
+	depreciatedAttributes[16] = 'hr*size';
+	depreciatedAttributes[17] = 'hr*width';
+	depreciatedAttributes[18] = 'html*version';
+	depreciatedAttributes[19] = 'iframe*align';
+	depreciatedAttributes[20] = 'img*align';
+	depreciatedAttributes[21] = 'img*border';
+	depreciatedAttributes[22] = 'img*hspace';
+	depreciatedAttributes[23] = 'img*vspace';
+	depreciatedAttributes[24] = 'input*align';
+	depreciatedAttributes[25] = 'legend*align';
+	depreciatedAttributes[26] = 'li*value';
+	depreciatedAttributes[27] = 'object*align';
+	depreciatedAttributes[28] = 'object*border';
+	depreciatedAttributes[29] = 'object*hspace';
+	depreciatedAttributes[30] = 'object*vspace';
+	depreciatedAttributes[31] = 'ol*compact';
+	depreciatedAttributes[32] = 'ol*start';
+	depreciatedAttributes[33] = 'p*align';
+	depreciatedAttributes[34] = 'pre*width';
+	depreciatedAttributes[35] = 'script*language';
+	depreciatedAttributes[36] = 'table*align';
+	depreciatedAttributes[37] = 'table*bgcolor';
+	depreciatedAttributes[38] = 'td*bgcolor';
+	depreciatedAttributes[39] = 'td*height';
+	depreciatedAttributes[40] = 'td*nowrap';
+	depreciatedAttributes[41] = 'td*width';
+	depreciatedAttributes[42] = 'th*bgcolor';
+	depreciatedAttributes[43] = 'th*height';
+	depreciatedAttributes[44] = 'th*nowrap';
+	depreciatedAttributes[45] = 'th*width';
+	depreciatedAttributes[46] = 'tr*bgcolor';
+	depreciatedAttributes[47] = 'ul*compact';
+	depreciatedAttributes[48] = 'ul*type';
+
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//  Valid attributes for tags
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+var tagAttribute = new Array();
+
+	tagAttribute[0] = 'a*accesskey|8';
+	tagAttribute[1] = 'a*href|0';
+
+	tagAttribute[2] = 'a*name|B';
+	tagAttribute[3] = 'a*tabindex|2';
+	tagAttribute[4] = 'a*target|J';
+	tagAttribute[5] = 'applet*code|0';
+	tagAttribute[6] = 'applet*width|2';
+	tagAttribute[7] = 'applet*height|2';
+	tagAttribute[8] = 'area*accesskey|8';
+	tagAttribute[9] = 'area*alt|1';
+	tagAttribute[10] = 'area*coords|E';
+	tagAttribute[11] = 'area*href|0';
+	tagAttribute[12] = 'area*nohref|D nohref';
+	tagAttribute[13] = 'area*shape|6 rect, circle, poly';
+	tagAttribute[14] = 'area*target|J';
+	tagAttribute[15] = 'base*href|0';
+	tagAttribute[16] = 'base*target|J';
+	tagAttribute[17] = 'basefont*color|5';
+	tagAttribute[18] = 'blockquote*cite|0';
+	tagAttribute[19] = 'body*alink|5';
+	tagAttribute[20] = 'body*link|5';
+	tagAttribute[21] = 'body*vlink|5';
+	tagAttribute[22] = 'body*background|0';
+	tagAttribute[23] = 'body*bgcolor|5';
+	tagAttribute[24] = 'body*text|5';
+	tagAttribute[25] = 'br*clear|6 left, right, all, none';
+	tagAttribute[26] = 'button*accesskey|8';
+	tagAttribute[27] = 'button*disabled|6 disabled, true, false';
+	tagAttribute[28] = 'button*name|B';
+	tagAttribute[29] = 'button*type|6 button, submit, reset';
+	tagAttribute[30] = 'button*value|1';
+	tagAttribute[31] = 'caption*align|6 top, bottom, left, right';
+	tagAttribute[32] = 'col*align|K left, right, center, justify';
+	tagAttribute[33] = 'col*valign|6 top, bottom, middle, baseline';
+	tagAttribute[34] = 'col*span|2';
+	tagAttribute[35] = 'col*width|I';
+	tagAttribute[36] = 'colgroup*align|K left, right, center, justify';
+	tagAttribute[37] = 'colgroup*valign|6 top, bottom, middle, baseline';
+	tagAttribute[38] = 'colgroup*span|2';
+	tagAttribute[39] = 'colgroup*width|I';
+	tagAttribute[40] = 'div*align|6 left, right, center, justify';
+	tagAttribute[41] = 'div*class|R';
+	tagAttribute[42] = 'div*id|A';
+	tagAttribute[43] = 'embed*align|6 top, bottom, left, middle, right';
+	tagAttribute[44] = 'embed*autostart|6 true, false, 1, 0';
+	tagAttribute[45] = 'embed*controls|6 true, false, console play';
+	tagAttribute[46] = 'embed*loop|6 true, false';
+	tagAttribute[47] = 'embed*src|0';
+	tagAttribute[48] = 'embed*width|2';
+	tagAttribute[49] = 'embed*height|2';
+	tagAttribute[50] = 'font*color|5';
+	tagAttribute[51] = 'font*face|Q';
+	tagAttribute[52] = 'font*size|6 1, 2, 3, 4, 5, 6, 7, -1, -2 ,-3, -4, -5, -6, +1, +2, +3, +4, +5, +6';
+	tagAttribute[53] = 'form*action|0';
+	tagAttribute[54] = 'form*enctype|6 text/plain, multipart/form-data, application/x-www-form-urlencoded';
+	tagAttribute[55] = 'form*method|6 get, post, #';
+	tagAttribute[56] = 'frame*border|2';
+	tagAttribute[57] = 'frame*bordercolor|5';
+	tagAttribute[58] = 'frame*frameborder|6 0, 1';
+	tagAttribute[59] = 'frame*framespacing|2';
+	tagAttribute[60] = 'frame*longdesc|9';
+	tagAttribute[61] = 'frame*name|B';
+	tagAttribute[62] = 'frame*noresize|D noresize';
+	tagAttribute[63] = 'frame*marginwidth|2';
+	tagAttribute[64] = 'frame*marginheight|2';
+	tagAttribute[65] = 'frame*scrolling|6 yes, no, auto';
+	tagAttribute[66] = 'frame*src|0';
+	tagAttribute[67] = 'frame*title|1';
+	tagAttribute[68] = 'frameset*border|2';
+	tagAttribute[69] = 'frameset*bordercolor|5';
+	tagAttribute[70] = 'frameset*cols|I';
+	tagAttribute[71] = 'frameset*frameborder|2';
+	tagAttribute[72] = 'frameset*framespacing|2';
+	tagAttribute[73] = 'frameset*rows|I';
+
+	tagAttribute[74] = 'h1*align|6 left, center, right, justify';
+	tagAttribute[75] = 'h2*align|6 left, center, right, justify';
+	tagAttribute[76] = 'h3*align|6 left, center, right, justify';
+	tagAttribute[77] = 'h4*align|6 left, center, right, justify';
+	tagAttribute[78] = 'h5*align|6 left, center, right, justify';
+	tagAttribute[79] = 'h6*align|6 left, center, right, justify';
+	tagAttribute[80] = 'hr*align|6 left, center, right, justify';
+	tagAttribute[81] = 'hr*noshade|D noshade';
+	tagAttribute[82] = 'hr*size|2';
+	tagAttribute[83] = 'hr*width|L';
+	tagAttribute[84] = 'iframe*align|6 top, middle, bottom, left, right';
+	tagAttribute[85] = 'iframe*frameborder|2';
+	tagAttribute[86] = 'iframe*height|2';
+	tagAttribute[87] = 'iframe*name|B';
+	tagAttribute[88] = 'iframe*width|L';
+	tagAttribute[89] = 'iframe*height|L';
+	tagAttribute[90] = 'iframe*scrolling|6 yes, no, auto';
+	tagAttribute[91] = 'iframe*src|0';
+	tagAttribute[92] = 'img*align|6 top, middle, bottom, left, right';
+	tagAttribute[93] = 'img*alt|0';
+	tagAttribute[94] = 'img*border|2';
+	tagAttribute[95] = 'img*hspace|2';
+	tagAttribute[96] = 'img*vspace|2';
+	tagAttribute[97] = 'img*src|0';
+	tagAttribute[98] = 'img*usemap|O';
+	tagAttribute[99] = 'img*width|0';
+	tagAttribute[100] = 'img*height|0';
+	tagAttribute[101] = 'input*accesskey|8';
+	tagAttribute[102] = 'input*align|6 top, middle, bottom, left, right';
+	tagAttribute[103] = 'input*checked|D checked';
+	tagAttribute[104] = 'input*disabled|6 disabled, true, false';
+	tagAttribute[105] = 'input*maxlength|2';
+	tagAttribute[106] = 'input*name|B';
+	tagAttribute[107] = 'input*size|2';
+	tagAttribute[108] = 'input*src|9';
+	tagAttribute[109] = 'input*readonly|D readonly';
+	tagAttribute[110] = 'input*tabindex|2';
+	tagAttribute[111] = 'input*type|6 text, password, checkbox, radio, submit, reset, file, hidden, image, button';
+	tagAttribute[112] = 'input*value|1';
+	tagAttribute[113] = 'label*for|1';
+	tagAttribute[114] = 'legend*align|6 top, bottom, left, right';
+	tagAttribute[115] = 'li*type|6 disc, square, circle, 1, A, a, I, i';
+	tagAttribute[116] = 'li*value|2';
+	tagAttribute[117] = 'link*href|0';
+	tagAttribute[118] = 'link*media|6 all, print, screen';
+	tagAttribute[119] = 'link*title|1';
+	tagAttribute[120] = 'link*type|M';
+	tagAttribute[121] = 'link*rel|1';
+	tagAttribute[122] = 'map*name|B';
+	tagAttribute[123] = 'meta*content|0';
+	tagAttribute[124] = 'meta*http-equiv|0';
+	tagAttribute[125] = 'meta*name|0';
+	tagAttribute[126] = 'object*align|6 top, middle, bottom, left, right';
+	tagAttribute[127] = 'object*border|L';
+	tagAttribute[128] = 'object*classid|9';
+	tagAttribute[129] = 'object*codebase|0';
+	tagAttribute[130] = 'object*data|9';
+	tagAttribute[131] = 'object*hspace|2';
+	tagAttribute[132] = 'object*vspace|2';
+	tagAttribute[133] = 'object*name|B';
+	tagAttribute[134] = 'object*standby|1';
+	tagAttribute[135] = 'object*type|M';
+	tagAttribute[136] = 'object*width|L';
+	tagAttribute[137] = 'object*height|L';
+	tagAttribute[138] = 'ol*type|1, A, a, I, i';
+	tagAttribute[139] = 'ol*start|2';
+	tagAttribute[140] = 'optgroup*disabled|6 disabled, true, false';
+	tagAttribute[141] = 'optgroup*label|1';
+	tagAttribute[142] = 'option*disabled|6 disabled, true, false';
+	tagAttribute[143] = 'option*label|1';
+	tagAttribute[144] = 'option*selected|D selected';
+	tagAttribute[145] = 'option*value|1';
+	tagAttribute[146] = 'p*align|6 left, center, right, justify';
+	tagAttribute[147] = 'param*name|1';
+	tagAttribute[148] = 'param*value|1';
+	tagAttribute[149] = 'q*cite|9';
+	tagAttribute[150] = 'script*charset|6 iso-8859-1, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6,' +
+						'iso-8859-7, iso-8859-8, iso-8859-9, shift_jis, euc-jp, utf-8';
+	tagAttribute[151] = 'script*language|6 javascript, vbscript, jscript, javascript1.0, javascript1.1, javascript1.2,'+
+						'javascript1.3, javascript1.5, jscript1.0, jscript2.0, jscript3.0, jscript5.0' +
+						'jscript5.1, jscript5.5, jscript5.6';
+	tagAttribute[152] = 'script*src|0';
+	tagAttribute[153] = 'script*type|6 text/javascript, text/vbscript, text/jscript';
+	tagAttribute[154] = 'select*disabled|6 disabled, true, false';
+	tagAttribute[155] = 'select*name|B';
+	tagAttribute[156] = 'select*multiple|D multiple';
+	tagAttribute[157] = 'select*size|2';
+	tagAttribute[158] = 'span*class|R';
+	tagAttribute[159] = 'span*id|A';
+	tagAttribute[160] = 'style*media|1';
+	tagAttribute[161] = 'style*type|M';
+	tagAttribute[162] = 'table*align|6 left, center, right';
+	tagAttribute[163] = 'table*background|0';
+	tagAttribute[164] = 'table*bgcolor|5';
+	tagAttribute[165] = 'table*border|2';
+	tagAttribute[166] = 'table*bordercolor|5';
+	tagAttribute[167] = 'table*cellpadding|L';
+	tagAttribute[168] = 'table*cellspacing|L';
+	tagAttribute[169] = 'table*frame|6 void, above, below, hsides, lhs, rhs, vsides, box, border';
+	tagAttribute[170] = 'table*rules|6 none, groups, rows, cols, all';
+	tagAttribute[171] = 'table*width|L';
+	tagAttribute[172] = 'tbody*align|6 left, center, right, justify, char';
+	tagAttribute[173] = 'tbody*valign|6 top, middle, bottom, baseline';
+	tagAttribute[174] = 'td*align|6 left, center, right';
+	tagAttribute[175] = 'td*valign|6 top, middle, bottom, baseline';
+	tagAttribute[176] = 'td*bgcolor|5';
+	tagAttribute[177] = 'td*char|8';
+	tagAttribute[178] = 'td*colspan|2';
+	tagAttribute[179] = 'td*nowrap|D nowrap';
+	tagAttribute[180] = 'td*rowspan|2';
+	tagAttribute[181] = 'td*width|L';
+	tagAttribute[182] = 'td*height|L';
+	tagAttribute[183] = 'th*align|6 left, center, right, justify, char';
+	tagAttribute[184] = 'th*valign|6 top, middle, bottom, baseline';
+	tagAttribute[185] = 'th*bgcolor|5';
+	tagAttribute[186] = 'th*char|8';
+	tagAttribute[187] = 'th*colspan|2';
+	tagAttribute[188] = 'th*nowrap|D nowrap';
+	tagAttribute[189] = 'th*rowspan|2';
+	tagAttribute[190] = 'th*width|L';
+	tagAttribute[191] = 'th*height|L';
+	tagAttribute[192] = 'textarea*accesskey|8';
+	tagAttribute[193] = 'textarea*disabled|6 disabled, true, false';
+	tagAttribute[194] = 'textarea*name|B';
+	tagAttribute[195] = 'textarea*readonly|D readonly';
+	tagAttribute[196] = 'textarea*rows|2';
+	tagAttribute[197] = 'textarea*cols|2';
+	tagAttribute[198] = 'tfoot*align|6 left, center, right, justify, char';
+	tagAttribute[199] = 'tfoot*valign|6 top, middle, bottom, baseline';
+	tagAttribute[200] = 'thead*align|6 left, center, right, justify, char';
+	tagAttribute[201] = 'thead*valign|6 top, middle, bottom, baseline';
+	tagAttribute[202] = 'tr*align|6 left, center, right, justify, char';
+	tagAttribute[203] = 'tr*valign|6 top, middle, bottom, baseline';
+	tagAttribute[204] = 'tr*bgcolor|5';
+	tagAttribute[205] = 'ul*type|6 disc, square, circle';
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// above from Quick Start book
+// below from Web Design in a Nutshell
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	tagAttribute[206] = 'applet*align|6 top, middle, bottom, left, right';
+	tagAttribute[207] = 'applet*archive|7';
+	tagAttribute[208] = 'applet*alt|1';
+	tagAttribute[209] = 'applet*codebase|P';
+	tagAttribute[210] = 'applet*hspace|2';
+	tagAttribute[211] = 'applet*name|B';
+	tagAttribute[212] = 'applet*object|1';
+	tagAttribute[213] = 'applet*vspace|2';
+	tagAttribute[214] = 'area*tabindex|2';
+	tagAttribute[215] = 'button*tabindex|2';
+	tagAttribute[216] = 'embed*alt|1';
+	tagAttribute[217] = 'embed*border|2';
+	tagAttribute[218] = 'embed*code|1';
+	tagAttribute[219] = 'embed*codebase|9';
+	tagAttribute[220] = 'embed*frameborder|2';
+	tagAttribute[221] = 'embed*hidden|6 hidden, true, false, yes, no';
+	tagAttribute[222] = 'embed*hspace|2';
+	tagAttribute[223] = 'embed*name|B';
+	tagAttribute[224] = 'embed*palette|1';
+	tagAttribute[225] = 'embed*pluginspace|1';
+	tagAttribute[226] = 'embed*pluginurl|1';
+	tagAttribute[227] = 'embed*type|M';
+	tagAttribute[228] = 'embed*units|1';
+	tagAttribute[229] = 'embed*vspace|2';
+	tagAttribute[230] = 'form*accept|1';
+	tagAttribute[231] = 'form*name|B';
+	tagAttribute[232] = 'form*target|J';
+	tagAttribute[233] = 'iframe*longdesc|9';
+	tagAttribute[234] = 'iframe*marginheight|2';
+	tagAttribute[235] = 'iframe*marginwidth|2';
+	tagAttribute[236] = 'img*ismap|D ismap';
+	tagAttribute[237] = 'img*longdesc|9';
+	tagAttribute[238] = 'img*lowsrc|9';
+	tagAttribute[239] = 'input*accept|1';
+	tagAttribute[240] = 'input*alt|1';
+	tagAttribute[241] = 'input*ismap|1';
+	tagAttribute[242] = 'input*usemap|9';
+	tagAttribute[243] = 'legend*accesskey|8';
+	tagAttribute[244] = 'li*start|2';
+	tagAttribute[245] = 'link*charset|6 iso-8859-1, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6,' +
+						'iso-8859-7, iso-8859-8, iso-8859-9, shift_jis, euc-jp, utf-8';
+	tagAttribute[246] = 'link*target|J';
+	tagAttribute[247] = 'meta*scheme|1';
+	tagAttribute[248] = 'object*archive|C';
+	tagAttribute[249] = 'object*codetype|1';
+	tagAttribute[250] = 'object*declare|D declare';
+	tagAttribute[251] = 'object*tabindex|2';
+	tagAttribute[252] = 'param*valuetype|6 data, ref, object';
+	tagAttribute[253] = 'param*type|M';
+	tagAttribute[254] = 'select*tabindex|2';
+	tagAttribute[255] = 'style*title|1';
+	tagAttribute[256] = 'tbody*vspace|2';
+	tagAttribute[257] = 'td*abbr|1';
+	tagAttribute[258] = 'textarea*tabindex|2';
+	tagAttribute[259] = 'th*abbr|1';
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// FLASH specific combinations
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	tagAttribute[260] = 'embed*pluginspage|9';
+	tagAttribute[261] = 'object*pluginspage|9';
+	tagAttribute[262] = 'embed*allowscriptaccess|1';
+	tagAttribute[263] = 'object*allowscriptaccess|1';
+	tagAttribute[264] = 'embed*bgcolor|5';
+	tagAttribute[265] = 'object*bgcolor|5';
+	tagAttribute[266] = 'embed*quality|6 high, low, medium';
+	tagAttribute[267] = 'object*quality|6 high, low, medium';
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// miscellaneous globals
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	tagAttribute[268] = 'html*xmlns|9';
+	tagAttribute[269] = 'html*xml:lang|G';
+	tagAttribute[270] = 'html*lang|G';
+	tagAttribute[271] = 'meta*charset|6 iso-8859-1, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6,' +
+						'iso-8859-7, iso-8859-8, iso-8859-9, shift_jis, euc-jp, utf-8';
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// Quick Time specific combinations
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	tagAttribute[272] = 'embed*autoplay|6 true, false';
+	tagAttribute[273] = 'object*autoplay|6 true, false';
+	tagAttribute[274] = 'embed*controller|6 true, false';
+	tagAttribute[275] = 'object*controller|6 true, false';
+	tagAttribute[276] = 'embed*volume|1';
+	tagAttribute[277] = 'object*volume|1';
+	tagAttribute[278] = 'embed*playeveryframe|6 true, false';
+	tagAttribute[279] = 'object*playeveryframe|6 true, false';
+	tagAttribute[280] = 'embed*playeveryframe|6 true, false';
+	tagAttribute[281] = 'object*target|J';
+	tagAttribute[282] = 'embed*href|9';
+	tagAttribute[283] = 'object*href|9';
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// RAOCX player specific combinations
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	tagAttribute[284] = 'object*displaysize|6 0, 1';
+	tagAttribute[285] = 'embed*displaysize|6 0, 1';
+	tagAttribute[286] = 'object*autosize|6 true, false';
+	tagAttribute[287] = 'embed*autosize|6 true, false';
+	tagAttribute[288] = 'object*showstatusbar|6 0, 1';
+	tagAttribute[289] = 'embed*showstatusbar|6, 0, 1';
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// Miscellaneous additions
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	tagAttribute[290] = 'body*lang|G';
+	tagAttribute[291] = 'isindex*prompt|1';
+	tagAttribute[292] = 'basefont*face|1';
+	tagAttribute[293] = 'basefont*size|6 1, 2, 3, 4, 5, 6, 7, -1, -2 ,-3, -4, -5, -6, +1, +2, +3, +4, +5, +6';
+	tagAttribute[294] = 'del*datetime|F';
+	tagAttribute[295] = 'ins*datetime|F';
+	tagAttribute[296] = 'img*name|B';
+	tagAttribute[297] = 'embed*hidden|1';
+	tagAttribute[298] = 'span*name|B';
+	tagAttribute[299] = 'textarea*wrap|D wrap';
+	tagAttribute[300] = 'embed*showcontrols|1';
+// mask embeded ids
+	tagAttribute[301] = 'object*classddi|1';
+	tagAttribute[302] = 'embed*classda|1';
+//2005 July 11 addition
+	tagAttribute[303] = 'ol*name|1';
+//2013 aug 25 addition
+	tagAttribute[304] = 'span*datasrc|1';
+	tagAttribute[305] = 'span*datapagesize|1';
+	tagAttribute[306] = 'span*datafld|1';
+	tagAttribute[307] = 'table*datapagesize|1';
+	tagAttribute[308] = 'table*datafld|1';
+	tagAttribute[309] = 'table*datasrc|1';
+	tagAttribute[310] = 'a*media|1';
+	tagAttribute[311] = 'a*type|1';
+	tagAttribute[312] = 'audio*autoplay|D autoplay';
+	tagAttribute[313] = 'audio*controls|D controls';
+	tagAttribute[314] = 'audio*loop|D loop';
+	tagAttribute[315] = 'audio*preload|6 auto, metadata, none';
+	tagAttribute[316] = 'audio*src|9';
+	tagAttribute[317] = 'video*src|9';
+	tagAttribute[318] = 'video*autoplay|D autoplay';
+	tagAttribute[319] = 'video*controls|D controls';
+	tagAttribute[320] = 'video*height|2';
+	tagAttribute[321] = 'video*loop|D loop';
+	tagAttribute[322] = 'video*muted|D muted';
+	tagAttribute[323] = 'video*poster|9';
+	tagAttribute[324] = 'video*preload|6 auto, metadata, none';
+	tagAttribute[325] = 'video*width|2';
+	tagAttribute[326] = 'source*media|1';
+	tagAttribute[327] = 'source*src|9';
+	tagAttribute[328] = 'source*type|1';
+	// oct 3 add some more new attributes for tags
+	tagAttribute[329] = 'input*autofocus|6 autofocus';
+	tagAttribute[330] = 'select*autofocus|6 autofocus';
+	tagAttribute[331] = 'textarea*autofocus|6 autofocus';
+	
+	
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// all valid html tags
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+function initializeValidTags()
+{
+	validTags[0]='!--';
+	validTags[1]='--';
+	validTags[2]='a';
+	validTags[3]='/a';
+	validTags[4]='abbr';
+	validTags[5]='/abbr';
+	validTags[6]='nav';
+	validTags[7]='/nav';
+	validTags[8]='address';
+	validTags[9]='/address';
+	validTags[10]='applet';
+	validTags[11]='/applet';
+	validTags[12]='b';
+	validTags[13]='/b';
+	validTags[14]='big';
+	validTags[15]='/big';
+	validTags[16]='blockquote';
+	validTags[17]='/blockquote';
+	validTags[18]='body';
+	validTags[19]='/body';
+	validTags[20]='button';
+	validTags[21]='/button';
+	validTags[22]='caption';
+	validTags[23]='/caption';
+	validTags[24]='center';
+	validTags[25]='/center';
+	validTags[26]='cite';
+	validTags[27]='/cite';
+	validTags[28]='code';
+	validTags[29]='/code';
+	validTags[30]='col';
+	validTags[31]='/col';
+	validTags[32]='colgroup';
+	validTags[33]='/colgroup';
+	validTags[34]='dd';
+	validTags[35]='/dd';
+	validTags[36]='del';
+	validTags[37]='/del';
+	validTags[38]='div';
+	validTags[39]='/div';
+	validTags[40]='dl';
+	validTags[41]='/dl';
+	validTags[42]='dt';
+	validTags[43]='/dt';
+	validTags[44]='em';
+	validTags[45]='/em';
+	validTags[46]='embed';
+	validTags[47]='/embed';
+	validTags[48]='fieldset';
+	validTags[49]='/fieldset';
+	validTags[50]='font';
+	validTags[51]='/font';
+	validTags[52]='form';
+	validTags[53]='/form';
+	validTags[54]='frameset';
+	validTags[55]='/frameset';
+	validTags[56]='h1';
+	validTags[57]='/h1';
+	validTags[58]='h2';
+	validTags[59]='/h2';
+	validTags[60]='h3';
+	validTags[61]='/h3';
+	validTags[62]='h4';
+	validTags[63]='/h4';
+
+	validTags[64]='h5';
+	validTags[65]='/h5';
+	validTags[66]='h6';
+	validTags[67]='/h6';
+
+	validTags[68]='head';
+	validTags[69]='/head';
+	validTags[70]='html';
+	validTags[71]='/html';
+	validTags[72]='i';
+	validTags[73]='/i';
+	validTags[74]='iframe';
+	validTags[75]='/iframe';
+	validTags[76]='ins';
+	validTags[77]='/ins';
+	validTags[78]='kbd';
+	validTags[79]='/kbd';
+	validTags[80]='label';
+	validTags[81]='/label';
+	validTags[82]='legend';
+	validTags[83]='/legend';
+	validTags[84]='li';
+	validTags[85]='/li';
+	validTags[86]='map';
+	validTags[87]='/map';
+	validTags[88]='nobr';
+	validTags[89]='/nobr';
+	validTags[90]='noframes';
+	validTags[91]='/noframes';
+	validTags[92]='noscript';
+	validTags[93]='/noscript';
+	validTags[94]='object';
+	validTags[95]='/object';
+	validTags[96]='ol';
+	validTags[97]='/ol';
+	validTags[98]='optgroup';
+	validTags[99]='/optgroup';
+	validTags[100]='option';
+	validTags[101]='/option';
+	validTags[102]='p';
+	validTags[103]='/p';
+	validTags[104]='pre';
+	validTags[105]='/pre';
+	validTags[106]='q';
+	validTags[107]='/q';
+	validTags[108]='s';
+	validTags[109]='/s';
+	validTags[110]='samp';
+	validTags[111]='/samp';
+	validTags[112]='script';
+	validTags[113]='/script';
+	validTags[114]='select';
+	validTags[115]='/select';
+	validTags[116]='small';
+	validTags[117]='/small';
+	validTags[118]='span';
+	validTags[119]='/span';
+	validTags[120]='strike';
+	validTags[121]='/strike';
+	validTags[122]='strong';	
+	validTags[123]='/strong';
+	validTags[124]='style';
+	validTags[125]='/style';
+	validTags[126]='sub';
+	validTags[127]='/sub';
+	validTags[128]='sup';
+	validTags[129]='/sup';
+	validTags[130]='table';
+	validTags[131]='/table';
+	validTags[132]='tbody';
+	validTags[133]='/tbody';
+	validTags[134]='td';
+	validTags[135]='/td';
+	validTags[136]='th';
+	validTags[137]='/th';
+	validTags[138]='textarea';
+	validTags[139]='/textarea';	
+	validTags[140]='tfoot';
+	validTags[141]='/tfoot';
+	validTags[142]='thead';
+	validTags[143]='/thead';
+	validTags[144]='title';
+	validTags[145]='/title';
+	validTags[146]='tr';
+	validTags[147]='/tr';
+	validTags[148]='tt';
+	validTags[149]='/tt';
+	validTags[150]='u';
+	validTags[151]='/u';
+	validTags[152]='ul';
+	validTags[153]='/ul';
+	// html 5 in book
+	validTags[154]='header';
+	validTags[155]='/header';
+	validTags[156]='article';
+	validTags[157]='/article';
+	validTags[158]='section';
+	validTags[159]='/section';
+	validTags[160]='audio';
+	validTags[161]='/audio';
+	validTags[162]='video';
+	validTags[163]='/video';
+	validTags[164]='footer';
+	validTags[165]='/footer';
+	//
+	// empty tags
+	validTags[166]='!doctype';
+	validTags[167]='base';
+	validTags[168]='basefont';
+	validTags[169]='br';
+	validTags[170]='frame';
+	validTags[171]='hr';
+	validTags[172]='img';
+	validTags[173]='input';
+	validTags[174]='link';
+	validTags[175]='meta';
+	validTags[176]='param';
+	validTags[177]='wbr';
+	validTags[178]='area';
+	validTags[179] = 'isindex';
+	validTags[180] = 'source';
+	
+	commentTag=0;
+	regularTagsFirst = 2;
+	regularTagsLast = 165;
+	emptyTagsFirst = 166;
+	emptyTagsLast = 180;
+
+}
+function initializeTagCount(Array)
+{
+	var i=0;
+	for (i=0; i<validTags.length; i++)
+		{
+		Array[i]=0;
+		}
+}	
+function getCurrentDirectory()
+{
+	var s="";
+	var cd="";
+	var x=0;
+
+
+	s = window.location.pathname;
+	x = s.lastIndexOf("\\");
+	cd = s.substring(0,x+1);
+	cd = cd.replace("/","");
+	re = "%20";
+	for (i=0; i<cd.length;i++)
+		{
+		cd = cd.replace(re," ");
+		}
+	re = '\\';
+	rp= '/';
+ 	for (i=0; i<cd.length;i++)
+		{
+		cd = cd.replace(re,rp);
+		}
+	return(cd);
+}
+function unmaskClassid(s)
+{
+	
+	s = s.replace(/classddi/ig, 'classid');
+	
+	return (s);
+}
+function getFoldersInDirectory(folderspec)
+{
+   	var f, fc;
+	var i=0;
+    
+   	f = fso.GetFolder(folderspec);
+     	fc = new Enumerator(f.SubFolders);
+  	for (; !fc.atEnd(); fc.moveNext())
+   		{
+      		FoldersArray[i] = fc.item();
+     		i = i+1;
+		}
+}
+
+function getHTMLFilesInDirectory(folderspec)
+{
+	var f, f1, fc;
+	var i=0;
+	var ext="";
+
+   	f = fso.GetFolder(folderspec);
+   	fc = new Enumerator(f.files);
+   	
+   	for (; !fc.atEnd(); fc.moveNext())
+   		{
+		ext = fso.GetExtensionName(fc.item());
+		if (ext=="html" || ext=="htm")
+			{
+      			HTMLFilesArray[i]=fc.item();
+			i = i+1;
+			}
+   		}
+}
+function getOtherFilesInDirectory(folderspec)
+{
+	var f, f1, fc;
+	var i=0,t=0;
+	var ext="";
+
+   	f = fso.GetFolder(folderspec);
+   	fc = new Enumerator(f.files);
+   	
+   	for (; !fc.atEnd(); fc.moveNext())
+   		{
+		ext = fso.GetExtensionName(fc.item());
+		if (ext == 'css')
+			displayCSSmessage = true;
+		if (ext!="html" && ext!="htm")			{
+      			otherFilesArray[i]=ext+'~'+fc.item();
+			i = i+1;
+			}
+   		}
+
+	otherFilesArray.sort();
+
+	for (i=0; i<otherFilesArray.length; i++)
+		{
+		t =otherFilesArray[i].indexOf('~');
+		otherFilesArray[i]=otherFilesArray[i].substr(t);
+		}
+}
+function getFilesInDirectory(folderspec)
+{
+	var f, f1, fc;
+	var i=0;
+	
+   	f = fso.GetFolder(folderspec);
+   	fc = new Enumerator(f.files);
+   	for (; !fc.atEnd(); fc.moveNext())
+   		{
+		FilesArray[i]=fc.item();
+		i = i+1;
+		}
+}
+function getAssetsInFolder(folderspec)
+{
+
+
+
+
+	var f, f1, fc;
+	var y=1;
+	var spaces="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+	var wholePath = "";
+	var parentFolder="";
+	var tempArray = new Array();
+	var z=0,t=0;
+	var s="";
+	
+
+	wholePath=fso.GetAbsolutePathName(folderspec);
+	parentFolder=wholePath.substring(wholePath.lastIndexOf("\\")+1)+"\\";
+	
+	f = fso.GetFolder(folderspec);
+   	fc = new Enumerator(f.files);
+   	       for (; !fc.atEnd(); fc.moveNext())
+   		{
+		fso.getFilename(fc.item());
+		assetArray[assetArrayIndex]=parentFolder+fso.getFilename(fc.item());
+		s = fso.getFilename(fc.item());
+		s=s.toLowerCase();
+		tempArray[z]=fso.getExtensionName(fc.item())+s+"~"+
+			fso.getFilename(fc.item());
+
+		z++;
+		assetArrayIndex++;
+		}
+	tempArray.sort();
+	for (z=0;z<tempArray.length;z++)
+		{
+		s=tempArray[z];
+		t=s.indexOf("~")+1;
+		document.write(spaces+zeroPad(z+1)+") "+s.substr(t));
+		document.write("<br />");
+		y++;
+		}
+
+
+ 	f = fso.GetFolder(folderspec);
+     	fc = new Enumerator(f.SubFolders);
+  	for (; !fc.atEnd(); fc.moveNext())
+   		{
+		st=zeroPad(z+1);
+ 		document.write(spaces+st+') FOLDER '+fso.getFilename(fc.item()));
+		document.write('<br />');
+     		z = z+1;
+		}
+}
+function dumpFolders() 
+{
+	var x=0;
+	for (x=0;x<=FoldersArray.length-1;x++)
+		{
+		document.write(x+1+") "+FoldersArray[x]);
+		document.write("<br />");
+		}
+		
+	return;
+}
+function dumpFiles() 
+{
+	var x=0;
+	for (x=0;x<=FilesArray.length-1;x++)
+		{
+		document.write(x+1+") "+FilesArray[x]);
+		document.write("<br />");
+		}
+		
+	return;
+}
+function dumpHTMLFiles() 
+{
+	var x=0;
+
+	if (HTMLFilesArray.length==0)
+		{
+		document.write('No html Files<br />');
+		return;
+		}
+
+	for (x=0;x<=HTMLFilesArray.length-1;x++)
+		{
+		document.write(zeroPad(x+1)+") "+fso.getFilename(HTMLFilesArray[x]));
+		document.write("<br />");
+		}
+}
+function dumpTags() 
+{
+	var i=0;
+	for (i=0;i<tags.length;i++)
+		{
+		tags[i]=stripTag(tags[i]);
+		document.write(tags[i]+"<br /><br />");
+		}
+}
+function dumpAssetArray() 
+{
+
+	var i=0;
+	for (i=0;i<assetArray.length;i++)
+		{
+		document.write(assetArray[i]+"<br />");
+		}
+}
+function dumpOtherFiles() 
+{
+	var i=0;
+
+	if (otherFilesArray.length==0)
+		{
+		document.write('No Other Files<br />');
+		return;
+		}
+
+	for (i=0;i<otherFilesArray.length;i++)
+		{
+		document.write(zeroPad(i+1)+") "+fso.getFilename(otherFilesArray[i])+"<br />");
+		}
+}
+function normalizeTag(tag)
+{
+	var str="";
+	str="&lt;"+tag.substr(1,tag.length-2)+"&gt;";
+	return (str);
+}
+function stripTag(tag)
+{
+	var str="";
+	str=tag.substr(1,tag.length-2);
+	return (str);
+}
+function zeroPad(n)
+{
+	var str="";
+	str=n.toString();
+	if (str.length ==1)
+		str="00"+str;
+	else if (str.length == 2)
+		str = "0"+str;
+		
+	return (str);
+}
+function zeroPad5(n)
+{
+	var str="";
+	str=n.toString();
+	if (str.length ==1)
+		str="0000"+str;
+	else if (str.length == 2)
+		str = "000"+str;
+	else if (str.length == 3)
+		str = "00" + str;
+	else if (str.length == 4)
+		str = "0" + str;
+		
+	return (str);
+}
+
+function extractTag(str)
+{
+	var s="";
+	var i=0;
+
+	if (str.substr(0,4)=='<!--')
+		return '!--';
+
+	s = trimSpaces(str.substr(1));
+	while (s.charAt(i)!=" "&&s.charAt(i)!=">")
+		{
+		i++;
+		}
+	s = s.substring(0, i);
+
+	if (s.charAt(s.length-1)=="/")
+		s = s.substr(0, s.length-1);
+
+	return s.toLowerCase();	
+}
+function findTag(tag, Array)
+{
+	var tagLocation=-1;
+	var i=0;
+	
+	for (i=0; i<Array.length; i++)
+		{
+		if (Array[i]==tag)
+			tagLocation = i;
+		}
+
+	return tagLocation;
+}
+function inArray(t, Array)
+{
+	var tLocation=-1;
+	var i=0;
+
+	for (i = 0; i < Array.length; i++)
+		{
+		if (Array[i]==t)
+			return (true);
+		}
+
+	return (false);
+}
+
+function countTags(sourceArray, targetArray, notFoundArray, countArray, numComments)
+{
+	var i=0,x=0;
+	var notFound = -1;
+	var location = -1;
+
+	for (i=0; i<sourceArray.length; i++)
+		{
+		location=findTag(sourceArray[i], targetArray);
+
+		if (location==notFound)
+			{
+			notFoundArray[x]=sourceArray[i];
+			x++;
+			}
+		else
+			{
+			countArray[location]++;
+			}
+	}
+	// overlay comments count with length of comments array so that comments embeded between script
+	// tags are counted correctly.
+	
+	countArray[commentTag] = numComments;
+	
+	return;				
+}
+
+function isDepreciated(tag)
+{
+	switch (tag)
+		{
+		case 'applet': return (true);	
+		case 'basefont': return (true);
+		case 'center': return (true);
+		case 'dir': return (true);
+		case 'font': return (true);
+		case 'isindex': return (true);
+		case 'menu': return (true);
+		case 's': return (true);
+		case 'strike': return (true);
+		case 'u': return (true);
+		case '/applet': return (true);	
+		case '/center': return (true);
+		case '/dir': return (true);
+		case '/font': return (true);
+		case '/menu': return (true);
+		case '/s': return (true);
+		case '/strike': return (true);
+		case '/u': return (true);
+
+		default: return (false);
+		}
+}
+function writeTagAnalysis(Source1, Source2)
+{
+	var i=0;
+	var s="",s2="", s3='';
+	var tagOut = '';
+	
+	validTags[166]='!DOCTYPE';
+
+
+	Source2.sort();
+	
+	document.write('<table width="91%">');
+
+
+	if (Source1[commentTag]==1)
+		{
+
+		s2="  Comment";
+		}
+	else
+		{
+		s2="  Comments";
+		}
+	
+	document.write('<tr><td bgcolor="#d3dcbd" align="center">');
+	document.write('General Tag Statistics');
+	document.write('</td></tr>');
+	document.write('<tr><td bgcolor="#ffffff"><font color="#d16f69"><br />Comments</font></td></tr>');
+
+	document.write('<tr><td bgcolor="#ffffff">'+zeroPad(Source1[commentTag])+s2+'</td></tr>');
+	document.write('<tr><td bgcolor="#ffffff"><br /><font color="#d16f69">Regular Tags</font><br /></td></tr>');
+	
+	for (i=regularTagsFirst; i<regularTagsLast+1; i++)
+	    {
+        if (Source1[i]>0)
+	       {
+ 	       document.write('<tr>');
+ 	       if (isDepreciated(validTags[i]))
+ 	       		tagOut = validTags[i] + ' (deprecated) ';
+ 	       	else
+ 	       		tagOut = validTags[i];
+ 	       if (Source1[i] == 1)
+ 	       		s3 = 'tag';
+ 	       else
+ 	       		s3 = 'tags';
+	       document.write('<td bgcolor="#ffffff">'+ zeroPad(Source1[i]) + ' ' + tagOut+ ' ' + s3 + '<td></tr>');
+	       }
+	     }
+	document.write('<tr><td bgcolor="#ffffff"><font color="#d16f69"><br />Empty Tags</font></td></tr>');
+	
+	for (i=emptyTagsFirst; i<emptyTagsLast+1; i++)
+	  {
+     	if (Source1[i]>0)
+	       {
+ 	       if (validTags[i] == 'basefont' || validTags[i] == 'isindex')
+ 	       		tagOut = validTags[i] + ' (deprecated)';
+ 	       else
+ 	       		tagOut = validTags[i];
+ 	       if (Source1[i] == 1)
+ 	       		s3 = 'tag';
+ 	       else
+ 	       		s3 = 'tags';
+	       document.write('<tr><td bgcolor="#ffffff">'+ zeroPad(Source1[i]) + ' ' + tagOut+ ' ' + s3 + '<td></tr>');
+           }	
+	   }
+	if (Source2.length>0)
+	      {
+	      document.write('<tr><td bgcolor="#ffffff"><font color="#d16f69">');
+	      document.write('<br />Unrecognized Tags</font></td></tr>');
+	      for (i=0; i<Source2.length; i++)
+				{
+				if (Source2[i]!=s)
+					{
+					document.write('<tr><td bgcolor="#ffffff">');
+					document.write(Source2[i]);
+					document.write('</td></tr>');
+					}
+				}
+		  }
+	document.write('</table></font>');
+
+	validTags[166]='!doctype';
+}
+function dumpErrorMessageArray( errorMessages, title )
+{
+	var x=0;
+
+	if (errorMessages.length>0)
+		{
+		document.write(' <br /><table width="90%">');
+		document.write('<tr><td bgcolor="#d3dcbd" align="center">&nbsp;&nbsp;');
+		document.write(title);
+
+		document.write('&nbsp;&nbsp;</td></tr>');
+		for (x=0;x<errorMessages.length;x++)
+			{
+			errorMessages[x] = unmaskClassid(errorMessages[x]);			
+			document.write(errorMessages[x]);
+			}
+		document.write('</table>');
+		}
+
+	return;
+}
+
+function BestPractices(array1, array2, file, errorMessages, doctype)
+{
+	var x=0,i=0,z=0;
+	var s='',s2='', s3='';
+	var notFound=-1;
+	var DOC1='',DOC2='',DOC3='',DOC4='',DOC5='',DOC6='',DOC7='', DOC8='', DOC9='', DOC10='';
+
+	s2 = doctype;
+	doctype = removeSpaces(doctype);
+	DOC1 = removeSpaces(vDOC1);
+	DOC2 = removeSpaces(vDOC2);
+	DOC3 = removeSpaces(vDOC3);
+	DOC4 = removeSpaces(vDOC4);
+	DOC5 = removeSpaces(vDOC5);
+	DOC6 = removeSpaces(vDOC6);
+	DOC7 = removeSpaces(vDOC7);
+	DOC8 = removeSpaces(vDOC8);
+	DOC9 = removeSpaces(vDOC9);
+	DOC10 = removeSpaces(vDOC10);
+	
+	
+	if (array1[0]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should always code comments';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;
+		}
+	if (array1[175]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should almost always code meta tags';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;
+		}
+	if (doctype == "")
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should always code a !DOCTYPE statement';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;
+		}
+
+	if (array1[166] == 1 && doctype!=DOC1 && doctype!=DOC2 && doctype!= DOC3 && doctype!=DOC4
+		&& doctype!=DOC5 && doctype!=DOC6 && doctype!=DOC7 && doctype!=DOC8 && doctype!=DOC9 && doctype!=DOC10)
+
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="black">';
+		errorMessages[x+1]='&lt;'+s2.substr(1)+'</font><br /><font color="#d16f69">';
+		errorMessages[x+2]='Your DOCTYPE statement should only be one of the following:<br /><font size="2">';
+		errorMessages[x+3]='&lt;'+ vDOC1.substr(1)+'<br />';
+		errorMessages[x+4]='&lt;'+ vDOC2.substr(1)+'<br />';
+		errorMessages[x+5]='&lt;'+ vDOC3.substr(1)+'<br />';
+		errorMessages[x+6]='&lt;'+ vDOC4.substr(1)+'<br />';		
+
+		errorMessages[x+7]='&lt;'+ vDOC5.substr(1)+'<br />';
+		errorMessages[x+8]='&lt;'+ vDOC6.substr(1)+'<br />';
+		errorMessages[x+9]='&lt;'+ vDOC7.substr(1)+'<br />';
+		errorMessages[x+10]='&lt;'+ vDOC8.substr(1)+'<br />';
+		errorMessages[x+11]='&lt;'+ vDOC9.substr(1)+'<br />';
+		errorMessages[x+12]='&lt;'+ vDOC10.substr(1)+'<br />';
+		errorMessages[x+13]='&nbsp;&nbsp;</font></font></td></tr>';
+		x=x+14;
+		}
+	if (array1[166]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one !DOCTYPE statement';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[70]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should always code an html tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+	if (array1[70]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one html tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[71]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should always code a closing html tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+
+		}
+	if (array1[71]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one closing html tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[68]==0)
+
+
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should always code a head tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+	if (array1[68]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one head tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[69]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+
+		errorMessages[x+1]='You should always code a closing head tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+	if (array1[69]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one closing head tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[144]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should always code a title tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+	if (array1[144]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one title tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[145]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You should always code a closing title tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+	if (array1[145]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one closing title tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[18]==0 && array1[54]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There must be a body or a frameset tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[54]==1 && array1[18]==1 && array1[90]==0)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='When you use framesets the body tag can only go between the noframes tags';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+
+	if (array1[54]==1 && array1[18]==0 && array1[90]==1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='If you use the noframes tag you have to use the body tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	if (array1[54]==0 && array1[18]==1 && array1[90]==1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='You can only use the noframes tag if you use frameset tags';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+
+	if (array1[18]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one body tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+	if (array1[19]>1)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='There can only be one closing body tag';
+		errorMessages[x+2]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+3;	
+		}
+
+	for (i=regularTagsFirst;i<regularTagsLast;i=i+2)
+		{
+		if (array1[i]!=array1[i+1])
+			{
+			errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+			errorMessages[x+1]='The number of opening ('+array2[i]+') tags must match ';
+			errorMessages[x+2]=' the number of closing (/' +array2[i]+') tags';
+			errorMessages[x+3]='&nbsp;&nbsp;</font></td></tr>';
+			x=x+4;
+			}
+		}
+	
+	s=fso.getExtensionName(file);
+	if (s=='htm')
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+		errorMessages[x+1]='<font color="black">'+file+'</font><br />&nbsp;&nbsp;';
+		errorMessages[x+2]='It is better to use .html instead of .htm';
+		errorMessages[x+3]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+4;
+		}
+
+	
+	s3 = s;
+	s=fso.getFilename(file);
+	z=s.lastIndexOf(".");	
+	s=s.substring(0,z);
+
+	z=s.search(/[^a-zA-Z0-9_-]/);
+	if (z!=notFound)
+		{
+		errorMessages[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';		errorMessages[x+1]='<font color="black">'+file+'</font><br />&nbsp;&nbsp;';
+		errorMessages[x+2]='File name (' + s + '.' + s3 + ') should not contain anything but digits, letters, ';
+		errorMessages[x+3]='or the underscore character';
+		errorMessages[x+4]='&nbsp;&nbsp;</font></td></tr>';
+		x=x+5;
+		}
+
+	return;
+
+}
+function trimSpaces(s)
+{
+	var space=" ";
+	var NULL = '';
+	var i=0;
+	var c = String.fromCharCode(9);
+
+	s = s.replace(/\s/, space);
+	if (s == NULL)
+		s= space;
+	
+	if (s == space)
+		return ('Value is NULL');
+
+	while (s.substr(i, 1) == space || s.substr(i, 1) == c)
+		{
+		i++;
+		}
+
+	s = s.substr(i);
+	
+	i = s.length-1;
+	while (s.substr(i, 1) == space)
+		{
+		i--;
+
+		}
+
+	s = s.substr(0, i+1);
+
+	return (s);
+
+}
+
+function extractAttributeValue (tag, attribute)
+{
+	var notFound = -1;
+	var location = -1, endLocation=-1;
+	var buffer = tag;
+	var space = " ";
+
+	if (tag.substr(0, 21) == 'Not a valid attribute')
+		return (tag);
+
+	location = buffer.indexOf(attribute);
+
+	if (location == notFound)
+		return ('Attribute not in tag');
+	 	
+	buffer = buffer.substr(location + attribute.length);
+
+	location = buffer.indexOf('=');
+	if (location == notFound)
+		return ('No attribute value');
+	buffer = trimSpaces(buffer.substr(location + 1));
+	 
+	if (buffer.substr(0,1)!='"')
+		{
+		buffer = trimSpaces(buffer);
+		if (buffer == 'Value is NULL')
+			return (buffer);
+		location = buffer.indexOf(space);
+		if (location == notFound)
+			return (buffer);
+ 			
+		return (buffer.substring(0, location));
+		}
+	else
+		{
+		location = buffer.substr(1).indexOf('"');
+		if (location == notFound)
+			return ('No closing quotation mark found');
+		buffer = buffer.substring(0, location+2);
+		buffer = buffer.substr(1, buffer.length-2);
+ 		buffer = trimSpaces(buffer);
+ 
+ 		return (buffer);
+		}
+}
+function dumpLine(s)
+{
+	debugWindow.document.write('<br />'+s);
+
+}
+function removeSpaces(s)
+{
+	var s2='';
+	var i=0;
+
+	for (i=0; i<s.length; i++)
+		{
+		if (s.charAt(i)!=' ')
+			s2 = s2 + s.charAt(i);
+		}
+
+	return (s2);
+
+}
+function validAttribute(attribute, VAarray)
+{
+	var s='', s2='', s3='';	
+	var location=0;
+	var notFound=-1;
+ 
+	location=VAarray[1].substr(attribute.length).indexOf(attribute);
+	if (location==notFound)
+		{
+		VAarray[0]=true;
+		s3 = removeSpaces(VAarray[1]);
+		if (s3.charAt(attribute.length)=='=')
+			{
+			VAarray[1]=trimSpaces(VAarray[1]);
+			}
+		else
+			{
+ 			VAarray[1]='Not a valid attribute, should be ('+ attribute +'=)';
+			}
+		return (VAarray);
+		}
+
+	s3= removeSpaces(VAarray[1]);
+ 
+	if (s3.charAt(attribute.length)=='=')
+		{
+		VAarray[0]=true;
+		}
+	else
+		{
+		VAarray[0]=false;
+		VAarray[1]=VAarray[1].substr(attribute.length + 1 );
+		}
+
+	return (VAarray);
+}
+function lookBack(s)
+{
+	var i=0;
+	var quoteFoundAt = 0;
+	var equalSignFoundAt = 0;
+	var done = false;
+
+	i = s.length-1;
+	
+	while (!done)
+		{
+		if (s.charAt(i) == '"')
+			{
+			quoteFoundAt = i;
+			done = true;
+			}
+		i--;
+		if (i < 0)
+			done = true;
+		}
+	
+	if (quoteFoundAt == 0)
+		return (false);
+
+	done = false;
+	i = s.length-1;
+	while (!done)
+		{
+		if (s.charAt(i) == '=')
+			{
+			equalSignFoundAt = i;
+			done = true;
+			}
+
+		i--;
+		if (i < 0)
+			done = true;
+		}
+
+
+	if (equalSignFoundAt == 0)
+		return (false);
+
+
+	if (equalSignFoundAt  == quoteFoundAt - 1)
+		{
+		return (true);
+		}
+	else
+		{
+		return (false);	
+		}
+
+}	
+
+
+function stripEmbeddedAttributes(tag, attribute)
+{
+	var i=0;
+	var s1='',s2='',s3='';
+	var done=false, isEmbedded=false;
+	var notFound = -1;
+	while (!done)
+		{
+		i = tag.indexOf(attribute);
+		if (i == notFound)
+			{
+			done = true;
+			tag = 'Only found embedded attributes';
+			}
+		else
+			{
+			s1 = tag.substr(1, i-1);
+			s2 = tag.substr(i);
+			s3 = removeSpaces(s1);
+			isEmbedded=lookBack(s3);
+			if (isEmbedded)
+				{
+				tag = s2.substr(1);
+				}
+			else
+				{
+				done = true;
+				tag = s2;
+				}
+			}
+
+
+		}
+ 
+	return(tag);
+}
+function maskEmbeddedAttributes ( s )
+{
+	var s2 = '', s3 = '';
+	var inQuote = false;
+	var i = 0;
+	
+	for ( i = 0; i < s.length; i++ )
+		{
+		if ( s.charAt(i) == '"' )
+			{
+			s3 = s3 + '"';
+			if (inQuote)
+				{
+				inQuote = false;
+				}
+			else
+				{
+				inQuote = true;
+				}
+			}
+		else
+			{
+			if (inQuote)
+				{
+				s3 = s3 + '*';
+				}
+			else
+				{
+				s3 = s3 + s.charAt(i);
+				}
+			}
+			
+		}
+		
+	return ( s3 );
+}
+function precheck(s, attribute)
+{
+	var location=-1;
+	var notFound=-1;
+	var s2 = '', s3 = '';
+	var reEQUALS = /[\s\r\t\v]*\=[\s\r\t\v]*/g
+	
+	s2 = s.toLowerCase(s);
+	
+	location=s2.indexOf(attribute);
+	if (location==notFound)
+		return ('');	
+
+	s2 = s2.replace(reEQUALS, '=');
+	s3 = maskEmbeddedAttributes(s2);
+	
+	location=s3.indexOf(attribute + '=');
+	if (location==notFound)
+		return ('');	
+
+	return ( s2.substr(location) );
+}
+function precheckAttr(s, attribute)
+{
+	var location=-1;
+	var notFound=-1;
+	var s2 = '', s3 = '', s4 = '';
+	var reEQUALS = /[\s\r\t\v]*\=[\s\r\t\v]*/g
+	
+	s2 = s.toLowerCase(s);
+	s4 = s;
+	
+	location=s2.indexOf(attribute);
+	if (location==notFound)
+		return ('');	
+
+	s2 = s2.replace(reEQUALS, '=');
+	s4 = s4.replace(reEQUALS, '=');
+	s3 = maskEmbeddedAttributes(s2);
+		
+	location=s3.indexOf(attribute + '=');
+	if (location==notFound)
+
+		return ('');	
+
+	return ( s4.substr(location) );
+
+
+
+}
+
+function precheckAttr2(s, attribute)
+{
+	var location=-1;
+	var notFound=-1;
+	var s2 = '', s3 = '', s4 = '';
+	var reEQUALS = /[\s\r\t\v]*\=[\s\r\t\v]*/g
+	
+	s2 = s;
+	s4 = s;
+	
+	location=s2.indexOf(attribute);
+	if (location==notFound)
+		return ('');	
+
+	s2 = s2.replace(reEQUALS, '=');
+	s4 = s4.replace(reEQUALS, '=');
+	s3 = maskEmbeddedAttributes(s2);
+		
+	location=s3.indexOf(attribute + '=');
+	if (location==notFound)
+		return ('');	
+
+	return ( s4.substr(location) );
+}
+
+function precheckFILES(s, attribute)
+{
+	var location=-1;
+	var notFound=-1;
+	var s2 = '', s3 = '';
+	var reEQUALS = /[\s\r\t\v]*\=[\s\r\t\v]*/g
+	
+
+	s2 = s.toLowerCase(s);
+	
+	location=s2.indexOf(attribute);
+	if (location==notFound)
+		return ('');	
+
+	s2 = s2.replace(reEQUALS, '=');
+	s3 = maskEmbeddedAttributes(s2);
+
+	
+	location=s3.indexOf(attribute + '=');
+	if (location==notFound)
+		return ('');	
+//2005 6 30 change s2. to s.
+	return ( s.substr(location) );
+}
+
+function isError(s)
+{
+	if (s.substr(0, 21) == 'Not a valid attribute')
+		return (true);
+		
+	switch (s)
+		{
+		case 'Only found embedded attributes': return (true);	
+		case 'No closing quotation mark found': return (true);
+		case 'No attribute value': return (true);
+		case 'Attribute not in tag': return (true);
+		default: return (false);
+		}
+}
+
+function addError(source, errorArray, s2)
+{
+	var x=errorArray.length;
+			
+	errorArray[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+	errorArray[x+1]=source +'<br />' + '&nbsp;&nbsp;'+ s2;
+	errorArray[x+2]='&nbsp;&nbsp;</font></td></tr>';
+
+	return;
+}
+function addError2(errorArray, s2)
+{
+	var x=errorArray.length;
+
+	errorArray[x]='<tr><td bgcolor="#ffffff"><font color="#d16f69">&nbsp;&nbsp;';
+	errorArray[x+1]= s2;
+	errorArray[x+2]='&nbsp;&nbsp;</font></td></tr>';
+
+	return;
+}
+function countCharacter(s, c)
+{
+	var i = 0;
+	var count = 0;
+
+	for (i=0; i<s.length; i++)
+
+
+
+
+		if (s.charAt(i)==c)
+			count++;
+
+	return count;
+
+}
+function countCharacterCode(s, c)
+{
+	var i = 0;
+	var count = 0;
+
+	for (i=0; i<s.length; i++)
+		if (s.charCodeAt(i)==c)
+			count++;
+
+	return count;
+
+}
+function replaceCharacterCode(s, c, replaceWith)
+{
+	var i = 0;
+	var count = 0;
+	var s3='';
+
+	if (!s)
+		return (s3);
+		
+		
+
+
+
+	for (i=0; i<s.length; i++)
+		{
+		if (s.charAt(i)==c)
+			{
+			s3 = s3 + replaceWith;
+			}
+		else
+			{
+			s3 = s3 + s.charAt(i);
+			}
+		}
+		
+	return (s3);
+
+}
+
+function processFile(src)
+{
+	var reEMAIL = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+	var reWWW = /^(\w*:\w*@)?[-\w.]+(:\d+)?(\/([\w\/_.]*(\?\S+)?)?)?$/
+	//var reHTTPftp = /^(http|https|ftp):\/\/(\w*:\w*@)?[-\w.]+(:\d+)?(\/([\w\/_.]*(\?\S+)?)?)?$/
+	var reHTTPftp = /^((mailto\:|(news|(ht|f)tp(s?))\:\/\/){1}\S+)/
+	var reFILEschema = /^file:\/\/\/\S+\/\S+\.[a-zA-Z]{1,4}$/i
+
+	var numOfPeriods =0;
+	var ext = '', ext2='', drive='';
+	var returnMessage='';
+	var jc = '';
+	var notFound = -1;
+	var found = 0;
+
+// sep 16 2005
+	if (src == '#')
+		return ('');
+//
+		
+	jc = src.toLowerCase(src);
+
+	if (jc.substr(0, 11) == 'javascript:')
+		return('javascript');
+	
+	// will erroneously treat functions passed as parameters to other functions as an invalid URL;
+	// but that is not likely to happen and many other common errors will be trapped and reported;
+	
+	if (jc.substr(0, 7) == 'return ' && countCharacter(jc, "(" ) == 1 &&countCharacter(jc, ")"  ) == 1 )
+		return('javascript');
+	
+	if (src.substr(0, 7) == 'mailto:')
+		{
+		if ( reEMAIL.test(src.substr(7)) )
+			{
+			return ('');
+
+			}
+		else
+			{
+
+			return ('Invalid e-mail address');
+			}
+		}	
+	if (src.substr(0, 4) == 'www.')
+		{
+		if (reWWW.test(src) )
+			{
+			return ('('+ src + ') It is better to begin external URL\'s with http:// https:// or ftp://');
+			}
+		else
+			{
+			return ('(' + src + ') Invalid URL, also it is better to begin external URL\'s with http:// https:// or ftp://');
+			}
+		}
+
+	if (src.substr(0, 5) == 'http:' || src.substr(0, 6) == 'https:' || src.substr(0, 4) == 'ftp:')
+		{
+		if (reHTTPftp.test(src))
+			{
+			return ('');
+			}
+		else
+			{
+			return ('(' + src + ') Unusual URL format for an external file, double check file name')
+			}
+		}
+		
+	if (src.substr(0, 5) == 'file:')
+
+
+		{
+
+		if (reFILEschema.test(src))
+
+			{
+			return ('');
+			}
+		else
+			{
+			return ('(' + src + ') Invalid URL for external file')
+			}
+		}
+
+	
+	if (src.indexOf('www.') > -1 || src.indexOf('.com') > -1 || src.indexOf('.org')>-1 || src.indexOf('.edu')>-1)
+		return ('(' + src + ') Invalid external URL, must begin with http://, https://, file:///, or ftp://');
+
+	if (src.indexOf('aspcode') > -1)
+
+		return ('');
+	if (src.indexOf('phpcode') > -1)
+		return ('');
+	if (src.indexOf('coldfusioncode') > -1)
+		return ('');
+		
+	if (src.search(/\s*\w+\s*\(.+\)/) == found) // is javascript
+		return ('');
+
+	z=src.search(/[^a-zA-Z0-9_.\/\\\-]/);
+	if (z!=notFound)
+			return ('Invalid URL for local file (' + src + ') - File names should not contain anything but digits, letters,' +
+					' minus signs or underscore characters');			
+		
+	if (src.indexOf('//') > -1 )
+		return (returnMessage+ '(' + src +') Invalid URL - double slashes');
+
+	ext = fso.GetExtensionName(src);
+
+	if (ext == '')
+		ext = 'no extension coded';
+	
+	ext2 = ext.toLowerCase(ext);
+		
+	switch (ext2)
+		{
+		case 'gif': break;
+		case 'jpg': break;
+		case 'jar':	break;
+		case 'htm': break;
+		case 'html': break;
+		case 'png': break;
+		case 'pdf': break;
+		case 'css': break;
+		case 'js': break;
+		case 'xml': break;
+		case 'swf': break;
+		case 'wav': break;
+		case 'aif': break;
+		case 'aiff': break;
+		case 'mpa': break;
+		case 'mov': break;
+		case 'avi': break;
+		case 'mpg': break;
+		case 'mp3': break;
+		case 'wmv': break;
+		case 'doc' : break;
+		case 'mp4' : break;
+		default: returnMessage = 'Observation: File (' + src + ') is an unusual file type (' + ext + 
+									') for a web page <br />&nbsp;&nbsp;';
+		}
+
+	/*
+	if (src.indexOf('../') > -1 || src.indexOf('..\\') > -1)
+		return (returnMessage+'(' + src +') Generally speaking relative pathing is needlessly complex for web work');
+	
+	
+	numOfPeriods = countCharacter(src, '.');
+	
+	if (numOfPeriods > 1)
+		returnMessage = returnMessage + '(' + src + ') too many extensions <br />&nbsp;&nbsp;';
+	*/
+	drive = fso.GetDriveName(src);
+
+	if (drive != '')
+		return(returnMessage+'(' + src + ') Do not code drive specifications in URL\'s');
+
+	if (numOfPeriods > 1)
+		return(returnMessage.substr(0,returnMessage.length-19));	
+	
+	src = currentDirectory + src;
+
+
+	if (!fso.FileExists(src))
+		returnMessage = returnMessage + 'File (' + fso.getFileName(src) + ') not found';
+		
+	if (returnMessage.substr(returnMessage.length - 12) == '&nbsp;&nbsp;')
+		returnMessage = returnMessage.substr(0, returnMessage.length - 13);
+
+	return (returnMessage);
+
+
+}
+function ER(errorMessage, s)
+{
+	if (errorMessage == '')
+		{
+		errorMessage = errorMessage + s + '<br />';
+		}
+	else
+		{
+		errorMessage = errorMessage + '&nbsp;&nbsp;' + s + '<br />';
+		}
+
+	return (errorMessage);
+
+}
+
+function checkWidthAndHeight(src, width, height)
+{
+	var errMessage='';
+	var imgName ='';
+	var htmlString = '';
+	var newLine = '';
+	var mess = 'Refresh the browser so that the cache can be flushed for width and height analysis';
+
+
+	imgName = 'IMAGE'+zeroPad(imgNumber);
+	imgNumber++;
+	src = currentDirectory + src;
+
+	
+	htmlString = '<img name="'+imgName+'" src="'+src+'" />'
+	document.write(htmlString);
+	
+			
+	if (document[imgName].width==28 && document[imgName].height==30)
+		{
+		if (width == 28 && height == 30)
+			{
+			document[imgName].width=0;
+			document[imgName].height=0;
+			return ('');
+			}
+		else
+			{
+			if (alertIssued)
+				{
+				document[imgName].width=0;
+				document[imgName].height=0;
+				return ('');
+				}
+			else
+				{
+				alert(mess);
+				alertIssued = true;
+				return ('');
+
+				}	
+
+			}
+
+		}
+
+	newLine = '';
+	if (document[imgName].width != width)
+		{
+		errMessage='actual image width is ('+document[imgName].width+'), tag attribute is ('+width;	
+		errMessage=errMessage+')&nbsp;&nbsp; They should be the same';
+		newLine = '<br />';
+		}
+
+	if (document[imgName].height != height)
+		{
+		errMessage=errMessage + newLine +'&nbsp;&nbsp;' +
+			'actual image height is ('+document[imgName].height+'), tag attribute is ('+height;	
+		errMessage=errMessage+')&nbsp;&nbsp; They should be the same';
+		}
+
+	document[imgName].width=0;
+	document[imgName].height=0;
+	
+	return (errMessage);
+}
+function validateIMG( source, errorArray, osource, tagCount)
+{
+	var x=errorArray.length;
+	var z=0;
+	var s='',s2='';
+	var message='', errorMessage='', SHWmessage='';
+	var width=0, height=0, src='';
+	var validWidth = false, validHeight = false, validSrc = false;
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+
+	
+	
+	s = precheckFILES(source, 'src');
+	s2 = extractAttributeValue(s, 'src');
+	if (isError(s2))
+		{
+
+		errorMessage = ER(errorMessage, 'Invalid attribute(src) - ' + s2);
+		}	
+	else
+		{
+		src = s2;
+		validSrc = false;
+		message=processFile(src);
+		if (message == '')
+			validSrc = true;
+		if (message.substr(0, 25) == 'Observation: unusual file')
+		    validSrc = true;
+		if (message == 'javascript')
+			{
+			validSrc = false;
+			message = '';
+			}
+		if (message != '')
+			errorMessage = ER(errorMessage, message);
+		}
+// sep 16 2005
+	if (src == '#')
+		return;
+//		
+	s = precheck(source, 'width');
+	s2 = extractAttributeValue(s, 'width');
+	if (isError(s2))
+		{
+		errorMessage = ER(errorMessage, 'Invalid attribute (width) - ' + s2);
+		}
+	else
+		{
+		if (isNaN(s2))
+			{
+			errorMessage = ER(errorMessage,'Invalid attribue value (width) - ' + s2);
+			}
+		else
+			{
+			width =parseInt(s2);
+			validWidth = true;
+			}
+		}
+
+	s = precheck(source, 'height');
+	s2 = extractAttributeValue(s, 'height');
+	if (isError(s2))
+		{
+		errorMessage = ER(errorMessage, 'Invalid attribute (height) - ' + s2);
+		}
+	else
+		{
+		if (isNaN(s2))
+			{
+			errorMessage = ER(errorMessage, 'Invalid attribute value (height) - ' + s2);
+			}
+		else
+			{
+			height =parseInt(s2);
+			validHeight = true;
+			}
+		}
+	
+	if (validWidth)
+		if ( width > 1200)
+			errorMessage = ER(errorMessage, 'width should almost always be less than 1200 pixels');
+					
+	if (validHeight)
+		if ( height > 900)
+			errorMessage = ER(errorMessage, 'height should almost always be less than 900 pixels');
+			
+
+	if (validSrc && validHeight && validWidth && tagCount[18] == 1)
+		SHWmessage = checkWidthAndHeight(src, width, height);
+ 
+	if (SHWmessage != '' )
+		errorMessage = ER(errorMessage, SHWmessage);
+			
+	s = precheck(source, 'alt');
+	s2 = extractAttributeValue(s, 'alt');
+	if (isError(s2))
+		{
+		errorMessage = ER(errorMessage, 'Invalid attribute (alt) - ' + s2);
+		}
+
+	if (errorMessage != '')
+		{
+		mask = osource.replace(reLESSTHAN, replaceWith);
+		addError('<font color="black">'+mask+'</font>', errorArray, errorMessage.substr(0, errorMessage.length-6));
+		}
+
+	return;
+}
+function validateMETA(source, errorArray, osource)
+{
+	var s='', s2='', s3='', errorMessage='';
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+
+	s = precheck(source, 'name');
+	s2 = extractAttributeValue(s, 'name');
+	if (isError(s2))
+		{
+		s = precheck(source, 'http-equiv');
+		s3 = extractAttributeValue(s, 'http-equiv');
+		if (isError(s3))
+			errorMessage = ER(errorMessage, 'Invalid attribute (name) - ' + s2);
+		}
+	else
+		{
+		s2 = trimSpaces(s2);
+		s2 = s2.toLowerCase();
+//		if (s2 == 'keywords')
+//			metaKeywords=true;
+		if (s2 == 'description')
+			metaDescription=true;
+		}
+		
+	s = precheck(source, 'content');
+		
+	s2 = extractAttributeValue(s, 'content');
+	
+	if (isError(s2))
+			errorMessage = ER(errorMessage, 'Invalid attribute (content) - ' + s2);
+
+	if (errorMessage != '')
+		{
+		mask = osource.replace(reLESSTHAN, replaceWith);
+		addError('<font color="black">'+mask+'</font>', errorArray, errorMessage.substr(0, errorMessage.length-6));
+		}
+	
+	return;
+}
+function validateFORM(source, errorArray, osource)
+{
+	var s='', s2='', s3 ='', errorMessage='', er ='';
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+
+
+
+	s = precheck(source, 'action');
+	s2 = extractAttributeValue(s, 'action');
+	
+	if (isError(s2))
+		{
+		errorMessage = ER(errorMessage, 'Invalid attribute (action) - ' + s2);
+		}
+	else
+		{
+		s3 =s2.toLowerCase(s2);
+		if (s3 != '#')
+			{
+			if (s3.substr(0, 7) != 'mailto:')
+				{
+				errorMessage = ER(errorMessage, 'For CGT 141 use the mailto: action' );
+				}
+			else
+				{
+				er = processFile(s3);
+				if (er != '')
+
+					errorMessage = ER(errorMessage, er);
+				}	
+			}
+		}
+	s = precheck(source, 'method');
+	s2 = extractAttributeValue(s, 'method');
+	
+	if (isError(s2))
+		errorMessage = ER(errorMessage, 'Invalid attribute (method) - ' + s2);
+	
+	if (errorMessage != '')
+		{
+		mask = osource.replace(reLESSTHAN, replaceWith);
+		addError('<font color="black">'+mask+'</font>', errorArray, errorMessage.substr(0, errorMessage.length-6));
+		}
+		
+	return;
+
+}
+function checkForRequiredAttributes( valueArray, source, errorArray, osource)
+{
+	var i = 0;
+	var s=''; s2='', message='';
+	var notFound = -1;
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+
+	
+	for (i = 0; i < valueArray.length; i++)
+		{
+ 		s2 = removeSpaces(source);
+ 		s2 = s2.toLowerCase();
+ 		if (s2.indexOf(valueArray[i]+'=') == notFound)
+			message = message + '(' + valueArray[i] + ') attribute should be coded for this tag<br />&nbsp;&nbsp;';
+		}
+	
+	if (message != '')
+		{
+		mask = osource.replace(reLESSTHAN, replaceWith);
+		addError('<font color="black">'+mask+'</font>', errorArray, message.substr(0, message.length-18));
+		}
+		
+	return;
+
+}
+function checkForOneRequiredAttribute( valueArray, source, errorArray, osource)
+{
+	var i = 0;
+	var s=''; s2='', message='';
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+
+	
+	for (i = 0; i < valueArray.length; i++)
+		{
+		s = s + valueArray[i] + ', ';
+ 		s2 = removeSpaces(source);
+ 		s2 = s2.toLowerCase();
+ 		if (s2.indexOf(valueArray[i]+'=') > -1)
+ 			return;
+ 		}
+ 	
+ 	s = trimSpaces(s);
+ 	s = s.substr(0, s.length - 1);
+	message = 'One of the following attributes should be coded for this tag [' + s +']<br />&nbsp;&nbsp;';
+	
+
+	
+
+	if (message != '')
+		{
+		mask = osource.replace(reLESSTHAN, replaceWith);
+		addError('<font color="black">'+mask+'</font>', errorArray, message.substr(0, message.length-18));
+		}
+		
+	return;
+
+}
+function checkFile(source, errorArray, osource, fileAttribute, required)
+{
+	var x=errorArray.length;
+	var s='',s2='';
+	var message='', errorMessage='';
+	var src='';
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+
+		
+	s = precheckFILES(source, fileAttribute);
+	s2 = extractAttributeValue(s, fileAttribute);
+		
+	if (s2.toLowerCase().substr(0, 6) == 'nohref')
+		return;
+		
+	if (s2 == 'Attribute not in tag' && !required)
+		return;
+	
+	if (isError(s2))
+		{
+		errorMessage = ER(errorMessage, 'Invalid attribute (' + fileAttribute + ') ' + s2);
+		}	
+	else
+		{
+		src = s2;
+		message=processFile(src);
+		if (message != '' && message != 'javascript')
+			errorMessage = ER(errorMessage, message);
+		}
+		
+	if (errorMessage != '')
+		{
+		mask = osource.replace(reLESSTHAN, replaceWith);
+		addError('<font color="black">'+mask+'</font>', errorArray, errorMessage.substr(0, errorMessage.length-6));
+		}
+
+	return;
+}
+function checkFileAtag(source, errorArray, osource, fileAttribute, required)
+{
+	var x=errorArray.length;
+	var s='',s2='';
+	var message='', errorMessage='';
+
+
+	var src='';
+	var notFound = -1;
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+
+	
+	s = precheckFILES(source, fileAttribute);
+	s2 = extractAttributeValue(s, fileAttribute);
+	if (s2 == 'Attribute not in tag' && !required)
+		return;
+	
+	if (isError(s2))
+		{
+		errorMessage = ER(errorMessage, 'Invalid attribute (' + fileAttribute + ') ' + s2);
+		}	
+	else
+		{
+		src = s2;
+		if (src.charAt(0) == '#')
+			return;
+		if (src.indexOf('#')== notFound)
+			{
+			message=processFile(src);
+			}
+		else
+			{
+			message = processFile(src.substr(0, src.indexOf('#')));
+			}	
+		if (message != '' && message != 'javascript')
+			errorMessage = ER(errorMessage, message);
+		}
+		
+	if (errorMessage != '')
+		{
+		mask = osource.replace(reLESSTHAN, replaceWith);
+		addError('<font color="black">'+mask+'</font>', errorArray, errorMessage.substr(0, errorMessage.length-6));
+		}
+
+	return;
+}
+function isCheckNeeded( s )
+{
+	var s2 = '';
+	
+	s2 = removeSpaces(s);
+	
+	if (s2.indexOf('type=reset') > -1)
+		return (false);
+		
+	if (s2.indexOf('type=submit') > -1)
+		return (false);
+	
+	if (s2.indexOf('type="reset"') > -1)
+		return (false);
+
+	if (s2.indexOf('type="submit"') > -1)
+		return (false);
+
+	return (true);
+
+}
+
+function validateINPUT(s, errorMessages, source)
+{
+	var doCheck = false;
+	
+	doCheck = isCheckNeeded(source.toLowerCase());
+
+	if (doCheck)
+			{
+			checkForRequiredAttributes(['name'],s, errorMessages, source);
+			checkFile(s, errorMessages, source, 'src', false);
+			}
+	return;
+}
+function BestPracticesAttributes(tagCount, validTags, file, errorMessages, tagArray, sourceArray)
+{
+	var i=0;
+	var x=0;
+	var notFound = -1;
+	var s2='',s3='',s4='', s5='', mask = '';
+	
+
+	for (i=0; i<sourceArray.length; i++)
+		{
+		s5 = normalizeAttributeValue(sourceArray[i]);
+		x = sourceArray[i].indexOf(' ');
+		
+		if (x == notFound)
+			{
+
+			s2 = sourceArray[i];
+			}
+		else
+			{
+			s2 = sourceArray[i].substr(0, x);
+			}
+		s2=s2.toLowerCase();
+ 
+		switch(s2)
+			{
+			case 'img': validateIMG(s5, errorMessages, sourceArray[i], tagCount);
+				break;
+			//case 'meta': validateMETA(s5, errorMessages, sourceArray[i]);
+				//break;
+			case 'form': validateFORM(s5, errorMessages, sourceArray[i]);
+				break;
+			case 'input': validateINPUT(s5, errorMessages, sourceArray[i]);
+				break; 
+			case 'button': checkForRequiredAttributes(['name', 'type'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'map': checkForRequiredAttributes(['name'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'select': checkForRequiredAttributes(['name'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'textarea': checkForRequiredAttributes(['name', 'cols', 'rows'],s5, errorMessages, sourceArray[i]);
+				break;
+		// 9/23/05 case 'span': checkForOneRequiredAttribute(['class', 'id'],s5, errorMessages, sourceArray[i]);
+		//		break;
+			case 'applet': checkForRequiredAttributes(['width', 'height'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'param': checkForRequiredAttributes(['name', 'value'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'link': checkForRequiredAttributes(['type'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'script': checkForRequiredAttributes(['type'],s5, errorMessages, sourceArray[i]);
+						   checkFile(s5, errorMessages, sourceArray[i], 'src', false);
+				break;
+			case 'style': checkForRequiredAttributes(['type'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'area':  mask = s5.toLowerCase(); 
+						  if (mask.indexOf('nohref') > -1)
+								mask = mask.replace(/nohref/g, 'no^*#@');
+						 checkFile(mask, errorMessages, sourceArray[i], 'href', false);
+						 checkForRequiredAttributes(['shape'],s5, errorMessages, sourceArray[i]);
+				break;
+			case 'a': checkFileAtag(s5, errorMessages, sourceArray[i], 'href', false);
+				break;
+			case 'blockquote': checkFileAtag(s5, errorMessages, sourceArray[i], 'cite', false);
+				break;
+			case 'base': checkFileAtag(s5, errorMessages, sourceArray[i], 'href', true);
+				break;
+			case 'applet': checkFile(s5, errorMessages, sourceArray[i], 'code', true);
+				break;
+			case 'body': checkFile(s5, errorMessages, sourceArray[i], 'background', false);
+				break;
+//			case 'embed': checkFile(s5, errorMessages, sourceArray[i], 'src', true);
+//				break;
+// 06 june 29
+			case 'frame': checkFile(s5, errorMessages, sourceArray[i], 'src', true);
+				break;
+			case 'iframe': checkFile(s5, errorMessages, sourceArray[i], 'src', true);
+				break;
+			case 'link': checkFile(s5, errorMessages, sourceArray[i], 'href', true);
+				break;
+//			case 'object': checkFile(s5, errorMessages, sourceArray[i], 'codebase', true);
+//				break;
+// 06 june 29
+			case 'table': checkFile(s5, errorMessages, sourceArray[i], 'background', false);
+				break;
+			case 'optgroup':checkForRequiredAttributes(['label'],s5, errorMessages, sourceArray[i]);
+				break;
+
+			default: //ignore
+			}
+		}
+
+
+
+
+	if (tagCount[163] > 0 && !metaDescription)
+		addError2( errorMessages, 
+			'It is usually best to code a meta description'); 
+		
+	return;
+}
+function getDOCTYPE(sArray)
+{
+	var i=0;
+
+	var docStatement = '',s='';
+
+
+	for (i=0; i<sArray.length; i++)
+		{
+		s = trimSpaces(sArray[i]);
+		s = s.toLowerCase(s);
+		if (s.substr(0,8) == '!doctype')
+			docStatement = sArray[i];
+		}
+
+	return (trimSpaces(docStatement));
+
+}
+function isEmptyTag(tag)
+{
+	var i = 0;
+	var found = false;
+
+	tag = tag.toLowerCase();
+	for ( i=emptyTagsFirst+1; i < emptyTagsLast+1; i++)
+		if (validTags[i] == tag)
+			{
+			found = true;
+			}
+	return (found);
+
+}
+function normalizeAttributeValue(s)
+{
+	var i = 0;
+	var s2 ='', s3 = '';
+	var c = String.fromCharCode(9);
+
+	for (i = 0; i < s.length; i++)
+		{
+		if (s.charCodeAt(i) == 8220 || s.charCodeAt(i) == 8221)
+			{
+			s2 = s2 + '"'
+			}
+		else
+			{
+			s2 = s2 + s.charAt(i);
+			}
+		}
+		
+	s2 = replaceCharacterCode(s2, c, ' ');
+	
+	for (i = 0; i < s2.length; i++)
+		{
+		if (s2.charAt(i) == '"')
+			{
+			s3 = s3 + '" '
+			}
+		else
+			{
+			s3 = s3 + s.charAt(i);
+			}
+		}
+
+
+	return (s3);
+
+}
+function returnAttributeArray( s )
+{
+	var attribute='';
+	var loc = -1, location = -1, notFound = -1;
+	var attributeArray = new Array();
+	var x = 0;
+	
+	s =normalizeAttributeValue(s);
+
+	loc = s.lastIndexOf('=');
+	
+	while( loc > -1)
+		{
+		s = s.substr(0, loc);
+		s = trimSpaces(s);
+		location = s.lastIndexOf(' ');
+		if (location == notFound)
+			{
+			attribute = trimSpaces(s);
+
+			}
+		else
+			{
+			attribute = trimSpaces(s.substr(location + 1));
+				}
+				
+		attributeArray[x] = attribute.toLowerCase();
+		x++;
+			
+		
+		loc = s.lastIndexOf('=');
+		}
+
+
+	return (attributeArray);
+
+}
+function IsJavascriptVariable(at)
+{
+	var at2 = at.toLowerCase();
+	
+	if (at2.substr(0, 11) == 'javascript:')
+		return (true);
+	if (at2.substr(0, 9) == 'document.')
+		return (true);
+	if (at2.substr(0, 7) == 'window.') 
+		return (true);
+		
+	return (false);
+}
+
+function isExternalFile( s )
+{
+	if (s.substr(0, 5) == 'http:')
+		return (true);
+		
+	if (s.substr(0, 6) == 'https:')
+		return (true);
+		
+	if (s.substr(0, 4) == 'ftp:')
+		return (true);
+		
+	if (s.substr(0, 5) == 'file:')
+		return (true);
+		
+	return (false); 
+}
+function determineCorrectMessage (attribute, message)
+{
+	var c = 0;
+	var outMessage = new Array();
+	
+	c = countCharacter(attribute, '.');
+	
+	if ( isExternalFile(attribute) )
+		{
+		outMessage[0] = 'do not check';
+		outMessage[1] = '';
+		return (outMessage);
+		}
+
+	
+	if (c > 0 && message == '')
+		{
+		outMessage[0] = 'do not check';
+		outMessage[1] = message + 'If (' + attribute + '...) is not a program variable, then it is invalid <br />';
+		return (outMessage);
+		}
+		
+	if (c > 0 && message != '')
+		{
+		outMessage[0] = 'do not check';
+		outMessage[1] = message + '&nbsp;&nbsp;If (' + attribute + '...) is not a program variable, then it is invalid <br />';
+		return (outMessage);
+		}
+		
+	if ( c == 0 && message == '')
+		{
+		outMessage[0] = 'check';
+		outMessage[1] = message + 'Attribute (' + attribute + ') should be lowercase (' + attribute.toLowerCase() + ')<br />';
+ 		return (outMessage);
+ 		}
+ 		
+	if ( c == 0 && message != '')
+		{
+		outMessage[0] = 'check';
+		outMessage[1] = message + '&nbsp;&nbsp;Attribute (' + attribute + ') should be lowercase (' + attribute.toLowerCase() + ')<br />';
+ 		return (outMessage);
+ 		}
+ 		
+ 	return ('problem with determineCorrectMessage function');
+
+}
+function okAforT(tag)
+{
+
+	if (tag == 'a')
+		return (true);
+	if (tag == 'area')
+		return (true);
+	if (tag == 'button')
+		return (true);
+	if (tag == 'input')
+		return (true);
+	if (tag == 'label')
+		return (true);
+	if (tag == 'select')
+		return (true);
+	if (tag == 'textarea')
+		return (true);
+
+	return (false);
+
+}
+function okAforT2(tag)
+{
+	if (tag == 'applet')
+		return (false);
+	if (tag == 'base')
+		return (false);
+	if (tag == 'basefont')
+		return (false);
+	if (tag == 'br')
+		return (false);
+	if (tag == 'font')
+		return (false);
+	if (tag == 'frame')
+		return (false);
+	if (tag == 'frameset')
+		return (false);
+	if (tag == 'head')
+		return (false);
+	if (tag == 'html')
+		return (false);
+	if (tag == 'iframe')
+		return (false);
+	if (tag == 'meta')
+		return (false);
+	if (tag == 'param')
+		return (false);
+	if (tag == 'script')
+		return (false);
+	if (tag == 'style')
+		return (false);
+	if (tag == 'title')
+		return (false);
+
+	return (true);
+}
+function okAforT3(tag, statement)
+{
+	var s='', s2='';
+	
+	if (tag == 'textarea' || tag =='input')
+		return (true);
+	
+	/*if (tag == 'input')
+		{
+		s = precheckFILES(statement, 'type');
+		s2 = extractAttributeValue(s, 'type');
+		if ( s2 == 'name' || s2 == 'password' )
+			return (true);
+		} */
+
+	return (false);
+}
+function validEventForTag( tag, attribute, statement)
+{
+ 
+	switch(attribute)
+		{
+		case 'onblur':	if ( okAforT(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onchange':	if ( tag == 'input' || tag == 'select' || tag == 'textarea' ) 
+							{
+							return (true);
+							}						else
+							{
+							return (false);
+							}
+						break;
+		case 'onclick':	if ( okAforT2(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'ondbclick':	if ( okAforT2(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onfocus':	if ( okAforT(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onkeydown':	if ( okAforT3(tag, statement) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onkeypress':	if ( okAforT3(tag, statement) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onkeyup':	if ( okAforT3(tag, statement) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+
+						break;
+		case 'onload':	if ( tag == 'body' || tag == 'frameset' ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onmousedown':	if ( okAforT2(tag) ) 
+							{
+							return (true);
+							}
+						else							{
+							return (false);
+							}
+						break;
+		case 'onmousemove':	if ( okAforT2(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onmouseout':	if ( okAforT2(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onmouseover':	if ( okAforT2(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onmouseup':	if ( okAforT2(tag) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onreset':	if ( tag == 'form' ) 
+							{
+
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onsubmit':	if ( tag == 'form' ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+		case 'onselect':	if ( okAforT3(lctag, statement) ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+
+		case 'onunload':	if ( tag == 'body' || tag == 'frameset' ) 
+							{
+							return (true);
+							}
+						else
+							{
+							return (false);
+							}
+						break;
+
+		default: return(false);
+		}
+}
+function unrecognizedATTR(attribute)
+{
+	var i = 0, location=0, notFound = -1;
+	var lcAttribute = attribute.toLowerCase();
+
+	lcAttribute = trimSpaces(lcAttribute);
+	location = lcAttribute.indexOf('(');
+
+	if (location == notFound)
+		location = lcAttribute.length;
+		
+	lcAttribute = lcAttribute.substr(0, location);
+
+	lcAttribute = trimSpaces(lcAttribute);
+		
+	for ( i = 0; i < VATarray.length; i++)
+		if (VATarray[i] == lcAttribute)
+			return (false);
+			
+	return (true);
+}
+function allowedAttribute(lcAttribute)
+{
+	switch(lcAttribute)
+		{
+		case 'class': return (true);
+		case 'id': return (true);
+		case 'title': return (true);
+		case 'style': return (true);
+		
+		default: return (false);
+		}
+}
+function attrNotAllowedInThisTag(attribute, tag, os)
+{
+	var i = 0, location=0, notFound = -1;
+	var lcAttribute = attribute.toLowerCase();
+	var lcTag = tag.toLowerCase();
+	var searchTarget ='';
+	
+
+	location = lcAttribute.indexOf('(');
+	if (location == notFound)
+		location = lcAttribute.length;
+
+	lcAttribute = lcAttribute.substr(0, location);
+	lcAttribute = trimSpaces(lcAttribute);
+	searchTarget = lcTag + '*' + lcAttribute;
+ 	 
+ 	for (i=0; i < tagAttribute.length; i++)
+		if (searchTarget == tagAttribute[i].substr(0, tagAttribute[i].indexOf('|') ) )
+			return (false);
+ 
+ 	if (allowedAttribute(lcAttribute))
+ 			return (false);
+ 			
+	if (validEventForTag(lcTag, lcAttribute, os))
+		return (false);
+		
+	return (true);
+
+}
+function maskEmbededAttributes(s)
+{
+	var s3 = '';	
+	var c = String.fromCharCode(8220);
+
+	var i = 0;
+	var inValue = false;
+	
+	for (i=0; i < s.length; i++)
+		{
+		if (s.charAt(i) == '"')
+			if (inValue)
+				{
+				inValue = false;
+				s3 = s3 + '"';
+				}
+			else
+				{
+				inValue = true;
+				s3 = s3 + '"';
+				}
+		else
+			if (s.charAt(i) == '=' )
+				{
+				if (inValue)
+					{
+					s3 = s3 + c;
+					}
+				else
+					{
+					s3 = s3 + '=';
+					}
+				}
+			else
+				{
+				s3 = s3 + s.charAt(i);
+				}
+		}
+					
+	return (s3);
+}
+function isServerCode ( value )
+{
+	if (value.indexOf('PHPcode') > -1)
+		return (true);
+	if (value.indexOf('ASPcode') > -1)
+		return (true);
+	if (value.indexOf('COLDFUSIONcode') > -1)
+		return (true);
+		
+	return (false);
+}
+function checkAndAddIfMissingInArray( value, array )
+{
+	
+	if (inArray(value, array))
+		return ('already in array');
+		
+	array[array.length] = value;
+	
+	return ('added to array');
+}
+
+function quoted(value, packedString)
+{
+	var s = '"' + value.toLowerCase() + '"';
+	
+	s = removeSpaces(s);
+
+	if ( packedString.indexOf(s) > -1 )
+		return (true);
+		
+	return (false);
+
+}
+function validInteger(n)
+{
+	if (isNaN(n))
+		return (false);
+		
+	if (n.indexOf('.') > -1)
+		return (false);
+		
+	return (true);
+
+}
+function validListOfCoordinates(cList)
+{
+	var i = 0;
+	var cArray = new Array();
+	
+	cArray = cList.split(/[\s\r\t\v\,]/g);
+	
+	if (cArray)
+		{
+		if (cArray.length < 3)
+			return (false);
+		for (i = 0; i < cArray.length; i++)
+			if (!validInteger(cArray[i]))
+				return (false);
+		}
+		
+	return (true); 
+
+}
+
+function inList(value, listValues )
+{
+
+	var listArray = new Array();
+	var i = 0;
+	
+
+	listArray = listValues.split(/[\s\r\t\v\,]/g);
+	
+	if (!listArray)
+		return (false);
+		
+	for (i = 0; i < listArray.length; i++)
+		if (listArray[i] == value)
+			return (true);
+			
+	return (false);
+
+}
+function isColor(attributeValue)
+{
+	
+	if (attributeValue.charAt(0) == '#' && attributeValue.length != 7)
+		return (false);
+	
+	if (attributeValue.charAt(0) == '#' )
+		if (attributeValue.substr(1).search(/[^0-9a-fA-F]/) > -1)
+			return (false);
+		else
+			return (true);
+			
+	if (inArray(attributeValue, namedColors))
+		return (true);
+
+	return (false);
+}
+function validateColLists(attributeValue, attribute)
+{
+	var colValues = new Array();
+	var i = 0;
+	var percentTotal = 0;
+	var message = '';
+	
+	colValues = attributeValue.split(/[\s\r\t\v\,]/g);
+
+	if (attributeValue.indexOf(' %') > -1)
+		message = ER(message, 'There should not be spaces between the integer and the % sign');
+		
+	for (i = 0; i < colValues.length; i++)
+		{
+		if (colValues[i] == '*')
+			continue;
+		if (colValues[i].charAt(colValues[i].length - 1) == '%' && colValues[i] != '%')
+			{
+
+			if (validInteger(colValues[i].substr(0, colValues[i].length - 1)))
+				{
+				percentTotal = percentTotal + parseInt(colValues[i].substr(0, colValues[i].length - 1));
+				continue;
+				}
+			else
+				{
+				message = ER(message, 'Attribute value (' + colValues[i] + ') for attribute (' + attribute + ') must be an integer followed by a % sign ');
+				continue;
+				}
+			}
+		if (!validInteger(colValues[i]) && colValues[i] != '%')
+			message = ER(message, 'Attribute value (' + colValues[i] + ') for attribute (' + attribute + ') must be an integer, a percent, ' +
+						'or an asterisk');
+		}
+		
+	if (percentTotal > 100)
+		message = ER(message, 'Percent values cannot total more than 100%');
+		
+	return (message.substr(0, message.length - 6));
+}
+function processFontList(fontList)
+{
+	var i = 0;
+	var fonts = new Array();
+	var message = '';
+	
+	fonts = fontList.split(/[\r\t\v\,]/g);
+
+	if (fontList == 'Value is NULL')
+		return ('Attribute value (' + fontList + ') for attribute (face) must be a comma separated list of typefaces');
+		
+	if (!fonts)
+		return ('Attribute value (' + fontList + ') for attribute (face) must be a comma separated list of typefaces');
+	
+	for (i = 0; i < fonts.length; i++)
+		fonts[i] = trimSpaces(fonts[i]);
+			
+	if (countCharacter(fontList, ',') != fonts.length - 1)
+		message = ER(message, 'All but the last element in the font face list must end in a comma');
+		
+	for ( i = 0; i < fonts.length; i++ )
+		if (!inArray(fonts[i], cpFonts))
+			{
+			if (inArray(fonts[i].toLowerCase(), cpFonts))
+				message = ER(message, 'Typeface (' + fonts[i] + ') should be lowercase');
+			else
+				message = ER(message, 'Typeface (' + fonts[i] + ') is not a cross-platform font');
+			}
+		
+	if (message != '')
+		message = message.substr(0, message.length - 6);
+			
+	return (message);
+	
+}
+function processURLlist(URLlist)
+{
+	var i = 0;
+	var URLarray = new Array();
+	var message = '', message2 = '';
+	
+	URLarray = URLlist.split(/[\s\r\t\v\,]/g);
+
+	if (URLlist == 'Value is NULL')
+		return ('Attribute value for attribute (archive) must be a comma separated list of URLs');
+
+	if (URLlist == 'No closing quotation mark found')
+		return ('Attribute value for attribute (archive) must be a comma separated list of URLs');
+
+	if (!URLarray)
+		return ('Attribute value (' + URLlist + ') for attribute (archive) must be a comma separated list of URLs');
+	
+	if (countCharacter(URLlist, ',') != URLarray.length - 1)
+		message2 = ER(message2, 'All but the last element in the archive list must end in a comma');
+		
+	
+	for ( i = 0; i < URLarray.length; i++ )
+		{
+		message = processFile(URLarray[i]);
+		if (message != '')
+			message2 = ER(message2, message);
+		}
+
+	return (message2.substr(0, message2.length - 6));
+
+}
+function processURLlistSepSpaces(URLlist)
+{
+	var i = 0, lastElement = 0;
+	var URLarray = new Array();
+	var message = '', message2 = '';
+	
+	URLarray = URLlist.split(/[\s\r\t\v]/g);
+
+
+	if (URLlist == 'Value is NULL')
+		return ('Attribute value for attribute (archive) must be a space separated list of URLs');
+
+	if (URLlist == 'No closing quotation mark found')
+		return ('Attribute value for attribute (archive) must be a space separated list of URLs');
+	
+	if (!URLarray)
+		return ('Attribute value (' + URLlist + ') for attribute (archive) must be a space separated list of URLs');
+	
+	lastElement = URLarray.length - 1;
+		
+	for ( i = 0; i < URLarray.length; i++ )
+		{
+		if (URLarray[i].charAt(URLarray[i].length-1) == ',')
+			{
+			message2 = ER(message2, 'Attribute value (' + URLarray[i] + ') for attribute (archive) cannot end with a comma');
+			URLarray[i] = URLarray[i].substr(0, URLarray[i].length-1);
+			}
+		message = processFile(URLarray[i]);
+		if (message != '')
+//			message2 = ER(message2, 'Attribute value (' + URLarray[i] + ')&nbsp;&nbsp;&nbsp;' + message);
+			message2 = ER(message2, message);
+		}
+
+	return (message2.substr(0, message2.length - 6));
+
+}
+
+function checkAttributesValue(tag, attribute, idArray, packedTag, os, classArray)
+{
+	var i = 0;
+	var attrKey = '', attrValues = '', attrControl = '', attributeValue = '';
+	var searchKey = tag.toLowerCase() + '*' + attribute.toLowerCase();
+	var message = '', message2 = '', s = '', s2 = '', s3 ='', s4 = '', s5 = '';
+	var oAttribute = attribute;
+
+	var oAttributeValue = '';
+	var inTable = false;
+	
+	for (i = 0; i < tagAttribute.length; i++)
+		{
+		attrKey = tagAttribute[i].substr(0, tagAttribute[i].indexOf('|') );
+		attrControl = tagAttribute[i].substr(tagAttribute[i].indexOf('|') + 1, 1);
+		attrValues = tagAttribute[i].substr(tagAttribute[i].indexOf('|') + 2);
+		if (searchKey == attrKey)
+			{
+
+			inTable = true;
+			break;
+			}
+		}
+		
+	if (!inTable)
+		{
+		attrKey = searchKey;
+
+		attrValues = '';
+		switch (attribute.toLowerCase())
+			{
+			case 'class':		attrControl = 'R';
+								break;
+			case 'id':			attrControl = 'A';
+								break;
+			case 'style':		attrControl = 'N';
+								break;
+			case 'title':		attrControl = '1';
+								break;
+			case 'lang':		attrControl = 'G';
+								break;
+			case 'onblur':		attrControl = '1';
+								break;
+			case 'onblur':		attrControl = '1';
+								break;
+			case 'onchange':	attrControl = '1';
+								break;
+			case 'onclick':		attrControl = '1';
+								break;
+			case 'ondblclick':	attrControl = '1';
+								break;
+			case 'onfocus':		attrControl = '1';
+								break;
+			case 'onkeydown':	attrControl = '1';
+								break;
+			case 'onkeypress':	attrControl = '1';
+								break;
+			case 'onkeyup':		attrControl = '1';
+								break;
+			case 'onload':		attrControl = '1';
+								break;
+			case 'onmousedown':	attrControl = '1';
+								break;
+			case 'onmousemove':	attrControl = '1';
+								break;
+			case 'onmouseout':	attrControl = '1';
+								break;
+			case 'onmouseover':	attrControl = '1';
+								break;
+			case 'onmouseup':	attrControl = '1';
+								break;
+			case 'onreset':		attrControl = '1';
+								break;
+			case 'onselect':	attrControl = '1';
+								break;
+			case 'onunload':	attrControl = '1';
+								break;
+			case 'onsubmit':	attrControl = '1';
+								break;
+			default:			attrControl ='unknown';
+								break;
+			}	
+		}	 
+	
+	if (attribute.toLowerCase() == 'align')
+		{
+		s4 = os.replace(/\s+align/ig, ' ngila');
+		s4 = s4.replace(/\"align/ig, '"ngila');
+		
+		s5 = attribute;
+		attribute = ' ngila';
+		s = precheckAttr2(normalizeAttributeValue(s4), attribute);
+		attributeValue = extractAttributeValue(s, attribute);
+		oAttributeValue = attributeValue;
+		attribute = s5;
+		}
+	else
+		{
+		s = precheckAttr2(normalizeAttributeValue(os), attribute);
+		attributeValue = extractAttributeValue(s, attribute);
+		oAttributeValue = attributeValue;
+		attribute = attribute.toLowerCase();
+		}
+		
+	if(attributeValue == 'alternate stylesheet')
+		attributeValue = 'alternate*stylesheet';
+		
+	if( attributeValue.charAt(0) == "'" )
+		message = 'Surround attribute value for (' + oAttribute + ') with double quotes, ' +
+					'use single quotes on the inside. <br />';
+	else if( !quoted(attributeValue, packedTag) && attributeValue != 'alternate*stylesheet' && 
+				attributeValue != 'Value is NULL' && 
+				attributeValue != 'No closing quotation mark found')
+		message = 'Attribute value (' + oAttributeValue + ') for attribute (' + oAttribute + ') must be surrounded by quotes. <br />';
+
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//
+// 			Control Key
+//
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//	0	already checked in other functions
+//	1	accept anything
+//	2	an integer
+//	5	a color
+//	6	an element in list
+//	7	a list of URL's separated by commas
+//	8	a single character
+//	9	a URL
+//	A	an id
+//	B	a name
+//	C	a list of URL's separated by spaces
+//	D	one word
+//	E	a list of coordinates
+//	F	an ISO date
+//	G	a two character language code
+//	I	row or column values that cannot exceed 100%
+//	J	frame target name	
+//	K	align with list values or a single character
+//	L	an integer or a percent
+//	M	MIME type
+//	N	style attribute
+//	O	label (#{\.}*)
+//	P 	folder exists
+//	Q	a list of fonts
+//	R	a class name
+
+
+	switch (attrControl)
+		{
+		case '0':	break;
+		case '1':	break;
+		case '2':	if (!validInteger(attributeValue))
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' + oAttribute 
+											+ ') must be an integer');
+					break;
+		case '5':	if (attributeValue.search(/[\s\r\t\v]/) > -1)
+
+						{
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' + oAttribute + 
+										') cannot contain spaces');
+						break;
+						}
+					if (!isColor(attributeValue))
+						if (attributeValue.charAt(0) == '#')
+							message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' + 
+										oAttribute + ') must be a valid six digit hexadecimal number [#rrggbb]' );
+						else
+							message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+										oAttribute + ') must be a valid ' +
+								'six digit hexadecimal number [#rrggbb] or one of the sixteen named colors' +
+								' (use lowercase spelling) [' + namedColors + ']');
+					break;
+		case '6':	if (!inList(removeSpaces(attributeValue), attrValues))
+						if (inList(removeSpaces(attributeValue.toLowerCase()), attrValues))
+							message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+								oAttribute + ') should be lowercase');
+						else
+							if (tag.toLowerCase() == 'link' && attribute.toLowerCase() == 'rel')
+								message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+											oAttribute + ') must be an element from this list [stylesheet, alternate stylesheet]');
+							else
+								message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+											oAttribute +') must be an element from this list [' + 
+											trimSpaces(attrValues) + ']');
+					break;
+		case '7':	message2 = processURLlist(attributeValue);
+					if (message2 != '')
+						message = ER(message, message2);
+					break;
+		case '8':	if (attributeValue.length > 1)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+									oAttribute + ') must be a single character');
+					break;
+		case '9':	message2 = processFile(attributeValue);
+					if (message2 != '')
+						message = ER(message, message2);
+					break;
+		case 'A':	if (attributeValue.search(/[^a-zA-Z0-9_-]/) > -1)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+								oAttribute + ') should not contain anything but digits, letters, or the underscore character');
+					s3 = checkAndAddIfMissingInArray( attributeValue, idArray );
+					//2007 oct 24  if (s3 == 'already in array')
+					if (s3 == 'already in array' && os.search(/type\s*=\s*\S*\s*radio/) == -1 && tag != 'embed')
+					//
+					
+						message = ER(message, 'Id name (' + oAttributeValue + 
+							') already used in this document, it must be unique ');
+					break;
+		case 'B':	if (attributeValue.search(/[^a-zA-Z0-9_-]/) > -1)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' + 
+										oAttribute + ') should not contain anything ' +
+										'but digits, letters, or the underscore character');
+					break;
+		case 'C':	message2 = processURLlistSepSpaces(attributeValue);
+					if (message2 != '')
+						message = ER(message, message2);
+					break;
+		case 'D':	if (attributeValue != attrValues.substr(1))
+						if (attributeValue.toLowerCase() == attrValues.substr(1))
+							message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+										oAttribute + ') should be lowercase');
+						else
+							message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+										oAttribute + ') can only be (' + 
+										attrValues.substr(1) + ')');
+					break;
+		case 'E':	if (attributeValue.charAt(attributeValue.length - 1) == ',')
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+									oAttribute + ') should not end with a comma');
+					if (!validListOfCoordinates(attributeValue))
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+									oAttribute + ') must be a list of at least 3 integers');
+					break;
+		case 'F':	if (attributeValue.search(/\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}TZD/) == -1)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+									oAttribute + ') must be in the form YYYY-MM-DDThh:mm:ssTZD');
+					break;
+		case 'G':	if (attributeValue.length != 2)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+								oAttribute + ') should almost always be a two character country code');
+					break;
+
+		case 'I':	message2 = validateColLists(attributeValue, oAttribute);
+					if (message2 != '')
+						message = ER(message, message2);
+					break;
+		case 'J':	if (attributeValue.search(/[^a-zA-Z0-9_-]/) > -1)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+										oAttribute + ') should not contain anything ' +
+										'but digits, letters, or the underscore character');
+					else if (attributeValue == '_new')
+						message = ER(message, 'Use _blank instead of _new');
+					break;
+		case 'K':	if (attributeValue.length != 1)
+						if (!inList(attributeValue, attrValues))
+							if (inList(attributeValue.toLowerCase(), attrValues))
+								message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+										oAttribute + ') should be lowercase');
+							else
+								message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+										oAttribute + ') must be an element ' +
+											'from this list [' + trimSpaces(attrValues) + '] or a single character');
+					break;
+		case 'L':	if (attributeValue.charAt(attributeValue.length - 1) == '%')
+
+						{
+						if (!validInteger(attributeValue.substr(0, attributeValue.length - 1)))
+							message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+										oAttribute + ') must be an integer followed by a percent sign');
+						if (attributeValue.indexOf(' %') > -1)
+							message = ER(message, 'There should not be spaces between the integer and the % sign');
+						}
+					else					
+						if (!validInteger(attributeValue))
+							message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+									oAttribute + ') must be an integer or a percent' );
+						break;
+		case 'M':	if (attributeValue.search(/.+\/.+/) == -1)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+								oAttribute + ') must be two words separated by a /');
+					break;
+		case 'N':	displayCSSmessage = true;
+					break;
+		
+		case 'O':	if (attributeValue.charAt(0) != '#')
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' + 
+								oAttribute + ') must begin with a #');
+					break;
+		case 'P':	if (!fso.FolderExists(currentDirectory + attributeValue))
+						message = ER(message, 'Folder (' + oAttributeValue + ') not found');
+					break;
+			
+		case 'Q':	message2 = processFontList(attributeValue);
+					if (message2 != '')
+						message = ER(message, message2);
+					break;
+		case 'R':	if (attributeValue.search(/[^a-zA-Z0-9_\s\,-]/) > -1)
+						message = ER(message, 'Attribute value (' + oAttributeValue + ') for attribute (' +
+								oAttribute + ') should not contain anything but digits, letters, or the underscore character');
+					s3 = checkAndAddIfMissingInArray( attributeValue, classArray );
+					break;
+								
+		default:	message = ER(message, '<font color="orange">Search key: '+ searchKey + ' not found in tag attribute array</font>');
+				
+		}
+		
+	return (message.substr(0, message.length - 6)); 
+
+}
+
+function checkAttributes( s, tag, idArray, classArray )
+{
+	var  message='', attribute='', message2='';
+	var loc = -1, location = -1, notFound = -1;
+	var JSvariable = false, recognized=false, checkAttributeValue=true;
+	var os = s;
+	var rsArray = new Array();
+	var packedTag = removeSpaces(s.toLowerCase());
+
+	s = normalizeAttributeValue(s);
+	s = maskEmbededAttributes(s);
+
+	loc = s.lastIndexOf('=');
+	
+	while( loc > -1)
+
+		{
+		checkAttributeValue = true;
+		s = s.substr(0, loc);
+		s = trimSpaces(s);
+		location = s.lastIndexOf(' ');
+		if (location == notFound)
+			{
+			attribute = trimSpaces(s);
+			}
+		else
+			{
+			attribute = trimSpaces(s.substr(location + 1));
+			}
+ 		
+		JSvariable = IsJavascriptVariable(attribute);
+		
+		if (JSvariable)
+			checkAttributeValue = false;
+		
+		if (!JSvariable && (countCharacter(attribute, '.') == 0 ))
+			{
+			recognized = true;
+			if (unrecognizedATTR(attribute))
+				{
+				recognized = false;
+				message = ER(message, 'Unrecognized attribute (' + attribute.replace(/\</g, '&lt;') + ')');
+				checkAttributeValue = false;
+				}
+			else
+				{
+				if (inArray(tag + '*' + attribute, depreciatedAttributes)&& showDepreciated)
+					message = ER(message, 'Attribute (' + attribute + ') deprecated, still ok to use');
+					
+				res = checkNoAttributeTags(tag, os);
+
+				if ( res != '' && res != 'regular tag')
+					{
+					message = ER(message, 'This tag can only have the following attributes: [' +
+												'class, id, style, title, or onclick]');
+					checkAttributeValue = false;
+					}
+				else
+					{
+					if (attrNotAllowedInThisTag(attribute, tag, os) && res == 'regular tag' && attribute != 'classddi')
+						if ( attribute == 'name')
+							{
+							message = ER(message, 'Use the id attribute instead of name');
+							}
+						else
+							{
+							message = ER(message, 'Attribute (' + attribute + ') not allowed in this tag');
+							checkAttributeValue = false;
+							}
+					}
+				}
+			}	
+			
+		if ((attribute != attribute.toLowerCase() && !JSvariable && recognized && attribute != 'allowScriptAccess') || 
+			(countCharacter(attribute, '.') > 0 && !JSvariable))
+				{
+				rsArray = determineCorrectMessage( attribute, message );
+				message = rsArray[1];
+				if (rsArray[0] == 'do not check')
+					checkAttributeValue = false;
+				}
+		
+		if (checkAttributeValue)
+
+			{
+			message2 = checkAttributesValue(tag, attribute, idArray, packedTag, os, classArray);
+			if (message2 != '')
+				message = ER(message, message2);
+			}
+				 
+		loc = s.lastIndexOf('=');
+		}
+
+		
+	return (message.substr(0, message.length - 6));
+
+}
+
+function makeQuoteEasyToFind(s)
+{
+	var rs ='';
+	var i = 0;
+
+	for ( i=0; i < s.length; i++)
+		{
+		if (s.charCodeAt(i) == 8220 || s.charCodeAt(i) == 8221)
+			{
+			rs = rs + '<font size="6" color="#d16f69" face="times"><b>'+s.charAt(i)+'</b></font>';
+			}
+		else
+			{
+			rs = rs + s.charAt(i);
+			}
+		}
+
+	return ('<font color="#4478c5">' + rs + '</font><br >');
+
+
+}
+function checkAttr(attr)
+{
+	var i = 0;
+	var goodAttribute = false;
+ 
+	for (i=0; i < okAttributes.length; i++)
+		{
+		if (attr == okAttributes[i])
+			goodAttribute = true;
+		}
+		 
+	return (goodAttribute);
+
+}
+function checkNoAttributeTags( tag, s) 
+{
+	var i = 0;
+	var NAT = false, attrGood = true;
+	var okArray = new Array();
+
+ 
+	for (i=0; i < NATarray.length; i++)
+		{
+		if (NATarray[i] == tag)
+			{
+			NAT = true;
+			break;
+			}
+		}
+ 		
+	if (!NAT)
+		return ('regular tag');
+		
+
+ 
+	okArray = returnAttributeArray(s);	
+ 	
+	for (i=0; i < okArray.length; i++)
+		{
+ 		
+		attrGood = checkAttr(okArray[i]);
+		if (!attrGood)
+			break;
+		}
+ 
+	if (attrGood == true)
+		{
+		return('');
+		}
+	else
+		{
+		return ('problem');
+		}
+
+
+}
+function findBasicErrors(source, errArray, idArray, classArray)
+{
+	var i = 0, j = 0, location = 0;
+	var s = '', tag='', tag2='', s3=''; 
+	var errorMessage = '', message='', q='';
+	var oddQuote = false, recognizedTag=false, doNextCheck=false;
+	var notFound = -1;
+	var reLESSTHAN = /\</g, replaceWith = '&lt;', mask = '';
+	var reATTRVALUES = /\"\S+\"/g;
+
+	idArray[0] = '';
+	
+	for (i=0; i<source.length; i++)
+
+		{
+		if (source[i].charAt(0) == ' ')
+			errorMessage = ER(errorMessage, 'Spaces not allowed between &lt; and tag name');
+
+		s = trimSpaces(source[i]);
+	 
+		if (s.indexOf(' ') == -1)
+			{
+			tag = s;
+			}
+		else
+			{
+			tag = s.substr(0, s.indexOf(' '));
+			}
+
+		if ( tag.substr(0,3) == '!--' )
+
+			continue;
+			
+		recognizedTag = true;
+		if (tag.charAt(tag.length -1) == '/')
+
+			{
+			if (tag.charAt(tag.length - 2) == ' ')
+				{
+				tag2 = tag;
+				}
+			else
+				{
+
+				tag2 = tag.substr(0, tag.length - 1);
+				}
+			}
+		else
+			{
+			tag2 = tag;
+			}
+		location=findTag(tag2.toLowerCase(), validTags);
+
+		if ( location == notFound)
+			{
+			errorMessage = ER(errorMessage, 'Unrecognized tag (' + tag + ')' );
+			recognizedTag = false;
+			}
+
+		if (tag != tag.toLowerCase(tag) && tag.toLowerCase(tag) == 'doctype')
+			errorMessage = ER(errorMessage, 'Tag name missing !');
+		if (tag != tag.toLowerCase(tag) && tag.toLowerCase(tag) != '!doctype' && tag.toLowerCase(tag) != 'doctype')
+			errorMessage = ER(errorMessage, 'Tag name ('+ tag +') should be lowercase (' +
+				tag.toLowerCase(tag)+')');
+
+		if (tag.charAt(tag.length - 1) == '/')
+			{
+			tag2 = tag.substr(0, tag.length-1)
+			}
+		else
+			{
+			tag2 = tag;
+			}
+
+		if (isEmptyTag(tag2))
+			{
+			if (s.charAt(s.length-1) != '/' || s.charAt(s.length-2) != ' ')
+				errorMessage = ER(errorMessage, 'Empty tags must end with a / preceded by a space');
+			}
+
+		j = countCharacter(s, '"');
+		if ( j % 2 > 0)
+			errorMessage = ER(errorMessage, 'Unequal number of quotation marks, results in unterminated string errors');
+
+		j = countCharacterCode(s, 8220);
+		if ( j > 0 )
+			{
+			errorMessage = ER(errorMessage, 'Found a left curly quote instead of a straight quote');
+			oddQuote = true;
+			}
+
+
+		j = countCharacterCode(s, 8221)
+		if ( j > 0 )
+			{
+			errorMessage = ER(errorMessage, 'Found a right curly quote instead of a straight quote');
+			oddQuote = true;
+			}
+
+		if (oddQuote)
+			{
+			q = makeQuoteEasyToFind(s);
+			errorMessage = ER(errorMessage, q);
+			oddQuote = false;
+			}
+
+
+		doNextCheck = true;
+		if (recognizedTag && tag.charAt(0) == '/' && tag != s)
+			{
+			errorMessage = ER(errorMessage,'Closing tags cannot have attributes');
+			doNextCheck = false;
+			}
+			
+		if (recognizedTag && doNextCheck)
+			{
+			message = checkAttributes(s, tag, idArray, classArray);
+			if (message != '' )
+				errorMessage = ER(errorMessage, message);
+			}
+
+		s3 = source[i].replace(reATTRVALUES, '');
+		if (s3.indexOf('<') != notFound)
+			errorMessage = ER(errorMessage, 'Tag is not closed correctly, missing &gt; symbol');
+			
+		if (errorMessage != '')
+			{
+			mask = source[i].replace(reLESSTHAN, replaceWith);
+			addError('<font color="black">'+mask+'</font>', errArray, errorMessage.substr(0, errorMessage.length-6));
+			}
+			
+			
+		errorMessage ='';
+		}
+
+	
+	return;
+}
+function checkNesting(errArray, tArray, sArray)
+{
+	var i = 0;
+	var nArray = new Array();
+	var openingTag = '', eMessage ='', sLines='', emptyTag = false;
+	
+	nestingErrorLocation = -1;
+	
+	for (i = 0; i < tArray.length; i++ )
+		{
+		emptyTag = isEmptyTag(tArray[i]);
+		if ( tArray[i].charAt(0) != '/' && tArray[i].charAt(0) != '!' && !emptyTag )
+			{
+			nArray.push(tArray[i]);
+			}
+		else
+			{
+			if ( tArray[i].charAt(0) == '/' && tArray[i].charAt(0) != '!' )
+				{
+				openingTag = nArray.pop();
+				if (!openingTag)
+					openingTag = 'no more open tags';
+				if ( openingTag != tArray[i].substr(1) )
+					{
+					nestingErrorLocation = i;
+					sArray[i] = replaceCharacterCode(sArray[i], '<', '&lt;');
+					sArray[i - 1] = replaceCharacterCode(sArray[i - 1], '<', '&lt;');
+					sArray[i + 1] = replaceCharacterCode(sArray[i + 1], '<', '&lt;');
+					if ( i > 0 )
+						sLines = '<font color = "black">' + sArray[i - 1] + '</font><br />';
+					sLines = sLines + '&nbsp;&nbsp;' + sArray[i] + '<br />';
+					if ( i + 1 < sArray.length )
+						sLines = sLines + '&nbsp;&nbsp;<font color="black">' + sArray[i + 1] + '</font>';
+
+					eMessage = 'Invalid nesting, last unclosed open tag (' + openingTag + ') expected (' + tArray[i].substr(1) + ')<br />&nbsp;&nbsp;';
+				 	eMessage = eMessage + 'Correct and resubmit to find other nesting errors';
+					addError(sLines, errArray, eMessage);
+					break;
+					}
+				}
+			}
+		}
+
+	return;
+}
+function dumpComments(comments, numComments)
+{
+	var i = 0;
+	var s = '';
+
+
+	if ( numComments == 0)
+		return;
+		
+	document.write('<br /><span class="title4">Comments (first 115 characters)</span><br />');
+	for ( i = 0; i < numComments; i++)
+		{
+		s = comments[i].replace(/\</g, '&lt;');
+		if (s.length > 120 )
+			s = s.substr(0, 115) + '...';
+		document.write(s + '<br />');
+		}
+		
+	return;
+}
+function dumpMetaTags( sArray )
+{
+	var i = 0, cnt = 0;
+	var s = '', s2 = '';
+	
+	
+	for ( i = 0; i < sArray.length; i++)
+		{
+		s = sArray[i].substr(0, 4);
+		s = s.toLowerCase();
+		if (s == 'meta')
+			cnt++;
+		}
+		
+	if ( cnt == 0 )
+		return;	
+		
+	document.write('<br /><span class="title4">Meta Tags (first 115 characters)</span><br />');
+	
+
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].substr(0, 4);
+		s = s.toLowerCase();
+		if (s == 'meta')
+			{
+			s2 = sArray[i].replace(/\</g, '&lt;');
+			s2 = unmaskClassid(s2);
+
+			if (s2.length > 120 )
+				s2 = s2.substr(0, 115) + '...';
+			document.write(sArray[i] + '<br />');
+			}
+		}
+
+	return;
+}
+function addTabs(numberOfTabs)
+{
+	var i = 0;
+	var tabs = '';
+	var TAB = '&nbsp;&nbsp;&nbsp;&nbsp;';
+	
+	if (numberOfTabs < 1)
+		return ('');
+		
+	for (i = 0; i < numberOfTabs; i++)
+		tabs = tabs + TAB;
+		
+	return (tabs);
+
+}
+function fontColor(level)
+{
+	var x = 0;
+	var fontString = new Array();
+	
+	if (level < 0 )
+		return ('<font color="#d16f69">');
+		
+	fontString[0] = '<font color="#da9b46">';
+	fontString[1] = '<font color="#6bbbc7">';
+	fontString[2] = '<font color="#a0b56d">';
+	fontString[3] = '<font color="#d16f69">';
+	fontString[4] = '<font color="#000000">';
+	
+	x = level % 5;
+	
+	return (fontString[x]);
+
+
+}
+
+function dumpTagHierarchy( tags, sArray )
+{
+	var i = 0, cnt = 0;
+	var s = '', prefix='';
+	var currentLevel = -1;
+	var tagType = '';
+	
+	
+	document.write('<br /><span class="title4">Tag Hierarchy (first 50 characters)</span><br /><br />');
+	document.write('In properly structured documents the html and /html tags');
+	document.write(' are <span class="orange">orange</span>. The head, /head, body, and /body tags are ');
+	document.write('<span class="turquoise">turquoise. </span>');
+	document.write(' All closing tags are the same color as their corresponding open tags');
+	document.write(' and are indented the same distance from the left.<br /><br />');
+	if (nestingErrorLocation != -1)
+		{
+		document.write('The nesting error identified above is displayed in large red type on a white background. ');
+		document.write('<br /><br />');
+		}
+	
+	document.write('<span id="boldColors">');
+	for ( i = 0; i < tags.length; i++)	
+		{
+		if (tags[i].toLowerCase() != '!doctype' && tags[i] != '!--')
+			{
+			s = sArray[i].replace(/\</g, '&lt;');
+			s = unmaskClassid(s);
+			if (s.length > 60 )
+				s = s.substr(0, 60) + '...';
+
+			s = '&lt;' + s + '&gt;';
+			if (i == nestingErrorLocation)
+				s = '<font color="#d16f69" size="6" style="background-color:white">' + s + '</font>';
+			if (isEmptyTag(tags[i]))
+				tagType = 'emptyTag';
+			else if (tags[i].charAt(0) == '/')
+				tagType = 'closingTag';
+			else
+				tagType = 'openingTag';
+			switch (tagType)
+				{
+				case 'emptyTag':	currentLevel++;
+									prefix = addTabs(currentLevel) + fontColor(currentLevel);
+									document.write(prefix + s + '</font><br />');
+									currentLevel--;
+									if (currentLevel < 0)
+										currrentLevel = 0;
+									break;		
+				case 'closingTag': 	prefix = addTabs(currentLevel) + fontColor(currentLevel);
+									document.write(prefix + s + '</font><br />');
+									currentLevel--;
+									if (currentLevel < 0)
+										currentLevel = 0;
+									break;
+				case 'openingTag': 	currentLevel++;
+									prefix = addTabs(currentLevel) + fontColor(currentLevel);
+									document.write(prefix + s + '</font><br />');
+
+				}
+			}
+		}
+
+	document.write('</span>');
+	
+
+	return;
+}
+
+function dumpScript( sArray )
+{
+	var i = 0, cnt = 0;
+	var s = '', s2 = '';
+	
+	
+	for ( i = 0; i < sArray.length; i++)
+
+		{
+		s = sArray[i].substr(0, 6);
+		s = s.toLowerCase();
+		if (s == 'script')
+			cnt++;
+		}
+		
+	if ( cnt == 0 )
+		return;	
+		
+	document.write('<br /><span class="title4">Script Tags (first 115 characters)</span><br />');
+	
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].substr(0, 6);
+		s = s.toLowerCase();
+		if (s == 'script')
+			{
+			s2 = sArray[i].replace(/\</g, '&lt;');
+			s2 = unmaskClassid(s2);
+			if (s2.length > 120 )
+				s2 = s2.substr(0, 115) + '...';
+			document.write(sArray[i] + '<br />');
+			}
+		}
+
+	return;
+}
+function dumpLinks( sArray )
+{
+	var i = 0, cnt = 0;
+
+	var s = '', s2 = '';
+	
+	
+	for ( i = 0; i < sArray.length; i++)
+
+		{
+		s = sArray[i].substr(0, 4);
+		s = s.toLowerCase();
+		if (s == 'link')
+			cnt++;
+		}
+		
+	if ( cnt == 0 )
+		return;	
+		
+	document.write('<br /><span class="title4">Links (first 115 characters)</span><br />');
+	
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].substr(0, 4);
+		s = s.toLowerCase();
+		if (s == 'link')
+			{
+			s2 = sArray[i].replace(/\</g, '&lt;');
+			if (s2.length > 120 )
+				s2 = s2.substr(0, 115) + '...';
+			document.write(sArray[i] + '<br />');
+
+			}
+		}
+
+	return;
+}
+ 
+
+function dumpEmbedTags( sArray )
+{
+	var i = 0, cnt = 0;
+	var s = '', s2 = '';
+	
+	
+	for ( i = 0; i < sArray.length; i++)
+		{
+		s = sArray[i].substr(0, 5);
+		s = s.toLowerCase();
+		if (s == 'embed')
+			cnt++;
+		}
+		
+	if ( cnt == 0 )
+		return;	
+		
+	document.write('<br /><span class="title4">Embed Tags (first 115 characters)</span><br />');
+	
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].substr(0, 5);
+		s = s.toLowerCase();
+		if (s == 'embed')
+			{
+			s2 = sArray[i].replace(/\</g, '&lt;');
+			s2 = unmaskClassid(s2);
+			if (s2.length > 120 )
+				s2 = s2.substr(0, 115) + '...';
+			document.write(sArray[i] + '<br />');
+			}
+		}
+
+	return;
+}
+function dumpObjects( sArray )
+{
+	var i = 0, cnt = 0;
+	var s = '', s2 = '';
+	
+	
+	for ( i = 0; i < sArray.length; i++)
+		{
+		s = sArray[i].substr(0, 6);
+		s = s.toLowerCase();
+
+		if (s == 'object')
+			cnt++;
+		}
+		
+	if ( cnt == 0 )
+		return;	
+		
+	document.write('<br /><span class="title4">Objects (first 115 characters)</span><br />');
+	
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].substr(0, 6);
+		s = s.toLowerCase();
+		if (s == 'object')
+			{
+			s2 = sArray[i].replace(/\</g, '&lt;');
+			s2 = unmaskClassid(s2);
+			if (s2.length > 120 )
+				s2 = s2.substr(0, 115) + '...';
+			document.write(sArray[i] + '<br />');
+			}
+		}
+
+	return;
+}
+function dumpServerCode( title, sArray )
+{
+	var i = 0;
+	var s = '';
+	var allValid = false;
+	
+	if (!sArray)
+		return;
+		
+	for (i = 0; i < sArray.length; i++)
+		if (sArray[i] != '<%.*?%>')
+			allValid = true;
+			
+	if (!allValid)
+		return;
+			
+	document.write('<br /><span class="title4">' + title +'</span><br />');
+	
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].replace(/\</g, '&lt;');
+		s = unmaskClassid(s);
+		if (s.length > 120 )
+			s = s.substr(0, 115) + '...';
+		document.write(s + '<br />');
+		}
+
+
+	return;
+}
+function dumpIds( title, sArray )
+{
+	var i = 0;
+	var s = '';
+	
+	if (!sArray)
+		return;
+		
+	if (sArray.length == 0)
+		return;
+		
+	sArray = sArray.sort(caseDoesNotMatter);
+	
+	document.write('<br /><span class="title4">' + title +'</span>');
+	
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].replace(/\</g, '&lt;');
+		document.write(s + '<br />');
+		}
+	
+
+	return;
+}
+function dumpClasses( title, sArray )
+{
+	var i = 0;
+	var s = '';
+	
+	if (!sArray)
+		return;
+		
+	if (sArray.length == 0)
+		return;
+		
+	sArray = sArray.sort(caseDoesNotMatter);
+	
+	document.write('<br /><span class="title4">' + title +'</span><br />');
+	
+	for ( i = 0; i < sArray.length; i++)	
+		{
+		s = sArray[i].replace(/\</g, '&lt;');
+		document.write(s + '<br />');
+		}
+		
+
+	return;
+}
+
+function checkMetaCharacters( metaChar, errorArray, rawSource )
+{
+	var erMessage = '', s='', s2='';
+	var matchMetaChar = '';
+	var charValue = 0;
+	var notFound = -1;
+	var inArray = -1;
+	var i = 0;
+	
+	metaChar = trimSpaces(metaChar);
+
+	if (metaChar == '&&')
+		return;
+		
+	if (metaChar.charAt(metaChar.length - 1) != ';')
+		{
+		matchMetaChar = metaChar + ';';
+		erMessage = 'Meta characters must end with a semi-colon';
+		}
+	else
+		{
+		matchMetaChar = metaChar;
+		}
+
+
+	if (metaChar.charAt(1) == '#')
+		{
+		charValue = parseInt(metaChar.substr(2));
+		if ( isNaN(charValue) )
+
+			erMessage = 'There should be a valid number after the # sign';
+		else
+			if ( charValue > 9999 )
+				erMessage = 'English characters have a character value between 0 and 10,000';
+		}
+	else
+		{
+		inArray = findTag(matchMetaChar, validNamedEntities);		
+		if (inArray == notFound)
+			{
+			if (erMessage == '') 
+				erMessage =
+				'Unrecognized metacharacter, unless this is part of a javascript comment it is an error';
+			else
+				erMessage = erMessage + '<br />&nbsp;&nbsp;' + 
+				'Unrecognized metacharacter, unless this is part of a javascript comment it is an error'
+			}
+		}
+		
+	if (erMessage != '')
+		{
+		s2 = metaChar.replace(/\&/g, '&amp;');
+		s2 = s2.replace(/\</g, '&lt;');
+		addError(s2, errorArray, erMessage);
+		}
+		
+	return;
+}
+function normalizeMETA( s )
+{
+	var s2='';
+	var i=0;
+	var reATTRVALUES = /\"\S+\"/g;
+	
+	
+	for (i=0; i < s.length; i++)
+		{
+		if (s.charAt(i) == ';')
+			{
+			s2 = s2 + '; ';
+			}
+		else
+			{
+			s2 = s2 + s.charAt(i);
+			}
+		}
+		
+		s2 = s2.replace(reATTRVALUES, '');
+		
+		return ( s2 + ' ');
+
+}
+
+function validateMetaCharacters( sourceCode, errorArray, rawSource )
+{
+	var metaCharacters = new Array();
+	var i = 0;
+	var reMETA = /&\S+\s/g;
+
+	sourceCode = normalizeMETA(sourceCode);
+	metaCharacters = sourceCode.match(reMETA);
+	
+	if (metaCharacters == null)
+		return ;
+		
+	for ( i = 0; i < metaCharacters.length; i++)
+		checkMetaCharacters(metaCharacters[i], errorArray, rawSource);
+
+	return;
+}
+function theRightNumberOfTags(tagCounts)
+{
+
+	// (html, /html, head, /head, title, /title) 
+	// and (body and /body = 1) or (frameset > 0 and /frameset = frameset)		
+	if ((tagCounts[70] == 1 && tagCounts[71] == 1 && tagCounts[68] == 1 && tagCounts[69] == 1 &&
+		 tagCounts[144] == 1 && tagCounts[145] == 1) &&
+	   ((tagCounts[18] == 1 && tagCounts[19] == 1) || (tagCounts[54] > 0 && (tagCounts[54] == tagCounts[55]))))
+		return (true);
+		
+	return (false);
+
+}	
+function findPos( s, sArray )
+
+{
+	var i = 0;
+	
+	for (i = 0; i < sArray.length; i++)
+		if (s == sArray[i].toLowerCase())
+			return (i);
+			
+	return (-1);
+
+}
+function findLastPos( s, sArray )
+{
+	var i = 0;
+	
+	for (i = sArray.length - 1; i >= 0; i--)
+		if (s == sArray[i].toLowerCase())
+			return (i);
+			
+	return (-1);
+
+}
+
+function checkStructure2(tags, frameSet)
+{
+	var erMessage = '';
+	var i = 0;
+	var docPos = -1, htmlPos = -1, headPos = -1, cHeadPos = -1, bodyPos = -1, cBodyPos = -1,  cHtmlPos = -1;
+	var lastClosingFrameset = -1, firstFramset = -1;
+	var inRightOrder = false;
+	var bodyOrder = new Array();
+	var framesetOrder = new Array();
+	var actualBodyOrder = new Array();
+	var actualFrameOrder = new Array();
+	var bodyDoc = !frameSet;
+	
+	
+	if (frameSet)
+		{
+		framesetOrder[0] = '!doctype';
+		framesetOrder[1] = 'html';
+		framesetOrder[2] = 'head';
+		framesetOrder[3] = '/head';
+		framesetOrder[4] = 'frameset';
+		framesetOrder[5] = '/frameset';
+		framesetOrder[6] = '/html';
+		if (tags[0].toLowerCase() != '!doctype')
+			erMessge = ER(erMessage, 'First statement must be doctype');
+		if (tags[tags.length - 1].toLowerCase() != '/html')
+			erMessage = ER(erMessage, 'Last statement must be /html');
+		docPos = findPos('!doctype', tags);
+
+		htmlPos = findPos('html', tags);
+		headPos = findPos('head', tags);
+		cHeadPos = findPos('/head', tags);
+		firstFrameset = findPos('frameset', tags);
+		lastClosingFrameset = findLastPos('/frameset', tags);
+		cHtmlPos = findPos('/html', tags);
+		actualFrameOrder[0] = zeroPad5(docPos) + '!doctype';
+		actualFrameOrder[1] = zeroPad5(htmlPos) + 'html';
+		actualFrameOrder[2] = zeroPad5(headPos) + 'head';
+		actualFrameOrder[3] = zeroPad5(cHeadPos) + '/head';
+		actualFrameOrder[4] = zeroPad5(firstFrameset) + 'frameset';
+		actualFrameOrder[5] = zeroPad5(lastClosingFrameset) + '/frameset';
+		actualFrameOrder[6] = zeroPad5(cHtmlPos) + '/html';
+		actualFrameOrder.sort();
+		for ( i = 0; i < actualFrameOrder.length; i++ )
+			actualFrameOrder[i] = actualFrameOrder[i].substr(5);
+		inRightOrder = true;
+		for ( i = 0; i < actualFrameOrder.length; i++ )
+			if (actualFrameOrder[i] != framesetOrder[i])
+				inRightOrder = false;
+		if ( !inRightOrder )
+			{
+			erMessage = ER(erMessage, 'Basic tags are in the wrong order');
+			erMessage = ER(erMessage, '(first framset and last /framset tags are shown below)');
+			erMessage = ER(erMessage, 'They are:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' 
+				+ actualFrameOrder);
+			erMessage = ER(erMessage, 'They should be: ' + framesetOrder);
+			}
+		}
+
+
+	if (bodyDoc)
+		{
+		bodyOrder[0] = '!doctype';
+		bodyOrder[1] = 'html';
+		bodyOrder[2] = 'head';
+		bodyOrder[3] = '/head';
+		bodyOrder[4] = 'body';
+		bodyOrder[5] = '/body';
+		bodyOrder[6] = '/html';
+		if (tags[0].toLowerCase() != '!doctype')
+			erMessge = ER(erMessage, 'First statement must be doctype');
+		if (tags[tags.length - 2].toLowerCase() != '/body')
+			erMessage = ER(erMessage, 'Next to last statement must be /body');
+		if (tags[tags.length - 1].toLowerCase() != '/html')
+			erMessage = ER(erMessage, 'Last statement must be /html');
+		docPos = findPos('!doctype', tags);
+		htmlPos = findPos('html', tags);
+		headPos = findPos('head', tags);
+		cHeadPos = findPos('/head', tags);
+		bodyPos = findPos('body', tags);
+		cBodyPos = findPos('/body', tags);
+		cHtmlPos = findPos('/html', tags);
+		actualBodyOrder[0] = zeroPad5(docPos) + '!doctype';
+		actualBodyOrder[1] = zeroPad5(htmlPos) + 'html';
+		actualBodyOrder[2] = zeroPad5(headPos) + 'head';
+		actualBodyOrder[3] = zeroPad5(cHeadPos) + '/head';
+		actualBodyOrder[4] = zeroPad5(bodyPos) + 'body';
+		actualBodyOrder[5] = zeroPad5(cBodyPos) + '/body';
+		actualBodyOrder[6] = zeroPad5(cHtmlPos) + '/html';
+		actualBodyOrder.sort();
+		for ( i = 0; i < actualBodyOrder.length; i++ )
+			actualBodyOrder[i] = actualBodyOrder[i].substr(5);
+		inRightOrder = true;
+		for ( i = 0; i < actualBodyOrder.length; i++ )
+			if (actualBodyOrder[i] != bodyOrder[i])
+				inRightOrder = false;
+		if ( !inRightOrder )
+			{
+			erMessage = ER(erMessage, 'Basic tags are in the wrong order');
+			erMessage = ER(erMessage, 'They are:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' 
+				+ actualBodyOrder);
+			erMessage = ER(erMessage, 'They should be: ' + bodyOrder);
+
+			}
+		}
+
+
+	return (erMessage);
+
+}
+function objectErrors( from, to, source, valid)
+{
+	var i = 0, x = 0;
+	var state = 'out';
+	var message = '', lastTagProcessed = '';
+	var tagsOutsideObject = new Array();
+	
+	for ( i = 0; i < source.length; i++ )
+		{
+		if (source[i] == from)
+			state = 'in';
+		else if (source[i] == to)
+			state = 'out';
+		else if (state == 'out')
+			{
+			tagsOutsideObject[x] = source[i];
+			x++;
+			}
+		}
+	
+	tagsOutsideObject.sort();
+	
+	for ( i = 0; i < tagsOutsideObject.length; i++)
+		if (tagsOutsideObject[i] != lastTagProcessed)
+			{
+			lastTagProcessed = tagsOutsideObject[i];
+			if (inArray(tagsOutsideObject[i], valid))
+				message = ER(message, '(' + tagsOutsideObject[i] + ') tags can only be coded between ' + 
+					from + ' and ' + to + ' tags');
+			}
+	
+	if (message != '')
+		message = message.substr(0, message.length-6);
+
+	return (message);
+
+
+}
+function objectErrors2( from, to, ignoreFrom, ignoreTo, source, valid )
+{
+	var i = 0, x = 0;
+	var state = 'out';
+	var message = '', lastTagProcessed = '';
+	var workArray = new Array();
+	var tagsOutsideObject = new Array();
+	
+	for ( i = 0; i < source.length; i++ )
+		{
+		if (source[i] == from)
+			state = 'in';
+		else if (source[i] == to)
+			state = 'out';
+		else if (state == 'out')
+			{
+			workArray[x] = source[i];
+			x++;
+			}
+		}
+	
+	x = 0;
+	for ( i = 0; i < workArray.length; i++ )
+		{
+		if (workArray[i] == ignoreFrom)
+			state = 'in';
+		else if (workArray[i] == ignoreTo)
+			state = 'out';
+		else if (state == 'out')
+			{
+			tagsOutsideObject[x] = workArray[i];
+
+			x++;
+			}
+		}
+	
+	tagsOutsideObject.sort();
+	
+	for ( i = 0; i < tagsOutsideObject.length; i++)
+		if (tagsOutsideObject[i] != lastTagProcessed)
+
+			{
+			lastTagProcessed = tagsOutsideObject[i];
+			if (inArray(tagsOutsideObject[i], valid))
+				message = ER(message, '(' + tagsOutsideObject[i] + ') tags can only be coded between ' + 
+					from + ' and ' + to + ' tags or ' + ignoreFrom + ' and ' + ignoreTo + ' tags');
+			}
+	
+	if (message != '')
+		message = message.substr(0, message.length-6);
+
+	return (message);
+
+}
+function objectErrorsTable(source)
+{
+	var i = 0, x = 0, level = 0;
+	var state = 'out';
+	var message = '';
+	
+	var tagsOutsideObject = new Array();
+	
+	for ( i = 0; i < source.length; i++ )
+		{
+		if (source[i] == 'table')
+			{
+			level++;
+			}
+		else if (source[i] == '/table')
+			{
+			level--;
+			}
+		else if (level <= 0)
+			{
+			tagsOutsideObject[x] = source[i];
+			x++;
+			}
+		}
+	
+		
+	for ( i = 0; i < tagsOutsideObject.length; i++)
+			if (inArray(tagsOutsideObject[i], tableTags))
+				message = ER(message, '(' + tagsOutsideObject[i] + ') tags can only be coded between ' + 
+					'table and /table tags');
+	
+	if (message != '')
+
+		message = message.substr(0, message.length-6);
+
+	return (message);
+
+
+}
+
+function checkHeritage(tags, frameSet)
+{
+	var erMessage = '', message='';
+	var i = 0;
+	var bodyDoc = !frameSet;
+	var bodyPos = -1, endBodyPos = -1, headPos = -1, endHeadPos = -1, endHTMLPos = -1;
+
+	if (frameSet)
+		{
+		headPos = findPos('head', tags);
+		endHeadPos = findPos('/head', tags);
+		for ( i = headPos + 1; i < endHeadPos; i++ )
+			if (findTag(tags[i], headTag) == -1 && tags[i] != '!--')
+				erMessage = ER(erMessage, 'Found (' + tags[i] + 
+					') in head section, it cannot be coded in a frames document');
+		endHTMLPos = findPos('/html', tags);
+		for ( i = endHeadPos + 1; i < endHTMLPos; i++ )
+			if (tags[i] != 'frameset' && tags[i] != '/frameset' && tags[i] != 'frame' && tags[i] != '!--')
+				erMessage = ER(erMessage, 'Found (' + tags[i] + 
+					') in frame section, there can only be framset, /frameset, or frame');
+		}
+		
+	if (bodyDoc)
+		{
+		headPos = findPos('head', tags);
+		endHeadPos = findPos('/head', tags);
+		for ( i = headPos + 1; i < endHeadPos; i++ )
+			if (findTag(tags[i], headTag) == -1 && tags[i] != '!--' && inArray(tags[i], validTags))
+				erMessage = ER(erMessage, 'Found (' + tags[i] + 
+					') in head section, it can only be coded in the body section');
+		bodyPos = findPos('body', tags);
+
+		endBodyPos = findPos('/body', tags);
+		for ( i = bodyPos + 1; i < endBodyPos; i++ )
+			if (findTag(tags[i], headTag) > -1 && (tags[i] != 'script' && tags[i] != '/script' && tags[i] != '!--'))
+				erMessage = ER(erMessage, 'Found (' + tags[i] + 
+						') in body section, it can only be coded in the head section');
+		message = objectErrors('form', '/form', tags, formTags);
+		if (message != '')
+			erMessage = ER(erMessage, message);
+		message = objectErrors('map', '/map', tags, mapTags);
+		if (message != '')
+			erMessage = ER(erMessage, message);
+
+		message = objectErrors('dl', '/dl', tags, defListTags);
+		if (message != '')
+			erMessage = ER(erMessage, message);
+		message = objectErrors('/head', '/html', tags, frameTags);
+		if (message != '')
+			erMessage = ER(erMessage, objectErrors('/head', '/html', tags, frameTags));
+		
+		message = objectErrorsTable(tags);
+		if (message != '')
+
+			erMessage = ER(erMessage, message);
+
+		
+		message = objectErrors2('ol', '/ol', 'ul', '/ul', tags, listTags);
+		if (message != '')
+			erMessage = ER(erMessage, message);
+		message = objectErrors2('object', '/object', 'applet', '/applet', tags, objectTags);
+		if (message != '')
+			erMessage = ER(erMessage, message);
+		}
+
+	if (erMessage != '')
+		erMessage = erMessage.substr(0, erMessage.length-6);
+		
+	return (erMessage);
+}
+function collectTagsInObject(tags, tagStart, tagEnd)
+{
+	var tagCollection = new Array();
+	var i = 0, x = 0;
+	var inObject = false;
+	
+	for (i = 0; i < tags.length; i++)
+		{
+		if (tags[i] == tagStart && !inObject)
+			{
+			inObject = true;
+			continue;
+			}
+		if (tags[i] == tagStart)
+			{
+			tagCollection[x] = tags[i];
+			x++;
+			continue;
+			}
+		if (tags[i] == tagEnd)
+			{
+			inObject = false;
+			continue;
+			}
+		if (inObject)
+			{
+			tagCollection[x] = tags[i];
+			x++;
+			}
+		}
+		
+	if (inObject)
+		{
+		tagCollection = tagCollection.slice(0, 0);
+		tagCollection[0] = 'wrong order';
+		}
+			
+	return (tagCollection);
+
+}
+function checkChildren( tags, erMessage, tagCounts )
+{
+	var tagsInObject = new Array();
+	var i = 0;
+	
+	if (erMessage != '')
+		erMessage = erMessage + '<br /><br />';
+	
+	if (tagCounts[52] != 0)
+		{	
+		if (tagCounts[52] == tagCounts[53])
+			{
+			tagsInObject = collectTagsInObject(tags, 'form', '/form');
+			if (tagsInObject[0] == 'wrong order')
+				{
+				erMessage = ER(erMessage, 'Form tags coded in the wrong order');
+				erMessage = ER(erMessage, 'They should be open, close, open, close, etc.');
+				erMessage = ER(erMessage, 'Fix and resubmit to find other form structure errors<br />');
+				}
+			else
+				for (i = 0; i < tagsInObject.length; i++)
+					if (inArray(tagsInObject[i], invalidFormChild))
+						erMessage = ER(erMessage, 'Found (' + tagsInObject[i] + 
+							') in form object (&lt;form>...&lt;/form>), forms cannot be nested');
+			}
+		else
+			erMessage = ER(erMessage, 'Fix form tag count errors and resubmit to find form structure errors');
+		}
+		
+	if (tagCounts[104] != 0)
+		{	
+		if (tagCounts[104] == tagCounts[105])
+			{
+			tagsInObject = collectTagsInObject(tags, 'pre', '/pre');
+			if (tagsInObject[0] == 'wrong order')
+				{
+				erMessage = ER(erMessage, 'Pre tags coded in the wrong order');
+				erMessage = ER(erMessage, 'They should be open, close, open, close, etc.');
+				erMessage = ER(erMessage, 'Fix and resubmit to find other pre structure errors<br />');
+
+				}
+			else
+				for (i = 0; i < tagsInObject.length; i++)
+					if (inArray(tagsInObject[i], invalidPreChild))
+						erMessage = ER(erMessage, 'Found (' + tagsInObject[i] + 
+							') in pre object (&lt;pre>...&lt;/pre>), it cannot be used there');
+			}
+		else
+			erMessage = ER(erMessage, 'Fix pre tag count errors and resubmit to find form structure errors');
+		}
+
+	if (tagCounts[2] != 0)
+		{	
+		if (tagCounts[2] == tagCounts[3])
+			{
+			tagsInObject = collectTagsInObject(tags, 'a', '/a');
+			if (tagsInObject[0] == 'wrong order')
+				{
+				erMessage = ER(erMessage, 'Anchor tags (&lt;a>) coded in the wrong order');
+				erMessage = ER(erMessage, 'They should be open, close, open, close, etc.');
+				erMessage = ER(erMessage, 'Fix and resubmit to find other anchor tag structure errors<br />');
+				}
+			else
+				for (i = 0; i < tagsInObject.length; i++)
+					if (inArray(tagsInObject[i], invalidAChild))
+						erMessage = ER(erMessage, 'Found (' + tagsInObject[i] + 
+							') in anchor tag object (&lt;a>...&lt;/a>), anchor tags cannot be nested');
+			}
+
+		else
+			erMessage = ER(erMessage, 'Fix anchor tag (&lt;a>) count errors and resubmit to find form structure errors');
+		}
+		
+	if (tagCounts[80] != 0)
+		{	
+		if (tagCounts[80] == tagCounts[81])
+			{
+			tagsInObject = collectTagsInObject(tags, 'label', '/label');
+			if (tagsInObject[0] == 'wrong order')
+				{
+				erMessage = ER(erMessage, 'Label tags coded in the wrong order');
+				erMessage = ER(erMessage, 'They should be open, close, open, close, etc.');
+				erMessage = ER(erMessage, 'Fix and resubmit to find other label structure errors<br />');
+				}
+			else
+				for (i = 0; i < tagsInObject.length; i++)
+					if (inArray(tagsInObject[i], invalidLabelChild))
+						erMessage = ER(erMessage, 'Found (' + tagsInObject[i] + 
+							') in label object (&lt;label>...&lt;/label>), labels cannot be nested');
+			}
+		else
+			erMessage = ER(erMessage, 'Fix label tag count errors and resubmit to find form structure errors');
+		}
+
+
+	if (tagCounts[20] != 0)
+		{	
+		if (tagCounts[20] == tagCounts[21])
+			{
+			tagsInObject = collectTagsInObject(tags, 'button', '/button');
+			if (tagsInObject[0] == 'wrong order')
+				{
+				erMessage = ER(erMessage, 'Button tags coded in the wrong order');
+				erMessage = ER(erMessage, 'They should be open, close, open, close, etc.');
+				erMessage = ER(erMessage, 'Fix and resubmit to find other button structure errors<br />');
+				}
+			else
+				for (i = 0; i < tagsInObject.length; i++)
+					if (inArray(tagsInObject[i], invalidButtonChild))
+						if (tagsInObject[i] == 'button')
+							erMessage = ER(erMessage, 'Found (' + tagsInObject[i] + 
+								') in button object (&lt;button>...&lt;/button>), buttons cannot be nested');
+						else
+							erMessage = ER(erMessage, 'Found (' + tagsInObject[i] + ') in button object ' +
+								'(&lt;button>...&lt;/button>), it cannot be used there');
+			}
+		else
+			erMessage = ER(erMessage, 'Fix form tag count errors and resubmit to find form structure errors');
+		}
+
+	return (erMessage.substr(0, erMessage.length - 6));
+	
+}	
+function checkStructure(errors, tagCounts, tags)
+{
+	var erMessage = '';
+	var frameSet = false;
+		
+	if (!theRightNumberOfTags(tagCounts))
+		{
+		erMessage = 'Fix the tag problems in the best practices report and resubmit to find structure errors';
+		}
+	else
+		{
+		if (tagCounts[54] > 0)
+			frameSet = true;
+		erMessage = checkStructure2(tags, frameSet);
+			
+		}
+
+	if (erMessage != '')
+		addError('<font color="black">Basic structure errors</font>', errors, erMessage);
+	else
+		{	
+		erMessage = checkHeritage(tags, frameSet);
+		erMessage = checkChildren(tags, erMessage, tagCounts);
+	
+		if (erMessage != '')
+			addError('<font color="black">Tags coded in the wrong object</font>', errors, erMessage);
+		}
+	
+		return;
+
+}
+function caseDoesNotMatter(a, b)
+{
+	var alc = a.toLowerCase();
+	var blc = b.toLowerCase();
+	
+	if (alc == blc)
+		return (0);
+		
+	if (alc > blc)
+		return (1);
+		
+	return (-1);
+
+}
+
+function findClasses(sourceArray)
+{
+	var resultArray = new Array();
+	var workArray = new Array();
+	var i = 0;
+	var s = '', s2 ='';
+//	var reCLASS = /class\s*\=\s*\"?\d+[\=\s]/ig
+	var reCLASS = /class\s*\=\s*\"?\w+\"/ig
+	
+	for (i = 0; i < sourceArray.length; i++)
+		s = s + sourceArray[i] + ' ';
+	
+	workArray = s.match(reCLASS);
+
+	if (workArray)
+		{
+		for (i = 0; i < workArray.length; i++)
+			{
+			s2 = removeSpaces(workArray[i]);
+			s2 = s2.substr(s2.indexOf('=') + 1);
+			if (s2.charAt(0) == '"')
+				s2 = s2.substr(1);
+			s = checkAndAddIfMissingInArray(s2, resultArray);
+			}
+		resultArray.sort(caseDoesNotMatter);
+		}
+		
+	return (resultArray);
+
+}
+function AnalyzeXHTMLfiles(file)
+{
+	var xhtmlFile = fso.OpenTextFile(file, OpenFileForReading, "True");
+
+	var inputLine = '';
+	var sourceCode = '',doc0='';
+	var tags = new Array();
+
+	var tagArray = new Array();
+	var tagCount = new Array();
+	var unrecognizedTags = new Array();
+	var sourceArray = new Array();
+	var rawSource = new Array();
+	var inScript = false;
+	var i=0, tagArrayIndex=0,notFound=-1;
+	var exTag='';
+	var errorMessages = new Array();
+	var basicErrors = new Array();
+	var nERRs = new Array();
+	var comments = new Array();
+	var numComments = 0;
+	var metaErrors = new Array();
+	var structureErrors = new Array();
+	var PHPcode = new Array();
+	var ASPcode = new Array();
+	var COLDFUSIONcode = new Array();
+	var idArray = new Array();
+	var classArray = new Array();
+	
+	initializeTagCount(tagCount);
+	metaDescription = false;
+	metaKeywords = false;
+
+	document.write('<div id="secondaryBody"><span class="title3"><br />'+fso.getFilename(file)+'</span><br />');
+ 	
+	while (!xhtmlFile.AtEndOfStream)
+		{
+		inputLine = xhtmlFile.ReadLine();
+		sourceCode = sourceCode+' '+inputLine;
+		}
+
+	ASPcode = sourceCode.match(/<%.*?%>/g);
+	sourceCode = sourceCode.replace(/<%.*?%>/g, 'ASPcode');
+	PHPcode = sourceCode.match(/<\?.*?\?>/g);
+	sourceCode = sourceCode.replace(/<\?.*?\?>/g, 'PHPcode');
+	COLDFUSIONcode = sourceCode.match(/<CF.*?>.*?<\/CF.*?>/ig);
+	sourceCode = sourceCode.replace(/<CF.*?>.*?<\/CF.*?>/ig, 'COLDFUSIONcode');
+	sourceCode = sourceCode.replace(/\sclassid\s*\=/ig, ' classddi=');
+	
+
+	comments = sourceCode.match(/<!-{2,}.*?-{2,}>/g);
+	
+	if (comments == null )
+		{
+		numComments = 0;
+		}
+	else
+		{
+		numComments = comments.length;
+		}
+	
+	// 2006 oct 03 mask all javascript statements including tags
+	// if not properly nested, error messages will be hard to understand
+	
+		sourceCode = sourceCode.replace('<script', '<!-- <script');
+		sourceCode = sourceCode.replace('</script>', '</script> -->');
+		
+	// end
+	
+	sourceCode = sourceCode.replace( /<!-{2,}.*?-{2,}>/g, '<!-- replaced comments -->');	
+	tags=sourceCode.match(/(<[^>]*>)/g);
+	
+	for (i=0; i<tags.length; i++)
+		{
+		exTag=extractTag(tags[i]);
+		if (inScript && exTag=="/script")
+			{
+			inScript=false;
+			tagArray[tagArrayIndex]=exTag;
+			sourceArray[tagArrayIndex]=trimSpaces(tags[i].substr(1, tags[i].length-2));
+			rawSource[tagArrayIndex]=tags[i].substr(1, tags[i].length-2);
+			tagArrayIndex++;
+			}
+		if (!inScript && exTag=="script")
+			{
+			inScript=true;
+			tagArray[tagArrayIndex]=exTag;
+
+			sourceArray[tagArrayIndex]=trimSpaces(tags[i].substr(1, tags[i].length-2));
+			rawSource[tagArrayIndex]=tags[i].substr(1, tags[i].length-2);
+			tagArrayIndex++;
+			}			
+		if (!inScript && exTag!="script" && exTag!="/script")
+			{
+			tagArray[tagArrayIndex]=exTag;
+			sourceArray[tagArrayIndex]=trimSpaces(tags[i].substr(1, tags[i].length-2));
+			rawSource[tagArrayIndex]=tags[i].substr(1, tags[i].length-2);
+			tagArrayIndex++;
+			}
+		}
+	document.write('<br />');
+
+	if (tagCount[124] > 0)
+		displayCSSmessage = true;
+		
+	countTags(tagArray, validTags, unrecognizedTags, tagCount, numComments);
+
+
+	if (tagCount[124] > 0)
+		displayCSSmessage = true;
+
+	writeTagAnalysis(tagCount, unrecognizedTags);
+	
+	findBasicErrors(rawSource, basicErrors, idArray, classArray);
+	dumpErrorMessageArray(basicErrors, 'Basic Coding Errors');
+	doc0 = getDOCTYPE(sourceArray);
+	doc0 = '<' + doc0 +'>';
+	
+	BestPractices(tagCount, validTags, file, errorMessages, doc0);
+	BestPracticesAttributes(tagCount, validTags, file, errorMessages, tagArray, sourceArray);
+	dumpErrorMessageArray(errorMessages, 'Best Practice Problems');
+	checkStructure(structureErrors, tagCount, tagArray);
+	dumpErrorMessageArray(structureErrors, 'Document Structure Problems');
+	checkNesting(nERRs, tagArray, sourceArray);
+	validateMetaCharacters(sourceCode, metaErrors, rawSource);
+	dumpErrorMessageArray(metaErrors, 'Meta Character Problems');
+	dumpErrorMessageArray(nERRs, 'Nesting Problems');
+	document.write('<br /></div><br /><div id="reviewSection">');
+	dumpTagHierarchy(tagArray, sourceArray);
+	dumpComments(comments, numComments);
+	dumpMetaTags(sourceArray);
+	dumpLinks(sourceArray);
+	dumpScript(sourceArray);
+	dumpEmbedTags(sourceArray);
+	dumpObjects(sourceArray);
+	dumpIds('id List', idArray);
+	dumpClasses('class List', classArray);
+	dumpServerCode('ASP code (first 115 characters)', ASPcode);
+	dumpServerCode('PHP code (first 115 characters)', PHPcode);
+	dumpServerCode('COLDFUSION code (first 115 characters)', COLDFUSIONcode);
+
+	
+	xhtmlFile.Close();
+	document.write('<br /></div><hr />');
+}
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+// main program logic
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+
+	var currentDirectory="";
+	var FoldersArray = new Array();
+	var HTMLFilesArray = new Array();
+
+	var otherFilesArray = new Array();
+	var assetArray = new Array();
+	var validTags = new Array();
+	var regularTagsFirst = 0;
+	var regularTagsLast = 157;
+	var emptyTagsFirst = 158;
+	var emptyTagsLast = 167;
+	var assetArrayIndex =0;
+
+	var z=0,x=0;
+	var st="";
+
+
+
+	fso = new ActiveXObject("Scripting.FileSystemObject");
+
+	initializeValidTags();
+
+	currentDirectory=getCurrentDirectory();
+	getFoldersInDirectory(currentDirectory);
+	getHTMLFilesInDirectory(currentDirectory);
+	getOtherFilesInDirectory(currentDirectory);
+	
+	document.write('<center><span id="header">Analyze Web Site</span></center>');
+	document.write('<center>Report general information about web site content ');
+	document.write('and validate html code for syntax and best practices</center><hr />');
+	document.write('<center> current directory: ' + currentDirectory + '</center><hr /><br />');
+	document.write('<div id="fileArea"><span class="titles">xhtml Files</span><hr />');
+	dumpHTMLFiles();
+	document.write('<br /><span class="titles">Other Files</span><hr />');
+	dumpOtherFiles();
+	document.write('<span class="titles"><br />Folders</span><hr />');
+	
+	if (FoldersArray.length == 0)
+		document.write('No folders<br />');
+		
+	for (z=0;z<FoldersArray.length;z++)
+		{
+		st=zeroPad(z+1);
+		document.write(st+") "+fso.getFilename(FoldersArray[z]));
+		document.write("<br />");
+		getAssetsInFolder(FoldersArray[z]);
+		document.write("<br />");
+		}
+
+	document.write('<br /></div><span class="title2"><br />xhtml File Analysis</span><hr />');
+
+	for (i=0; i<HTMLFilesArray.length; i++)
+		AnalyzeXHTMLfiles(HTMLFilesArray[i]);
+
+		
+	if (displayCSSmessage)
+
+		document.write('<br /><span class="title4">Remember to check your CSS code at ' +				
+						'<a href="http://jigsaw.w3.org/css-validator/">' + 
+						' http://jigsaw.w3.org/css-validator</a></span><br />');
+		
+
+	document.write('<br />');
+
+	document.write("</font>");
+	document.close();
+	
+//	debugWindow.document.close();
+
+// end hiding code -->
+</script>
+
+<noscript>
+<span class="title2">
+<br />
+<br />
+
+Sorry, you need to use a browser that supports Microsoft j script
+</span>
+</noscript>
+
+</body>
+</html>
