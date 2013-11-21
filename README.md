@@ -37,9 +37,10 @@ Updating your data from the server: <br />
   1) cd desktop <br />
   2) cd capstone <br />
   3) git add --all <br />
-  4) git pull master <br />
+  4) git fetch master <br />
+  5) git merge FETCH_HEAD <br />
   
-Pulling will merge server changes with yours so that you are up to date. <br />
+Fetching & merging will merge server changes with yours so that you are up to date. <br />
 Pushing will send your changes and merge it with the server. <br />
 
 Questions? Text me.  <br />

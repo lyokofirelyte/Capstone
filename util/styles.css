@@ -1,1 +1,42 @@
 /* Rainbow Stylin' */
+
+body {
+background-color: grey;
+}
+
+#homeBanner {
+border: 1px solid black;
+box-shadow: 10px 10px 5px #888888;
+margin-left: auto;
+margin-right: auto;
+display: block;
+text-align: center;
+}
+
+#homeMenu {
+margin-right: auto;
+margin-left: auto;
+position: relative;
+float: left;
+}
+
+#homeMenu ul {
+clear: left;
+float: left;
+list-style: none;
+text-align: center;
+box-shadow: 3px 8px 5px #888888;
+width: 150px;
+padding: 5px 5px 5px 5px;
+border:1px solid #9f9f9f;
+background-color: #CCCBC4;
+color:#888888;
+font:1.8em "Comic Sans MS", cursive, sans-serif;
+}
+
+#homeMenu ul li {
+display: block;
+float: left;
+list-style: none;
+}
+
