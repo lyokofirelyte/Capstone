@@ -14,29 +14,31 @@ text-align: center;
 }
 
 #homeMenu {
-margin-right: auto;
-margin-left: auto;
-position: relative;
-float: left;
-}
-
-#homeMenu ul {
-clear: left;
-float: left;
 list-style: none;
 text-align: center;
 box-shadow: 3px 8px 5px #888888;
-width: 150px;
 padding: 5px 5px 5px 5px;
 border:1px solid #9f9f9f;
+list-style-type: none;
+overflow: hidden;
 background-color: #CCCBC4;
-color:#888888;
-font:1.8em "Comic Sans MS", cursive, sans-serif;
+text-decoration: none;
+margin: 0;
 }
 
-#homeMenu ul li {
-display: block;
+#homeMenu li {
+color:#888888;
 float: left;
+text-decoration: none;
+list-style: none;
+margin-right: 15px;
+}
+
+#homeMenu li a {
+font:1.8em "Comic Sans MS", cursive, sans-serif;
+color:#888888;
+display: block;
+text-decoration: none;
 list-style: none;
 }
 
