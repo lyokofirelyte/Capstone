@@ -15,15 +15,15 @@
 
 <body onload="init()">
 	<div>
-		<img id="homeBanner" src="../ref/H13-22 Necrosis.jpg" width="900" height="200" alt="zombie1" />
+		<img id="homeBanner" src="../ref/menuHome.png" usemap="#navMap" width="900" height="200" alt="zombie1" />
 	</div>
 	<br />
-	<nav><!-- @required -->
-		<ul id="homeMenu">
-			<li id="navHome"><a href="#">Home</a></li>
-			<li id="navTwo"><a href="#">Equipment</a></li>
-		</ul>
-	</nav>
+
+	
+<map name="navMap">
+	<area id="areaHome" shape="rect" coords="7,143,135,189" href="index.html" target="_blank" />
+	<area id="areaEquipment" shape="rect" coords="157,141,394,197" href="equipment.html" target="_blank" />
+</map>
 </body>
 
 </html>
