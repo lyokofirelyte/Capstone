@@ -4,41 +4,36 @@ body {
 background-color: grey;
 }
 
+#mainPanel {
+background-color: #022B3B;
+clear: both;
+width: 900px;
+height: 700px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+}
+
 #homeBanner {
-border: 1px solid black;
-box-shadow: 10px 10px 5px #888888;
 margin-left: auto;
 margin-right: auto;
 display: block;
 text-align: center;
 }
 
-#homeMenu {
-list-style: none;
-text-align: center;
-box-shadow: 3px 8px 5px #888888;
-padding: 5px 5px 5px 5px;
-border:1px solid #9f9f9f;
-list-style-type: none;
-overflow: hidden;
-background-color: #CCCBC4;
-text-decoration: none;
-margin: 0;
-}
-
-#homeMenu li {
-color:#888888;
-float: left;
-text-decoration: none;
-list-style: none;
-margin-right: 15px;
-}
-
-#homeMenu li a {
-font:1.8em "Comic Sans MS", cursive, sans-serif;
-color:#888888;
+#mainFooter {
+margin-left: auto;
+margin-right: auto;
 display: block;
-text-decoration: none;
-list-style: none;
+text-align: center;
+width: 900px;
+height: 20px;
+background-color: black;
+color: white;
 }
 
+#indexH1 {
+color: #60BCE0;
+text-align:center;
+font-family: "Comic Sans MS", cursive, sans-serif;
+}
