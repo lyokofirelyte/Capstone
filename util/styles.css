@@ -11,8 +11,22 @@ font-family: "Comic Sans MS", cursive, sans-serif;
 font-size: 14px;
 }
 
-#resText {
-display: none;
+#galleryTable {
+position: relative;
+float: right;
+}
+
+#tips {
+text-align: center;
+color: white;
+font-style: italic;
+}
+
+#smallNav {
+text-align: left;
+font-size: x-large;
+text-shadow:-3px 4px 3px #523910;
+color: white;
 }
 
 #mainHeader {
@@ -39,7 +53,7 @@ text-shadow:-3px 4px 3px #523910;
 float: left;
 }
 
-#showCalcButton {
+#showCalcButton, #evenMore {
 -moz-box-shadow:inset 0px 0px 9px -37px #fce2c1;
 -webkit-box-shadow:inset 0px 0px 9px -37px #fce2c1;
 box-shadow:inset 0px 0px 9px -37px #fce2c1;
@@ -65,7 +79,7 @@ font-family:Comic Sans MS;
 font-size:20px;
 font-weight:bold;
 height:53px;
-line-height:43px;
+line-height:43px; /* @req new css property - line height determines the spacing between each line of text */
 width:150px;
 text-decoration:none;
 text-align:center;
@@ -80,13 +94,13 @@ width: 20px;
 display: none;
 }
 
-#showCalcButton:hover {
+#showCalcButton:hover, #evenMore:hover {
 background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #995b0f), color-stop(1, #c78636) );
 background:-moz-linear-gradient( center top, #995b0f 5%, #c78636 100% );
 background-color:#995b0f;
 }
 
-#showCalcButton:active {
+#showCalcButton:active, #evenMore:hover {
 position:relative;
 top:1px;
 }
@@ -151,7 +165,8 @@ right: 100px;
 display: none;
 float:right;
 position: relative;
-right: 100px;
+right: 140px;
+font-size: 20px;
 color: white;
 }
 
@@ -174,8 +189,8 @@ background-color:#666699
 #mainGallery {
 display: none;
 float:right;
-position: absolute;
-right: 500px;
+position: relative;
+right: 70px;
 color: white;
 }
 
