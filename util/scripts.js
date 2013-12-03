@@ -28,6 +28,10 @@ function ele(e, type, s){
 			document.getElementById(e).innerHTML = s; break;
 		case "disable":
 			document.getElementById(e).disabled= s; break;
+		case "display":
+			document.getElementById(e).style.display = s; break;
+		case "out":
+			document.getElementById(e).onmouseout = s; break;
 		default: break;
 	}
 }
@@ -49,6 +53,16 @@ function init(){
 	ele("areaStrat", "hover", homeMenuHover);
 	ele("areaMore", "hover", homeMenuHover);
 	ele("showCalcButton", "click", showCalc);
+	ele("resImg", "hover", showImg);
+	ele("resImg", "out", hideImg);
+}
+
+function hideImg(){
+ele("resText", "display", "none");
+}
+
+function showImg(){
+	ele("resText", "display", "block");
 }
 
 function showCalc(){
