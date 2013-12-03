@@ -1,0 +1,40 @@
+## YAML'in! ##
+val:
+- 1 Your website needs at least 5 web pages. One page must open in a new window.
+- 2 All CSS will be in external files.
+- 3 All JavaScript code will be in external files with the exception of event handlers, which can be coded as tag attributes.
+- 4 You must use my function to validate the email field in your form. Use a separate link tag to include my code on your page.
+- 5 No deprecated tags can be used (font, center, etc.)
+- 6 Your HTML must be well formed and valid.
+- 7 Your CSS must be valid. (use http://jigsaw.w3.org/css-validator)
+- 8 Each group members’ name must be coded in an author meta tag
+- 9 All images must come from morguefile.com
+- 10 You website should have a cohesive look and feel with consistent navigation
+- 11 You must use the following tags: <nav>, <ul>, <header>, <h1>, <h2>, <p>, <table>
+- 12 Your links must be part of a nav object structure
+- 13 You must use at least one new CSS property see HTML Appendix D in your book Add a comment listing which property you are using
+- 14 You must have at least one JavaScript rollover
+- 15 You must include a YouTube or Vimeo video with a creative commons license, see appendix B.
+- 16 One of your pages must include a form based on the criteria I provide. see appendix C 
+- 17 Your site must work correctly in chrome and IE
+checklist:
+  1: main, equipment, strategies, more, calculator
+  2: yes
+  3: yes
+  4: 
+  5: yes
+  6: all the indents
+  7: yes
+  8: yes
+  9: yes
+  10: yes, although you can't touch it, so I'm not sure about the feel. :D
+  11: index has all of them. easy.
+  12: sure why not, all they do is stop voice-readers from reading the links.
+  13: 
+  14: everywhere. rollovers everywhere.
+  15: both. overachieved. :)
+  16: 
+  17: yes
+unhelpfulchecklist: true
+validYAML: true
+  

@@ -17,8 +17,6 @@
 	<div>
 		<img id="homeBanner" src="../ref/more.png" usemap="#navMap" width="900" height="200" alt="zombie1" />
 	</div>
-	<br />
-
 	<nav><!--@req-->
 		<map name="navMap">
 			<area id="areaHome" shape="rect" coords="7,143,135,189" href="index.html" target="_blank" />
@@ -27,9 +25,68 @@
 			<area id="areaMore" shape="rect" coords="720,144,842,189" href="more.html" target="_blank" />
 		</map>
 	</nav>
-
+	<div id="mainHeader">
+		<div id="weatherNumber"></div>
+		<div id="weatherText"></div>
+	</div>
 	<div id="mainPanel">
 		<h1 id="indexH1">More Resources!</h1>
+		<div id="morePanel">
+			<h2 id="moreH2">Zombie TV Shows / Movies</h2>
+			<ul>
+				<li>ZombieLand</li>
+				<li>The Walking Dead</li>
+				<li>World War Z</li>
+			</ul>
+		</div>
+		<div id="morePanel">
+			<h2 id="moreH2">Zombie Survival Calculator</h2>
+			<h3>Fill out the form with information and see how likely you are to survive an invasion!</h3>
+			<form>
+				<button id="showCalcButton" type="button">Click!</button>
+			</form>
+		</div>
+		<div id="morePanel">
+			<h2 id="moreH2">Survey</h2>
+			<form id="survey" name="survey" class="survey" action="#" method="post">
+				<fieldset>
+					<label for="nameField">Name</label>
+					<input id="nameField" name="hisName" type="text" value="" autofocus="autofocus" />
+					<label for="colorMenu">Favorite Color?</label>
+					<select id="colorMenu" name="favoriteColor" size="1">
+						<option value="red" selected="selected">red</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+					</select>
+					<label for="mailBoolean">Mailing List?</label>
+					<input id="mailBoolean" name="putOnMailingList" type="checkbox" /> 
+					<label for="ageField">Age</label>
+					<input id="ageField" name="hisAge" type="text" value="" />
+					<label for="emailField">E-Mail</label>
+					<input id="emailField" name="emailAddress" type="text" value="" />
+				</fieldset>
+				<fieldset>
+					<label for="perryMason">Favorite TV Show [ Perry Mason</label>
+					<input type="radio" name="favoriteTVShow" id="perryMason" value="Perry Mason" /> 
+					<label for="bbT">Big Bang Theory</label>
+					<input type="radio" name="favoriteTVShow" id="bbT" value="Big Bang Theory" /> 
+					<label for="faceOff">Face Off</label>
+					<input type="radio" name="favoriteTVShow" id="faceOff" value="Face Off" /> 
+					<label for="hBB">Hone Boo Boo</label>
+					<input type="radio"  name="favoriteTVShow" id="hBB" value="Honey Boo Boo" checked="checked" />
+					<label for="hide"> ]</label>
+					<input type="radio" name=".." id="hide" value=".." />
+				</fieldset>
+				<fieldset>
+					<div>Comments?</div>
+					<textarea id="commentField" name="hisComments" cols="80" rows="4" title="comments"></textarea>
+				</fieldset>
+				<fieldset>
+					<button id="submit" type="submit" name="send" onclick="return doFinalWorkBeforeSend();">Finish</button>
+				</fieldset>
+			</form>
+		</div>
+		<br />
 	</div>
 
 	<div id="mainFooter">

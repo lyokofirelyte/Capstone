@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 
+<!-- ** @req indicates a required portion for grading ** -->
+
 <html>
 
 <head>
 	<title>Zombie Invasion!</title>
-	<meta name="Author" content="David Tossberg" />
+	<meta name="Author" content="David Tossberg" /><!--@req-->
 	<meta name="Author" content="Fabian O." />
 	<meta name="Author" content="Owen Kirby" />
 	<meta name="Author" content="Jayson Federick" />
@@ -27,13 +29,53 @@
 			<area id="areaMore" shape="rect" coords="720,144,842,189" href="more.html" target="_blank" />
 		</map>
 	</nav>
-
+	<div id="mainHeader">
+		<div id="weatherNumber"></div>
+		<div id="weatherText"></div>
+	</div>
 	<div id="mainPanel">
-		<h1 id="indexH1">Zombie Invasion Database</h1>
+		<header><!--@req-->
+			<h1 id="indexH1">Zombie Invasion Database</h1><!--@req-->
+			<p>Welcome to the Zombie Invasion Database (ZID). Here you will find various tips and tricks that will aid you in the event of a zombie invasion. <br /> Don't question it, just look around the site!</p>
+		</header> 
+		<br /> <br /> <br /> <br />
+		<img id="mainImage" src="../ref/file7621278384665.jpg" alt="scary?" width="500" height="300" />
+		<div id="mainVideo">
+			<iframe width="500" height="230" src="http://www.youtube.com/embed/AWHiqB1e5Xg" frameborder="0" allowfullscreen> </iframe><!--@req-->
+			<br />
+			<video width="500" height="230" controls>
+			<source src="../ref/zombie_480x272.mp4" type="video/mp4">
+			Upgrade your browser. You have no excuse not to.
+			</video><!--@req+max-->
+		</div>
+		<div id="mainGallery">
+			<table><!--@req-->
+				<tr>
+					<td><img src="../ref/H13-24 Necrosis.jpg" alt="firey something" width="100" height="100" /></td>
+				</tr>
+			</table>
+		</div>
+		<div id="mainTips">
+			<ul>
+				<li>Tip A</li>
+				<li>Tip B</li>
+			</ul>
+		</div>
+		<nav>
+			<div id="innerNav">
+				<a id="innerNavText" href="javascript:getVideo();">Show Video</a>
+			</div> <br /> <br />
+			<div id="innerNav">
+				<a id="innerNavText2" href="javascript:getTips();">Quick Tips</a>
+			</div> <br /> <br />
+			<div id="innerNav">
+				<a id="innerNavText3" href="javascript:getGallery();">Gallery</a>
+			</div> <br /> <br />
+		</nav>
 	</div>
 
 	<div id="mainFooter">
-		<p>All pictures used with permission. Copyright 2013. This site is for demonstration purposes only.</p>
+		<p>All pictures and video used under the Creative Commons license.This site is for demonstration purposes only.</p>
 	</div>
 </body>
 

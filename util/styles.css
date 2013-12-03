@@ -4,6 +4,100 @@ body {
 background-color: grey;
 }
 
+p {
+color: #60BCE0;
+text-align:center;
+font-family: "Comic Sans MS", cursive, sans-serif;
+font-size: 14px;
+}
+
+#mainHeader {
+width: 900px;
+height: 40px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+}
+
+#weatherNumber {
+text-align: left;
+font-size: x-large;
+text-shadow:-3px 4px 3px #523910;
+color: white;
+}
+
+#weatherText{
+text-align: left;
+font-size: 15px;
+color: #60BCE0;
+font-style: italic;
+text-shadow:-3px 4px 3px #523910;
+float: left;
+}
+
+#showCalcButton {
+-moz-box-shadow:inset 0px 0px 9px -37px #fce2c1;
+-webkit-box-shadow:inset 0px 0px 9px -37px #fce2c1;
+box-shadow:inset 0px 0px 9px -37px #fce2c1;
+background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c78636), color-stop(1, #995b0f) );
+background:-moz-linear-gradient( center top, #c78636 5%, #995b0f 100% );
+background-color:#c78636;
+-webkit-border-top-left-radius:42px;
+-moz-border-radius-topleft:42px;
+border-top-left-radius:42px;
+-webkit-border-top-right-radius:42px;
+-moz-border-radius-topright:42px;
+border-top-right-radius:42px;
+-webkit-border-bottom-right-radius:42px;
+-moz-border-radius-bottomright:42px;
+border-bottom-right-radius:42px;
+-webkit-border-bottom-left-radius:42px;
+-moz-border-radius-bottomleft:42px;
+border-bottom-left-radius:42px;
+border:2px solid #eeb44f;
+display:inline-block;
+color:#ffffff;
+font-family:Comic Sans MS;
+font-size:20px;
+font-weight:bold;
+height:53px;
+line-height:43px;
+width:150px;
+text-decoration:none;
+text-align:center;
+text-shadow:-3px 4px 3px #523910;
+}
+
+#ageField {
+width: 20px;
+}
+
+#hide {
+display: none;
+}
+
+#showCalcButton:hover {
+background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #995b0f), color-stop(1, #c78636) );
+background:-moz-linear-gradient( center top, #995b0f 5%, #c78636 100% );
+background-color:#995b0f;
+}
+
+#showCalcButton:active {
+position:relative;
+top:1px;
+}
+
+#moreH2{
+background-color: #5E5E5E;
+font-family: "Comic Sans MS", cursive, sans-serif;
+text-shadow: -0.2px 0 blue, 0 0.2px blue, 0.2px 0 blue, 0 -0.2px blue;
+}
+
+#morePanel{
+color: white;
+text-shadow: -0.2px 0 blue, 0 0.2px blue, 0.2px 0 blue, 0 -0.2px blue;
+}
+
 #mainPanel {
 background-color: #022B3B;
 clear: both;
@@ -12,6 +106,9 @@ height: 700px;
 margin-left: auto;
 margin-right: auto;
 display: block;
+text-align: center;
+border-style:solid;
+border-width:5px;
 }
 
 #homeBanner {
@@ -32,8 +129,57 @@ background-color: black;
 color: white;
 }
 
+#mainVideo {
+display: none;
+float:right;
+position: relative;
+right: 100px;
+}
+
+#mainImage {
+display: block;
+float:right;
+position: relative;
+right: 100px;
+}
+
+#mainTips {
+display: none;
+float:right;
+position: relative;
+right: 100px;
+color: white;
+}
+
 #indexH1 {
 color: #60BCE0;
 text-align:center;
 font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+#innerNav {
+background-color: grey;
+width: 200px;
+height: 40px;
+}
+
+#innerNav:hover {
+background-color:#666699
+}
+
+#mainGallery {
+display: none;
+float:right;
+position: absolute;
+right: 500px;
+color: white;
+}
+
+a {
+color: #990033;
+text-align: left;
+font-family: "Comic Sans MS", cursive, sans-serif;
+font-size: 30px;
+font-weight: bold;
+text-decoration: none;
 }

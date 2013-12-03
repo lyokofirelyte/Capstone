@@ -1,0 +1,128 @@
+form * {
+	background: transparent;
+}
+
+input[type=text],input[type=password],input[type=submit],input[type=email],input[type=url],input[type=tel],input[type=number],input[type=datetime],textarea,button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border: none;
+	background: white;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	padding: 5px;
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+body	{
+	padding-top: 50px;
+	background: #2b313b;
+}
+
+#myform {
+	font: normal 1.2em Arial, Helvetica, Geneva, sans-serif;
+	width: 80%;
+	margin: 0 auto;
+	padding: 10px;
+	max-width: 500px;
+	min-width: 300px;
+	background: #dddddd;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+
+
+	-webkit-box-shadow: 10px 10px 20px #20242c;
+	-moz-box-shadow: 10px 10px 20px #20242c;
+	box-shadow: 10px 10px 20px #20242c;
+}
+
+#myform textarea {
+	height: 75px;
+	width: 98%;
+}
+
+#myform button:disabled {
+	width: 20%;
+	min-width: 100px;
+ 	height: 24px;
+	float: right;
+	padding: 0;
+	margin-right: 10px;
+	margin-top: 5px;
+	border: 0;
+	color:#eeeeee;
+	font-weight: bold;
+	background: #bbbbbb;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+#myform button:enabled {
+	width: 20%;
+	min-width: 100px;
+ 	height: 24px;
+	float: right;
+	padding: 0;
+	margin-right: 10px;
+	margin-top: 5px;
+	border: 0;
+	color:#ffffff;
+	font-weight: bold;
+	cursor: pointer;
+	background: #466E82;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+#myform button:hover:enabled {
+	background: url(arrows.png) no-repeat right top, #93481A;
+}
+
+fieldset {
+	padding:10px;
+}
+
+#textField {
+	width:70%;
+}
+
+#integerField {
+	width:10%;
+	text-align:right;
+}
+.toggleVisibility {
+	display:none;
+	color: #cf1925;
+}
+.alertMessage {
+	color: #cf1925;
+}
+
+#decorationDisplay {
+	padding-left:50px;
+	padding-top:6px;
+	padding-bottom:19px;
+	margin-left:12px;
+	display:inline;
+	border-style:dotted;
+	border-width:3px;
+}
+
+#myform select {
+	min-width:25%;
+	margin-bottom:10px;
+	padding:5px;
+	border-style:none;
+	background:#707070;
+	color:#ffffff;
+}
+/* finds safari and chrome 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #myform select:hover {
+	background: url(SelectArrows.png) no-repeat center top, #93481A;
+}
+*/
