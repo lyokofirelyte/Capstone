@@ -100,7 +100,7 @@ background:-moz-linear-gradient( center top, #995b0f 5%, #c78636 100% );
 background-color:#995b0f;
 }
 
-#showCalcButton:active, #evenMore:hover {
+#showCalcButton:active, #evenMore:active {
 position:relative;
 top:1px;
 }
@@ -129,11 +129,73 @@ border-style:solid;
 border-width:5px;
 }
 
+fieldset {
+border: none;
+}
+
 #homeBanner {
 margin-left: auto;
 margin-right: auto;
 display: block;
 text-align: center;
+}
+
+input, button, textarea, select {
+-moz-box-shadow:inset 0px 0px 9px -37px #fce2c1;
+-webkit-box-shadow:inset 0px 0px 9px -37px #fce2c1;
+box-shadow:inset 0px 0px 9px -37px #fce2c1;
+background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c78636), color-stop(1, #995b0f) );
+background:-moz-linear-gradient( center top, #c78636 5%, #995b0f 100% );
+background-color:#c78636;
+-webkit-border-top-left-radius:42px;
+-moz-border-radius-topleft:42px;
+border-top-left-radius:42px;
+-webkit-border-top-right-radius:42px;
+-moz-border-radius-topright:42px;
+border-top-right-radius:42px;
+-webkit-border-bottom-right-radius:42px;
+-moz-border-radius-bottomright:42px;
+border-bottom-right-radius:42px;
+-webkit-border-bottom-left-radius:42px;
+-moz-border-radius-bottomleft:42px;
+border-bottom-left-radius:42px;
+border:2px solid #eeb44f;
+display:inline-block;
+color:#ffffff;
+font-family:Comic Sans MS;
+font-size:15px;
+text-decoration:none;
+text-align:center;
+text-shadow:-3px 4px 3px #523910;
+}
+
+#survey {
+-moz-box-shadow:inset 0px 0px 9px -37px #fce2c1;
+-webkit-box-shadow:inset 0px 0px 9px -37px #fce2c1;
+box-shadow:inset 0px 0px 9px -37px #fce2c1;
+background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c78636), color-stop(1, #995b0f) );
+background:-moz-linear-gradient( center top, #c78636 5%, #995b0f 100% );
+background-color:#c78636;
+-webkit-border-top-left-radius:42px;
+-moz-border-radius-topleft:42px;
+border-top-left-radius:42px;
+-webkit-border-top-right-radius:42px;
+-moz-border-radius-topright:42px;
+border-top-right-radius:42px;
+-webkit-border-bottom-right-radius:42px;
+-moz-border-radius-bottomright:42px;
+border-bottom-right-radius:42px;
+-webkit-border-bottom-left-radius:42px;
+-moz-border-radius-bottomleft:42px;
+border-bottom-left-radius:42px;
+border:2px solid #eeb44f;
+display:inline-block;
+color:#ffffff;
+font-family:Comic Sans MS;
+font-size:15px;
+text-decoration:none;
+text-align:center;
+text-shadow:-3px 4px 3px #523910;
 }
 
 #mainFooter {

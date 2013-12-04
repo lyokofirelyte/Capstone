@@ -129,11 +129,12 @@ function submitForm(){
 	var email = "opt-out";
 	var age = document.survey.ageField.value;
 	var tvShow = getTVShow();
+	var comments = document.survey.commentField.value;
 	
 	if (document.survey.mailBoolean.checked){
 		mail = true;
 		email = document.survey.emailField.value;
-			if (email.indexOf("@") == -1 || (email.substring((email.length)-4, email.length) != ".com" && email.substring((email.length)-4, email.length) != ".edu" && email.substring((email.length)-3, email.length) != ".uk") || email.indexOf(" ") != -1) {
+			if (email.indexOf("@") == -1 || (email.substring((email.length)-4, email.length) != ".com" && email.substring((email.length)-4, email.length) != ".edu" && email.substring((email.length)-3, email.length) != ".uk") || email.indexOf(" ") != -1 || !validEmail(email)) { /*@req*/
 				alert("Invalid e-mail format!");
 				return;
 			}
@@ -144,6 +145,8 @@ function submitForm(){
 		return;
 	}
 	
+	alert("NAME: " + name + " // FAV. COLOR: " + color + " // EMAIL: " + email + " // AGE: " + age + " // TVSHOW: " + tvShow + " // COMMENTS: " + comments);
+	alert("Thanks, your data was not recorded because we really don't care!");
 }
 
 function getTVShow(){
@@ -165,8 +168,8 @@ function getTVShow(){
 	}
 }
 
-function evenMore(){
-window.open("res.html");
+function evenMore(){	
+	window.open("res.html");
 }
 
 function hideImg(){
