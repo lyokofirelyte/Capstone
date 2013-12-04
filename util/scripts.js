@@ -29,8 +29,6 @@ function ele(e, type, s){
 			document.getElementById(e).style.display = s; break;
 		case "out":
 			document.getElementById(e).onmouseout = s; break;
-		case "disable":
-			document.getElementById(e).disabled = s; break;
 		default: break;
 	}
 }
@@ -65,6 +63,14 @@ function init(){
 	ele("resText5", "display", "none");
 	ele("resText6", "display", "none");
 	ele("resText7", "display", "none");
+	ele("resText8", "display", "none");
+	ele("resText9", "display", "none");
+	ele("resText10", "display", "none");
+	ele("resText11", "display", "none");
+	ele("resText12", "display", "none");
+	ele("resText13", "display", "none");
+	ele("resText14", "display", "none");
+	ele("resText15", "display", "none");
 	ele("resImg", "hover", showImg);
 	ele("resImg2", "hover", showImg2);
 	ele("resImg3", "hover", showImg3);
@@ -72,6 +78,14 @@ function init(){
 	ele("resImg5", "hover", showImg5);
 	ele("resImg6", "hover", showImg6);
 	ele("resImg7", "hover", showImg7);
+	ele("resImg8", "hover", showImg8);
+	ele("resImg9", "hover", showImg9);
+	ele("resImg10", "hover", showImg10);
+	ele("resImg11", "hover", showImg11);
+	ele("resImg12", "hover", showImg12);
+	ele("resImg13", "hover", showImg13);
+	ele("resImg14", "hover", showImg14);
+	ele("resImg15", "hover", showImg15);
 	ele("resImg", "out", hideImg);
 	ele("resImg2", "out", hideImg2);
 	ele("resImg3", "out", hideImg3);
@@ -79,6 +93,14 @@ function init(){
 	ele("resImg5", "out", hideImg5);
 	ele("resImg6", "out", hideImg6);
 	ele("resImg7", "out", hideImg7);
+	ele("resImg8", "out", hideImg8);
+	ele("resImg9", "out", hideImg9);
+	ele("resImg10", "out", hideImg10);
+	ele("resImg11", "out", hideImg11);
+	ele("resImg12", "out", hideImg12);
+	ele("resImg13", "out", hideImg13);
+	ele("resImg14", "out", hideImg14);
+	ele("resImg15", "out", hideImg15);
 	ele("showCalcButton", "click", showCalc);
 	ele("evenMore", "click", evenMore);
 	ele("submit", "click", submitForm);
@@ -195,8 +217,41 @@ function hideImg5(){
 function hideImg6(){
 	ele("resText6", "display", "none");
 }
+
 function hideImg7(){
 	ele("resText7", "display", "none");
+}
+
+function hideImg8(){
+	ele("resText8", "display", "none");
+}
+
+function hideImg9(){
+	ele("resText9", "display", "none");
+}
+
+function hideImg10(){
+	ele("resText10", "display", "none");
+}
+
+function hideImg11(){
+	ele("resText11", "display", "none");
+}
+
+function hideImg12(){
+	ele("resText12", "display", "none");
+}
+
+function hideImg13(){
+	ele("resText13", "display", "none");
+}
+
+function hideImg14(){
+	ele("resText14", "display", "none");
+}
+
+function hideImg15(){
+	ele("resText15", "display", "none");
 }
 
 function showImg(){
@@ -222,8 +277,41 @@ function showImg5(){
 function showImg6(){
 	ele("resText6", "display", "block");
 }
+
 function showImg7(){
 	ele("resText7", "display", "block");
+}
+
+function showImg8(){
+	ele("resText8", "display", "block");
+}
+
+function showImg9(){
+	ele("resText9", "display", "block");
+}
+
+function showImg10(){
+	ele("resText10", "display", "block");
+}
+
+function showImg11(){
+	ele("resText11", "display", "block");
+}
+
+function showImg12(){
+	ele("resText12", "display", "block");
+}
+
+function showImg13(){
+	ele("resText13", "display", "block");
+}
+
+function showImg14(){
+	ele("resText14", "display", "block");
+}
+
+function showImg15(){
+	ele("resText15", "display", "block");
 }
 
 function homeMenuHover(){

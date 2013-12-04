@@ -11,12 +11,16 @@ font-family: "Comic Sans MS", cursive, sans-serif;
 font-size: 14px;
 }
 
+#equipTable {
+color: #60BCE0;
+}
+
 #galleryTable {
 position: relative;
 float: right;
 }
 
-#tips {
+#tips, #description {
 text-align: center;
 color: white;
 font-style: italic;
@@ -116,6 +120,13 @@ color: white;
 text-shadow: -0.2px 0 blue, 0 0.2px blue, 0.2px 0 blue, 0 -0.2px blue;
 }
 
+#equipTable {
+text-align: center;
+margin-left: auto;
+margin-right: auto;
+position: relative;
+}
+
 #mainPanel {
 background-color: #022B3B;
 clear: both;
@@ -140,7 +151,14 @@ display: block;
 text-align: center;
 }
 
-input, button, textarea, select {
+.center {
+margin-left: auto;
+margin-right: auto;
+display: block;
+text-align: center;
+}
+
+input, button, textarea, select, #equipTable, img {
 -moz-box-shadow:inset 0px 0px 9px -37px #fce2c1;
 -webkit-box-shadow:inset 0px 0px 9px -37px #fce2c1;
 box-shadow:inset 0px 0px 9px -37px #fce2c1;
@@ -166,6 +184,7 @@ font-family:Comic Sans MS;
 font-size:15px;
 text-decoration:none;
 text-align:center;
+overflow: hidden;
 text-shadow:-3px 4px 3px #523910;
 }
 
