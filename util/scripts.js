@@ -105,6 +105,8 @@ function init(){
 	ele("evenMore", "click", evenMore);
 	ele("submit", "click", submitForm);
 	ele("submit", "disable", true);
+	ele("colorChanger", "click", bgChange);
+	ele("colorChanger2", "click", bgChange2);
 	
 	document.survey.nameField.onchange = function() {
 		checkForm();
@@ -123,6 +125,14 @@ function checkForm(){
 	if (document.survey.nameField.value != '' && document.survey.ageField.value != '' && document.survey.commentField.value != ''){
 		ele("submit", "disable", false);
 	} 
+}
+
+function bgChange(){
+document.body.style.backgroundColor = "grey";
+}
+
+function bgChange2(){
+document.body.style.backgroundColor = "black";
 }
 
 function caps(s) {
@@ -339,10 +349,6 @@ function homeMenuHover(){
 		break;
 	}
 	
-}
-
-function bgChange(color){
-	document.body.style.backgroundColor = color;
 }
 
 function getGallery(){

@@ -127,6 +127,29 @@ margin-right: auto;
 position: relative;
 }
 
+#colorChanger {
+border-style: box;
+border: 1px solid white;
+width: 10px;
+height: 10px;
+float: right;
+position: relative;
+}
+
+#colorChanger2 {
+border-style: box;
+border: 1px solid white;
+width: 10px;
+height: 10px;
+float: right;
+position: relative;
+right: 5px;
+}
+
+#colorChanger:hover, #colorChanger2:hover {
+background-color: purple;
+}
+
 #mainPanel {
 background-color: #022B3B;
 clear: both;
